@@ -239,12 +239,16 @@
         <div class="premium-carousel-wrapper">
             <!-- Header Block -->
             <div class="premium-header-block">
-                <span class="premium-subtitle">BEHIND THE DESIGNS</span>
+                <div class="premium-subtitle-container">
+                    <span class="premium-subtitle">Behind the Designs</span>
+                </div>
                 <h2 class="premium-title">Curious What Else <span>We've Created?</span></h2>
                 <p class="premium-section-desc">Explore more brand identities, packaging, and digital design work in our creative showcase.</p>
                 <a href="#portfolio" class="premium-cta-btn">
-                    <span>SEE MORE PROJECTS</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <span class="premium-btn-text">See more Projects</span>
+                    <span class="premium-btn-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
                 </a>
             </div>
 
