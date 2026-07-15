@@ -4587,10 +4587,10 @@ a.contact-quick-card:hover .cqc-arrow {
 }
 
 .bottom-nav-link.active {
-    background: #ffffff;
+    background: var(--primary-color);
     color: #080a0e;
     font-weight: 700;
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 25px rgba(184, 255, 52, 0.35);
 }
 
 /* Mobile responsive styles: collapse to icons only (exactly like mobile screenshot) */
