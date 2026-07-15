@@ -646,7 +646,7 @@
                             <p>Fill in the details and we'll get back to you within hours.</p>
                         </div>
 
-                        <div id="contact-form-alert" style="display: none; margin-bottom: 1.5rem; padding: 1.2rem; border-radius: 16px; font-size: 0.9rem; line-height: 1.4; border: 1px solid rgba(249, 199, 0, 0.25); background: rgba(249, 199, 0, 0.08); color: var(--primary-color); box-shadow: 0 10px 20px rgba(249, 199, 0, 0.05);"></div>
+                        <div id="contact-form-alert" style="display: none; margin-bottom: 1.5rem; padding: 1.2rem; border-radius: 16px; font-size: 0.9rem; line-height: 1.4; border: 1px solid rgba(184, 255, 52, 0.25); background: rgba(184, 255, 52, 0.08); color: var(--primary-color); box-shadow: 0 10px 20px rgba(184, 255, 52, 0.05);"></div>
 
                         <div class="form-row">
                             <div class="form-group">

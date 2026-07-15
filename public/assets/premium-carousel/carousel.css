@@ -3,8 +3,8 @@
    ========================================================================== */
 
 :root {
-    --luxury-gold: #F9C700;
-    --gold-glow: rgba(249, 199, 0, 0.45);
+    --luxury-gold: #b8ff34;
+    --gold-glow: rgba(184, 255, 52, 0.45);
     --premium-bg: #080a0e;
     --card-width: 320px;
     --card-height: 460px;
@@ -53,7 +53,7 @@
     position: absolute;
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(249, 199, 0, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(184, 255, 52, 0.05) 0%, transparent 70%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -93,15 +93,15 @@
     font-family: 'Outfit', sans-serif;
     font-size: 0.76rem;
     font-weight: 700;
-    color: #ff5e00; /* Framer template style orange accent */
-    background: rgba(255, 94, 0, 0.12); /* Subtle colored pill background */
+    color: #b8ff34; /* Framer template style orange accent */
+    background: rgba(184, 255, 52, 0.12); /* Subtle colored pill background */
     letter-spacing: 2px;
     text-transform: uppercase;
     display: inline-block;
     padding: 0.45rem 1.25rem;
     border-radius: 50px;
     opacity: 1;
-    border: 1px solid rgba(255, 94, 0, 0.18);
+    border: 1px solid rgba(184, 255, 52, 0.18);
     transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -118,7 +118,7 @@
 }
 
 .premium-title span {
-    background: linear-gradient(135deg, #ffffff 30%, #ff5e00 100%);
+    background: linear-gradient(135deg, #ffffff 30%, #b8ff34 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -161,7 +161,7 @@
 
 .premium-cta-btn:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(255, 94, 0, 0.2);
+    box-shadow: 0 15px 35px rgba(184, 255, 52, 0.2);
 }
 
 .premium-btn-text {
@@ -174,7 +174,7 @@
     justify-content: center;
     width: 34px;
     height: 34px;
-    background: #ff5e00; /* Circular orange icon container */
+    background: #b8ff34; /* Circular orange icon container */
     color: #ffffff;
     border-radius: 50%;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -372,7 +372,7 @@
     align-items: center;
     justify-content: center;
     color: #080a0e;
-    box-shadow: 0 10px 20px rgba(249, 199, 0, 0.35);
+    box-shadow: 0 10px 20px rgba(184, 255, 52, 0.35);
     opacity: 0;
     transform: scale(0.7) translateZ(30px);
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -426,11 +426,11 @@
 }
 
 .premium-arrow-btn:hover {
-    background: rgba(249, 199, 0, 0.06);
-    border-color: rgba(249, 199, 0, 0.3);
+    background: rgba(184, 255, 52, 0.06);
+    border-color: rgba(184, 255, 52, 0.3);
     color: var(--luxury-gold);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(249, 199, 0, 0.12);
+    box-shadow: 0 8px 24px rgba(184, 255, 52, 0.12);
 }
 
 .premium-arrow-btn:active {

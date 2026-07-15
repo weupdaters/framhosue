@@ -73,7 +73,7 @@
         }
 
         .menu-link:hover, .menu-link.active {
-            background: rgba(249, 199, 0, 0.08);
+            background: rgba(184, 255, 52, 0.08);
             color: var(--primary-color);
         }
 
@@ -109,7 +109,7 @@
             flex-grow: 1;
             padding: 3rem 4rem;
             box-sizing: border-box;
-            background: radial-gradient(circle at top right, rgba(249, 199, 0, 0.02) 0%, transparent 60%);
+            background: radial-gradient(circle at top right, rgba(184, 255, 52, 0.02) 0%, transparent 60%);
         }
 
         .workspace-header {
@@ -145,12 +145,12 @@
             gap: 0.6rem;
             text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(249, 199, 0, 0.15);
+            box-shadow: 0 5px 15px rgba(184, 255, 52, 0.15);
         }
 
         .btn-add-work:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(249, 199, 0, 0.25);
+            box-shadow: 0 10px 25px rgba(184, 255, 52, 0.25);
         }
 
         .btn-add-work svg {
@@ -278,7 +278,7 @@
 
         .action-btn.edit {
             background: transparent;
-            border: 1px solid rgba(249, 199, 0, 0.3);
+            border: 1px solid rgba(184, 255, 52, 0.3);
             color: var(--primary-color);
         }
 

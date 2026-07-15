@@ -27,7 +27,7 @@
             transform: translate(-50%, -50%);
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(249, 199, 0, 0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(184, 255, 52, 0.05) 0%, transparent 70%);
             pointer-events: none;
             z-index: 1;
         }
@@ -110,13 +110,13 @@
         .form-group input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(249, 199, 0, 0.08);
+            box-shadow: 0 0 20px rgba(184, 255, 52, 0.08);
             background: rgba(0, 0, 0, 0.6);
         }
 
         .login-btn {
             background: #000000;
-            border: 1px solid rgba(249, 199, 0, 0.5);
+            border: 1px solid rgba(184, 255, 52, 0.5);
             color: #ffffff;
             padding: 1.1rem;
             font-family: 'Outfit', sans-serif;
@@ -140,7 +140,7 @@
             border-color: var(--primary-color);
             color: #080a0e;
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(249, 199, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(184, 255, 52, 0.15);
         }
 
         .error-alert {

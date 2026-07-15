@@ -73,7 +73,7 @@
         }
 
         .menu-link:hover, .menu-link.active {
-            background: rgba(249, 199, 0, 0.08);
+            background: rgba(184, 255, 52, 0.08);
             color: var(--primary-color);
         }
 
@@ -109,7 +109,7 @@
             flex-grow: 1;
             padding: 3rem 4rem;
             box-sizing: border-box;
-            background: radial-gradient(circle at top right, rgba(249, 199, 0, 0.02) 0%, transparent 60%);
+            background: radial-gradient(circle at top right, rgba(184, 255, 52, 0.02) 0%, transparent 60%);
         }
 
         .workspace-header {
@@ -207,7 +207,7 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 20px rgba(249, 199, 0, 0.08);
+            box-shadow: 0 0 20px rgba(184, 255, 52, 0.08);
             background: rgba(0, 0, 0, 0.6);
         }
 
@@ -215,7 +215,7 @@
             color: rgba(255, 255, 255, 0.8);
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg fill='%23F9C700' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%23b8ff34' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
             background-repeat: no-repeat;
             background-position: right 15px center;
             background-size: 20px;
@@ -283,7 +283,7 @@
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(249, 199, 0, 0.25);
+            box-shadow: 0 10px 25px rgba(184, 255, 52, 0.25);
         }
 
         .btn-cancel {
@@ -381,7 +381,7 @@
                         <div class="form-group">
                             <label for="image">Project Image / Cover Thumbnail (Required if no video supplied)</label>
                             <input type="file" name="image" id="image" accept="image/*">
-                            <span style="font-size: 0.72rem; color: #FFF1B3; margin-top: 0.2rem;">⚠️ Select your poster/thumbnail image here. Do NOT select a video file in this field.</span>
+                            <span style="font-size: 0.72rem; color: #e8ffb3; margin-top: 0.2rem;">⚠️ Select your poster/thumbnail image here. Do NOT select a video file in this field.</span>
                             @if(isset($project) && $project->image_path)
                                 <div style="margin-top: 0.5rem;">
                                     <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Image:</span>
@@ -409,7 +409,7 @@
                         <div class="form-group">
                             <label for="video_file">Upload Video File (.mp4/.mov) (Optional)</label>
                             <input type="file" name="video_file" id="video_file" accept="video/mp4,video/quicktime">
-                            <span style="font-size: 0.72rem; color: #FFF1B3; margin-top: 0.2rem;">🎥 Select your `.mp4` or `.mov` video file here. (Max 50MB)</span>
+                            <span style="font-size: 0.72rem; color: #e8ffb3; margin-top: 0.2rem;">🎥 Select your `.mp4` or `.mov` video file here. (Max 50MB)</span>
                             @if(isset($project) && $project->video_path)
                                 <div style="margin-top: 0.5rem;">
                                     <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Video File:</span>

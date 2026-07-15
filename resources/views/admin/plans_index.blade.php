@@ -73,7 +73,7 @@
         }
 
         .menu-link:hover, .menu-link.active {
-            background: rgba(249, 199, 0, 0.08);
+            background: rgba(184, 255, 52, 0.08);
             color: var(--primary-color);
         }
 
@@ -109,7 +109,7 @@
             flex-grow: 1;
             padding: 3rem 4rem;
             box-sizing: border-box;
-            background: radial-gradient(circle at top right, rgba(249, 199, 0, 0.02) 0%, transparent 60%);
+            background: radial-gradient(circle at top right, rgba(184, 255, 52, 0.02) 0%, transparent 60%);
         }
 
         .workspace-header {
@@ -185,9 +185,9 @@
         }
 
         .status-badge.popular {
-            background: rgba(249, 199, 0, 0.1);
+            background: rgba(184, 255, 52, 0.1);
             color: var(--primary-color);
-            border: 1px solid rgba(249, 199, 0, 0.2);
+            border: 1px solid rgba(184, 255, 52, 0.2);
         }
 
         .status-badge.regular {
@@ -234,7 +234,7 @@
 
         .action-btn.edit {
             background: transparent;
-            border: 1px solid rgba(249, 199, 0, 0.3);
+            border: 1px solid rgba(184, 255, 52, 0.3);
             color: var(--primary-color);
         }
 
