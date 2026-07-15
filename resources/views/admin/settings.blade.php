@@ -418,6 +418,42 @@
                         </div>
                     </div>
 
+                    <!-- SECTION 4: Carousel Settings -->
+                    <div class="settings-section-title">Curved Carousel Header Settings</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="carousel_subtitle">Carousel Subtitle (Tagline)</label>
+                            <input type="text" name="carousel_subtitle" id="carousel_subtitle" value="{{ old('carousel_subtitle', $settings['carousel_subtitle'] ?? 'Behind the Designs') }}" placeholder="e.g. Behind the Designs">
+                            @error('carousel_subtitle')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="carousel_cta_text">Carousel CTA Button Text</label>
+                            <input type="text" name="carousel_cta_text" id="carousel_cta_text" value="{{ old('carousel_cta_text', $settings['carousel_cta_text'] ?? 'See more Projects') }}" placeholder="e.g. See more Projects">
+                            @error('carousel_cta_text')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="carousel_title">Carousel Title (Main Heading)</label>
+                            <input type="text" name="carousel_title" id="carousel_title" value="{{ old('carousel_title', $settings['carousel_title'] ?? 'Curious What Else We\'ve Created?') }}" placeholder="e.g. Curious What Else We've Created?">
+                            @error('carousel_title')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="carousel_desc">Carousel Description</label>
+                            <textarea name="carousel_desc" id="carousel_desc" rows="2" placeholder="Explore more brand identities, packaging... Description text below the heading.">{{ old('carousel_desc', $settings['carousel_desc'] ?? 'Explore more brand identities, packaging, and digital design work in our creative showcase.') }}</textarea>
+                            @error('carousel_desc')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
                     <!-- Submit Buttons -->
                     <div class="btn-row">
                         <button type="submit" class="btn-submit">

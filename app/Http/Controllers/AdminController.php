@@ -407,6 +407,10 @@ class AdminController extends Controller
             'youtube_url' => 'nullable|url|max:255',
             'linkedin_url' => 'nullable|url|max:255',
             'facebook_url' => 'nullable|url|max:255',
+            'carousel_subtitle' => 'nullable|string|max:255',
+            'carousel_title' => 'nullable|string|max:255',
+            'carousel_desc' => 'nullable|string',
+            'carousel_cta_text' => 'nullable|string|max:255',
         ]);
 
         foreach ($data as $key => $value) {

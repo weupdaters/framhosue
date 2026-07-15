@@ -240,12 +240,24 @@
             <!-- Header Block -->
             <div class="premium-header-block">
                 <div class="premium-subtitle-container">
-                    <span class="premium-subtitle">Behind the Designs</span>
+                    <span class="premium-subtitle">{{ $site_settings['carousel_subtitle'] ?? 'Behind the Designs' }}</span>
                 </div>
-                <h2 class="premium-title">Curious What Else <span>We've Created?</span></h2>
-                <p class="premium-section-desc">Explore more brand identities, packaging, and digital design work in our creative showcase.</p>
+                @php
+                    $carouselTitle = $site_settings['carousel_title'] ?? "Curious What Else We've Created?";
+                    $titleWords = explode(' ', $carouselTitle);
+                    $spanWordCount = min(2, count($titleWords));
+                    if ($spanWordCount > 0) {
+                        $mainTitleText = implode(' ', array_slice($titleWords, 0, count($titleWords) - $spanWordCount));
+                        $spanTitleText = implode(' ', array_slice($titleWords, -$spanWordCount));
+                    } else {
+                        $mainTitleText = $carouselTitle;
+                        $spanTitleText = '';
+                    }
+                @endphp
+                <h2 class="premium-title">{!! e($mainTitleText) !!} @if($spanTitleText) <span>{!! e($spanTitleText) !!}</span> @endif</h2>
+                <p class="premium-section-desc">{{ $site_settings['carousel_desc'] ?? 'Explore more brand identities, packaging, and digital design work in our creative showcase.' }}</p>
                 <a href="#portfolio" class="premium-cta-btn">
-                    <span class="premium-btn-text">See more Projects</span>
+                    <span class="premium-btn-text">{{ $site_settings['carousel_cta_text'] ?? 'See more Projects' }}</span>
                     <span class="premium-btn-icon">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </span>
