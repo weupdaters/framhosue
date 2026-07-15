@@ -654,6 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 openModal(card);
             }
         });
+    }
     // ==========================================
     // 10. FLOATING BOTTOM NAVBAR SCROLLSPY
     // ==========================================
