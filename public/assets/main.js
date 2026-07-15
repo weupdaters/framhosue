@@ -295,6 +295,16 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.add('modal-active');
             document.body.style.overflow = 'hidden';
 
+            const isVertical = card.getAttribute('data-is-vertical') === '1' || card.getAttribute('data-category') === 'reels';
+
+            if (isVertical) {
+                if (modalContent) modalContent.classList.add('modal-vertical');
+                if (iframeContainer) iframeContainer.classList.add('modal-vertical');
+            } else {
+                if (modalContent) modalContent.classList.remove('modal-vertical');
+                if (iframeContainer) iframeContainer.classList.remove('modal-vertical');
+            }
+
             if (videoPath) {
                 videoPlayer.src = `/videos/${videoPath}`;
                 videoPlayer.style.display = 'block';
@@ -305,18 +315,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (videoId.startsWith('instagram:')) {
                     const igId = videoId.replace('instagram:', '');
                     iframe.src = `https://www.instagram.com/reel/${igId}/embed`;
-                    if (modalContent) modalContent.classList.add('modal-vertical');
-                    if (iframeContainer) iframeContainer.classList.add('modal-vertical');
                     iframe.style.display = 'block';
                     if (iframeContainer) iframeContainer.style.display = 'block';
                     modal.classList.add('active');
                 } else if (videoId.length > 20) {
-                    // Stream Google Drive natively inside custom HTML5 video player instead of heavy preview iframe
-                    videoPlayer.src = `https://drive.google.com/uc?id=${videoId}&export=download`;
-                    videoPlayer.style.display = 'block';
+                    // Google Drive preview URL (works reliably without virus download check warnings)
+                    iframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                    iframe.style.display = 'block';
                     if (iframeContainer) iframeContainer.style.display = 'block';
                     modal.classList.add('active');
-                    videoPlayer.play().catch(e => console.log("Drive video autoplay blocked:", e));
                 } else {
                     iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
                     iframe.style.display = 'block';

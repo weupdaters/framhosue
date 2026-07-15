@@ -230,7 +230,7 @@
                 <div class="portfolio-slider-track">
                     @foreach($featuredProjects as $project)
                         <!-- Dynamic Slide Card -->
-                        <div class="portfolio-slide-card {{ ($project->video_id || $project->video_path) ? 'video-card' : '' }}" data-project-id="{{ $project->id }}" data-project-title="{{ e($project->title) }}" data-category="{{ $project->category }}" {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!} {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}>
+                        <div class="portfolio-slide-card {{ ($project->video_id || $project->video_path) ? 'video-card' : '' }}" data-project-id="{{ $project->id }}" data-project-title="{{ e($project->title) }}" data-category="{{ $project->category }}" data-is-vertical="{{ $project->is_vertical_reel }}" {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!} {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}>
                             <div class="card-img-container">
                                 <img src="{{ asset('images/' . $project->image_path) }}" alt="{{ $project->title }}">
                                 @if($project->video_id || $project->video_path)
@@ -313,6 +313,7 @@
                              data-project-id="{{ $project->id }}"
                              data-project-title="{{ e($project->title) }}"
                              data-category="{{ $project->category }}"
+                             data-is-vertical="{{ $project->is_vertical_reel }}"
                              {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!}
                              {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}>
                             <div class="premium-card-inner">
