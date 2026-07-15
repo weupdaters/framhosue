@@ -25,19 +25,12 @@
                     </div>
                 </div>
             </a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+            <div class="top-status-badge">
+                <span class="status-pulse-dot"></span>
+                <span class="status-badge-text">Available for Projects</span>
+            </div>
             <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="btn-contact">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="phone-icon-header" style="margin-right: 6px; vertical-align: middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span class="contact-btn-text">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</span>
-                </a>
+                <a href="#contact" class="top-nav-btn">Get in Touch</a>
             </div>
         </div>
     </header>
@@ -818,6 +811,54 @@
             <img id="modal-image-player" src="" style="display: none; width: 100%; height: auto; border-radius: 12px; max-height: 80vh; object-fit: contain; background: #000; margin: 0 auto;">
         </div>
     </div>
+
+    <!-- Floating Bottom Navbar -->
+    <nav class="bottom-navbar">
+        <ul class="bottom-nav-list">
+            <li class="bottom-nav-item">
+                <a href="#home" class="bottom-nav-link active" data-section="home">
+                    <!-- Home Icon -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span class="bottom-nav-text">Home</span>
+                </a>
+            </li>
+            <li class="bottom-nav-item">
+                <a href="#about" class="bottom-nav-link" data-section="about">
+                    <!-- User/About Icon -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span class="bottom-nav-text">About</span>
+                </a>
+            </li>
+            <li class="bottom-nav-item">
+                <a href="#portfolio" class="bottom-nav-link" data-section="portfolio">
+                    <!-- Briefcase Icon -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span class="bottom-nav-text">Portfolio</span>
+                </a>
+            </li>
+            <li class="bottom-nav-item">
+                <a href="#services" class="bottom-nav-link" data-section="services">
+                    <!-- Star/Services Icon -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span class="bottom-nav-text">Services</span>
+                </a>
+            </li>
+            <li class="bottom-nav-item">
+                <a href="#pricing" class="bottom-nav-link" data-section="pricing">
+                    <!-- Tag/Pricing Icon -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span class="bottom-nav-text">Pricing</span>
+                </a>
+            </li>
+            <li class="bottom-nav-item">
+                <a href="#contact" class="bottom-nav-link" data-section="contact">
+                    <!-- Message/Contact Icon -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span class="bottom-nav-text">Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- GSAP & Premium 3D Carousel JS Split Files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

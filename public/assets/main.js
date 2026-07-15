@@ -668,5 +668,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 openModal(card);
             }
         });
+    // ==========================================
+    // 10. FLOATING BOTTOM NAVBAR SCROLLSPY
+    // ==========================================
+    const bottomNavLinks = document.querySelectorAll('.bottom-nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    if (bottomNavLinks.length > 0 && sections.length > 0) {
+        const spyScroll = () => {
+            let currentSectionId = 'home';
+            const scrollPos = window.scrollY + window.innerHeight / 3;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    currentSectionId = sectionId;
+                }
+            });
+
+            // Special check: if scrolled to the absolute bottom of the page, activate contact link
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                currentSectionId = 'contact';
+            }
+
+            bottomNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', spyScroll);
+        spyScroll(); // Run once on load
+        
+        // Smooth scrolling fallback check
+        bottomNavLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 30,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     }
 });
