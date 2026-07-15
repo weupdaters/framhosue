@@ -35,9 +35,55 @@
         </div>
     </header>
 
-    <!-- Hero / Banner Section -->
+    <!-- Hero / Video Showcase Section -->
     <section id="home" class="hero">
-        <img src="{{ asset('images/banner.png') }}" alt="Banner" class="full-banner-img">
+        <!-- Full Screen Ambient Video Layer -->
+        <div class="hero-video-container">
+            <video class="hero-bg-video" autoplay loop muted playsinline poster="{{ asset('images/banner.png') }}">
+                <source src="{{ asset('website.mp4') }}" type="video/mp4">
+            </video>
+            <!-- Ambient Cinema Vignette Overlays -->
+            <div class="hero-video-overlay-dark"></div>
+            <div class="hero-video-overlay-glow"></div>
+        </div>
+
+        <!-- Premium Trendy Editorial Content Overlay -->
+        <div class="hero-content-wrapper">
+            <div class="hero-brand-category">
+                <span class="category-dash"></span>
+                <span class="category-text">CREATIVE VISION. IMMERSIVE REALITY.</span>
+            </div>
+            
+            <h1 class="hero-editorial-title">
+                WE EDIT.<br>
+                WE CREATE.<br>
+                <span>WE TELL STORIES.</span>
+            </h1>
+            
+            <p class="hero-editorial-desc">
+                Crafting premium visual campaigns, cinematic narrative showreels, and dynamic branding reels that leave an indelible impression.
+            </p>
+
+            <div class="hero-cta-wrapper">
+                <a href="#portfolio" class="hero-btn-primary">
+                    <span class="btn-text">EXPLORE WORKS</span>
+                    <span class="btn-icon">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </a>
+                <a href="#about" class="hero-btn-secondary">
+                    <span>THE STUDIO</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Page Transition Indicator -->
+        <div class="hero-scroll-indicator">
+            <span class="indicator-mouse">
+                <span class="mouse-wheel"></span>
+            </span>
+            <span class="indicator-text">SCROLL</span>
+        </div>
     </section>
 
     <!-- About Us Section -->
