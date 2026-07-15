@@ -614,21 +614,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==========================================
-    // 7. HEADER TRANSITION ON SCROLL
-    // ==========================================
-    const siteHeader = document.querySelector('header');
-    if (siteHeader) {
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                siteHeader.classList.add('header-scrolled');
-            } else {
-                siteHeader.classList.remove('header-scrolled');
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Run once on load
-    }
+
 
     // ==========================================
     // 8. 3D INTERACTIVE TILT FOR SHOWREEL CARD
