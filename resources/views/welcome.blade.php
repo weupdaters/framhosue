@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('assets/premium-carousel/carousel.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('assets/premium-carousel/responsive.css') }}?v={{ time() }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/final_short_form.png') }}">
 </head>
 <body>
 
