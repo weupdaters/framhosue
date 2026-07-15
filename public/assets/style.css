@@ -1573,22 +1573,36 @@ header {
 }
 
 .modal-close-btn {
-    position: absolute;
-    top: -45px;
-    right: 0;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 36px;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(8, 10, 14, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 28px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     line-height: 1;
-    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 10002;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-close-btn:hover {
-    color: var(--gold-accent);
-    transform: scale(1.1);
+    background: var(--primary-color);
+    color: #080a0e;
+    border-color: var(--primary-color);
+    transform: rotate(90deg) scale(1.05);
+    box-shadow: 0 15px 30px rgba(184, 255, 52, 0.35);
 }
+
 
 /* Service Card Header Row */
 .service-card-header {

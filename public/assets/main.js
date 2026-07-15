@@ -300,20 +300,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 videoPlayer.style.display = 'block';
                 if (iframeContainer) iframeContainer.style.display = 'block';
                 modal.classList.add('active');
+                videoPlayer.play().catch(e => console.log("Native video autoplay blocked:", e));
             } else if (videoId) {
                 if (videoId.startsWith('instagram:')) {
                     const igId = videoId.replace('instagram:', '');
                     iframe.src = `https://www.instagram.com/reel/${igId}/embed`;
                     if (modalContent) modalContent.classList.add('modal-vertical');
                     if (iframeContainer) iframeContainer.classList.add('modal-vertical');
+                    iframe.style.display = 'block';
+                    if (iframeContainer) iframeContainer.style.display = 'block';
+                    modal.classList.add('active');
                 } else if (videoId.length > 20) {
-                    iframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                    // Stream Google Drive natively inside custom HTML5 video player instead of heavy preview iframe
+                    videoPlayer.src = `https://drive.google.com/uc?id=${videoId}&export=download`;
+                    videoPlayer.style.display = 'block';
+                    if (iframeContainer) iframeContainer.style.display = 'block';
+                    modal.classList.add('active');
+                    videoPlayer.play().catch(e => console.log("Drive video autoplay blocked:", e));
                 } else {
                     iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    iframe.style.display = 'block';
+                    if (iframeContainer) iframeContainer.style.display = 'block';
+                    modal.classList.add('active');
                 }
-                iframe.style.display = 'block';
-                if (iframeContainer) iframeContainer.style.display = 'block';
-                modal.classList.add('active');
             } else {
                 // Image/Graphic item!
                 const imgEl = card.querySelector('img');
