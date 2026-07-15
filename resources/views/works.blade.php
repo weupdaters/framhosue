@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Portfolio | Fame House</title>
+    <!-- Import style.css from public/assets -->
+    <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ time() }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+</head>
+<body class="works-archive-body">
+
+    <!-- Minimal Header Nav -->
+    <nav class="works-header-nav">
+        <div class="works-nav-container">
+            <a href="{{ route('home') }}" class="back-home-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Back to Home</span>
+            </a>
+            <a href="{{ route('home') }}" class="logo-link">
+                <div class="logo-wrapper">
+                    <img src="{{ asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 50px;">
+                    <div class="logo-expand-container">
+                        <img src="{{ asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 100px;">
+                    </div>
+                </div>
+            </a>
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                @auth
+                    <a href="{{ route('admin.dashboard') }}" class="btn-login-subtle" title="Admin Console Dashboard" style="color: var(--primary-color) !important; border-color: rgba(249, 199, 0, 0.4) !important; background: rgba(249, 199, 0, 0.05) !important;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    </a>
+                    <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0; display: inline;">
+                        @csrf
+                        <button type="submit" class="btn-login-subtle" title="Log Out" style="background: none; border: 1px solid rgba(255, 62, 108, 0.3); color: #ff3e6c !important; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px; width: 38px; padding: 0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        </button>
+                    </form>
+                @endauth
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <section class="works-archive-section">
+        <div class="works-title-block">
+            <span class="portfolio-tag">CREATIVE ARCHIVE</span>
+            <h1 class="works-archive-title">Our Complete Portfolio</h1>
+            <p class="works-archive-desc">
+                Browse through all our commercial campaigns, video edits, high-impact social reels, and premium graphic design templates.
+            </p>
+        </div>
+
+        <!-- Filter Tab Buttons -->
+        <div class="works-filter-nav">
+            <button class="works-tab-btn active" data-filter="all">All Works</button>
+            @foreach(\App\Models\Category::all() as $cat)
+                <button class="works-tab-btn" data-filter="{{ $cat->slug }}">{{ $cat->name }}</button>
+            @endforeach
+        </div>
+
+        <!-- Works Grid -->
+        <div class="works-archive-grid">
+            
+            @foreach($projects as $project)
+                <!-- Dynamic Archive Card -->
+                <div class="archive-card {{ ($project->video_id || $project->video_path) ? 'video-card' : '' }} {{ $project->is_vertical_reel ? 'card-vertical-reel' : '' }}" data-category="{{ $project->category }}" {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!} {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}>
+                    <div class="archive-card-img-wrapper">
+                        <img src="{{ asset('images/' . $project->image_path) }}" alt="{{ $project->title }}">
+                        @if($project->video_id || $project->video_path)
+                            <div class="archive-play-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="archive-card-details">
+                        <span class="archive-card-category">
+                            {{ $project->categoryDetails->name ?? ucfirst($project->category) }}
+                        </span>
+                        <h3 class="archive-card-title">{{ $project->title }}</h3>
+                    </div>
+                </div>
+            @endforeach
+
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="video-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+            <div class="iframe-container" id="modal-iframe-wrapper">
+                <iframe id="modal-video-iframe" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen style="display: none;"></iframe>
+                <video id="modal-video-player" controls autoplay style="display: none; width: 100%; height: auto; border-radius: 12px; max-height: 80vh; background: #000;"></video>
+            </div>
+            <img id="modal-image-player" src="" style="display: none; width: 100%; height: auto; border-radius: 12px; max-height: 80vh; object-fit: contain; background: #000; margin: 0 auto;">
+        </div>
+    </div>
+
+    <!-- Script assets for works filtering and playing -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Filter Tabs
+            const filterButtons = document.querySelectorAll('.works-tab-btn');
+            const archiveCards = document.querySelectorAll('.archive-card');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const category = btn.getAttribute('data-filter');
+
+                    archiveCards.forEach(card => {
+                        const cardCat = card.getAttribute('data-category');
+                        card.classList.remove('show', 'hide');
+
+                        if (category === 'all' || cardCat === category) {
+                            card.classList.add('show');
+                        } else {
+                            card.classList.add('hide');
+                        }
+                    });
+                });
+            });
+
+            // Video Playback Modal
+            const videoModal = document.getElementById('video-modal');
+            const modalIframe = document.getElementById('modal-video-iframe');
+            const modalVideoPlayer = document.getElementById('modal-video-player');
+            const modalClose = document.getElementById('modal-close-btn');
+
+            // Modal Playback (Videos & Images)
+            const clickCards = document.querySelectorAll('.archive-card');
+
+            clickCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const videoId = card.getAttribute('data-video-id');
+                    const videoPath = card.getAttribute('data-video-path');
+                    
+                    const modalContent = videoModal.querySelector('.modal-content');
+                    const iframeContainer = videoModal.querySelector('.iframe-container');
+                    const imagePlayer = videoModal.querySelector('#modal-image-player');
+                    
+                    if (modalContent) modalContent.classList.remove('modal-vertical');
+                    if (iframeContainer) iframeContainer.classList.remove('modal-vertical');
+
+                    // Hide everything by default
+                    modalIframe.style.display = 'none';
+                    modalVideoPlayer.style.display = 'none';
+                    if (imagePlayer) imagePlayer.style.display = 'none';
+
+                    // Show native cursor inside modal
+                    document.body.classList.add('modal-active');
+
+                    if (videoPath) {
+                        modalVideoPlayer.src = `{{ asset('videos') }}/${videoPath}`;
+                        modalVideoPlayer.style.display = 'block';
+                        if (iframeContainer) iframeContainer.style.display = 'block';
+                        videoModal.classList.add('active');
+                    } else if (videoId) {
+                        if (videoId.startsWith('instagram:')) {
+                            const igId = videoId.replace('instagram:', '');
+                            modalIframe.src = `https://www.instagram.com/reel/${igId}/embed`;
+                            if (modalContent) modalContent.classList.add('modal-vertical');
+                            if (iframeContainer) iframeContainer.classList.add('modal-vertical');
+                        } else if (videoId.length > 20) {
+                            modalIframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                        } else {
+                            modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                        }
+                        modalIframe.style.display = 'block';
+                        if (iframeContainer) iframeContainer.style.display = 'block';
+                        videoModal.classList.add('active');
+                    } else {
+                        // Image/Graphic item!
+                        const imgEl = card.querySelector('img');
+                        if (imgEl && imagePlayer) {
+                            imagePlayer.src = imgEl.src;
+                            imagePlayer.style.display = 'block';
+                            if (iframeContainer) iframeContainer.style.display = 'none';
+                            videoModal.classList.add('active');
+                        }
+                    }
+                });
+            });
+
+            const closeModal = () => {
+                videoModal.classList.remove('active');
+                modalIframe.src = '';
+                modalVideoPlayer.src = '';
+                const imagePlayer = videoModal.querySelector('#modal-image-player');
+                if (imagePlayer) imagePlayer.src = '';
+                
+                modalVideoPlayer.style.display = 'none';
+                modalIframe.style.display = 'none';
+                if (imagePlayer) imagePlayer.style.display = 'none';
+                
+                document.body.classList.remove('modal-active'); // Restore custom cursor
+                try {
+                    modalVideoPlayer.pause();
+                } catch(e) {}
+            };
+
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+
+            if (videoModal) {
+                videoModal.addEventListener('click', (e) => {
+                    if (e.target === videoModal) {
+                        closeModal();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
