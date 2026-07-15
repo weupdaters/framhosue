@@ -45,11 +45,13 @@ body {
 
 /* Header & Navbar */
 header {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     z-index: 1000;
-    background: #080a0e;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent;
+    border-bottom: none;
 }
 
 .top-status-badge {
@@ -1738,7 +1740,7 @@ header {
     width: 100%;
     padding: 0.8rem;
     border-radius: 30px;
-    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+    background: linear-gradient(135deg, #e8ffb3 0%, #b8ff34 45%, #8bc71e 100%);
     border: 1px solid var(--primary-color);
     color: #080a0e;
     font-family: 'Outfit', sans-serif;
@@ -3969,7 +3971,7 @@ header {
 }
 
 .portfolio-tab-btn.active, .works-tab-btn.active {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #e0b200 100%) !important;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #8bc71e 100%) !important;
     color: #080a0e !important;
     border-color: var(--primary-color) !important;
     box-shadow: 0 10px 24px rgba(184, 255, 52, 0.45),
