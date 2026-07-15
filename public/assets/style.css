@@ -369,22 +369,24 @@ header {
     background: var(--primary-color);
     padding: 0.5rem 0.5rem 0.5rem 2rem;
     border-radius: 50px;
-    color: #080a0e;
+    color: #080a0e !important;
     text-decoration: none;
     font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 1px;
     box-shadow: 0 10px 25px rgba(184, 255, 52, 0.25);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-.hero-btn-primary:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(184, 255, 52, 0.4);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .hero-btn-primary .btn-text {
     margin-right: 1.5rem;
+    color: #080a0e !important;
+}
+
+.hero-btn-primary:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(184, 255, 52, 0.45), 0 0 0 4px rgba(184, 255, 52, 0.15);
+    color: #080a0e !important;
 }
 
 .hero-btn-primary .btn-icon {
@@ -396,30 +398,32 @@ header {
     background: #080a0e;
     color: var(--primary-color);
     border-radius: 50%;
-    transition: transform 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-btn-primary:hover .btn-icon {
-    transform: translateX(3px);
+    transform: translateX(4px) scale(1.05);
 }
 
 .hero-btn-secondary {
     font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 1.5px;
-    color: #ffffff;
+    color: #ffffff !important;
     text-decoration: none;
     padding: 0.8rem 2rem;
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     background: rgba(255, 255, 255, 0.02);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .hero-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #080a0e !important;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(184, 255, 52, 0.35);
 }
 
 /* Scroll Down Indicator Mouse */
