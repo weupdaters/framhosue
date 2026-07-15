@@ -386,4 +386,33 @@ class AdminController extends Controller
         $plan->delete();
         return redirect()->route('admin.plans.index')->with('success', 'Plan deleted successfully!');
     }
+    // Edit website settings
+    public function settingsEdit()
+    {
+        $settings = \App\Models\Setting::pluck('value', 'key')->all();
+        return view('admin.settings', compact('settings'));
+    }
+
+    // Update website settings
+    public function settingsUpdate(Request $request)
+    {
+        $data = $request->validate([
+            'meta_title' => 'required|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
+            'contact_email' => 'required|email|max:255',
+            'contact_phone' => 'required|string|max:50',
+            'contact_address' => 'required|string|max:255',
+            'instagram_url' => 'nullable|url|max:255',
+            'youtube_url' => 'nullable|url|max:255',
+            'linkedin_url' => 'nullable|url|max:255',
+            'facebook_url' => 'nullable|url|max:255',
+        ]);
+
+        foreach ($data as $key => $value) {
+            \App\Models\Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully!');
+    }
 }

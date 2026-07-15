@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Portfolio | Fame House</title>
+    <title>{{ $site_settings['meta_title'] ?? 'Explore Portfolio | Fame House' }}</title>
+    <meta name="description" content="{{ $site_settings['meta_description'] ?? '' }}">
+    <meta name="keywords" content="{{ $site_settings['meta_keywords'] ?? '' }}">
     <!-- Import style.css from public/assets -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ time() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
@@ -26,17 +28,6 @@
                 </div>
             </a>
             <div style="display: flex; align-items: center; gap: 0.8rem;">
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="btn-login-subtle" title="Admin Console Dashboard" style="color: var(--primary-color) !important; border-color: rgba(249, 199, 0, 0.4) !important; background: rgba(249, 199, 0, 0.05) !important;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-                    </a>
-                    <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0; display: inline;">
-                        @csrf
-                        <button type="submit" class="btn-login-subtle" title="Log Out" style="background: none; border: 1px solid rgba(255, 62, 108, 0.3); color: #ff3e6c !important; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px; width: 38px; padding: 0;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                        </button>
-                    </form>
-                @endauth
             </div>
         </div>
     </nav>

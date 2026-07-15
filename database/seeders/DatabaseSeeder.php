@@ -19,10 +19,15 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'admin@famehouse.com',
-            'password' => bcrypt('famehouseadmin123'),
+            'email' => 'weupdaters@gmail.com',
+            'password' => bcrypt('weupdaters@123'),
         ]);
 
-        $this->call(ProjectSeeder::class);
+        $this->call([
+            ProjectSeeder::class,
+            PlanSeeder::class,
+            ServiceSeeder::class,
+            SettingSeeder::class,
+        ]);
     }
 }

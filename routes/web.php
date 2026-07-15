@@ -10,7 +10,8 @@ Route::get('/', function () {
     // Retrieve all projects so that the frontend category filter has access to all content
     $featuredProjects = Project::orderBy('created_at', 'desc')->get();
     $plans = Plan::orderBy('order')->get();
-    return view('welcome', compact('featuredProjects', 'plans'));
+    $services = \App\Models\Service::orderBy('order')->get();
+    return view('welcome', compact('featuredProjects', 'plans', 'services'));
 })->name('home');
 
 // Works Gallery Page
@@ -55,6 +56,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/plans/{plan}/edit', [AdminController::class, 'plansEdit'])->name('admin.plans.edit');
         Route::post('/plans/{plan}/update', [AdminController::class, 'plansUpdate'])->name('admin.plans.update');
         Route::post('/plans/{plan}/delete', [AdminController::class, 'plansDelete'])->name('admin.plans.delete');
+        
+        // Settings CRUD
+        Route::get('/settings', [AdminController::class, 'settingsEdit'])->name('admin.settings.index');
+        Route::post('/settings', [AdminController::class, 'settingsUpdate'])->name('admin.settings.update');
         
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     });

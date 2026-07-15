@@ -19,6 +19,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        try {
+            view()->composer('*', function ($view) {
+                if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+                    $settings = \App\Models\Setting::pluck('value', 'key')->all();
+                    $view->with('site_settings', $settings);
+                }
+            });
+        } catch (\Exception $e) {
+            // Avoid failing during migrations or CLI commands
+        }
     }
 }

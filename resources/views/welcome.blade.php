@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibhu | Portfolio</title>
+    <title>{{ $site_settings['meta_title'] ?? 'Vibhu | Portfolio' }}</title>
+    <meta name="description" content="{{ $site_settings['meta_description'] ?? '' }}">
+    <meta name="keywords" content="{{ $site_settings['meta_keywords'] ?? '' }}">
     <!-- Import style.css from public/assets -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ time() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
@@ -30,18 +32,7 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <a href="{{ route('works') }}" class="btn-contact">Explore Portfolio</a>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="btn-login-subtle" title="Admin Console Dashboard" style="color: var(--primary-color) !important; border-color: rgba(249, 199, 0, 0.4) !important; background: rgba(249, 199, 0, 0.05) !important;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
-                    </a>
-                    <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0; display: inline;">
-                        @csrf
-                        <button type="submit" class="btn-login-subtle" title="Log Out" style="background: none; border: 1px solid rgba(255, 62, 108, 0.3); color: #ff3e6c !important; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 38px; width: 38px; padding: 0;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                        </button>
-                    </form>
-                @endauth
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="btn-contact">call now</a>
             </div>
         </div>
     </header>
@@ -96,16 +87,16 @@
                 <div class="about-contact-social-bar reveal reveal-slide-left" style="--delay: 4;">
                     <div class="bar-email">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <span>famehousemedia@gmail.com</span>
+                        <span>{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</span>
                     </div>
                     <div class="bar-divider"></div>
                     <div class="bar-socials">
                         <span class="socials-title">FOLLOW US</span>
                         <div class="social-icons-wrapper">
-                            <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                            <a href="https://www.instagram.com/famehousemedia/" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                            <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-                            <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                            <a href="{{ $site_settings['youtube_url'] ?? '#' }}" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                            <a href="{{ $site_settings['instagram_url'] ?? 'https://www.instagram.com/famehousemedia/' }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                            <a href="{{ $site_settings['linkedin_url'] ?? '#' }}" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                            <a href="{{ $site_settings['facebook_url'] ?? '#' }}" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
                         </div>
                     </div>
                 </div>
@@ -261,128 +252,42 @@
             
             <!-- Grid matching reference mockup layout -->
             <div class="services-grid-mockup">
-                <!-- Card 1: Commercial & Promo Edits -->
-                <div class="service-card-mockup reveal reveal-slide-up" style="--delay: 0;">
-                    <div class="card-left-content">
-                        <div>
-                            <span class="service-badge-mockup">01 - PROMOS</span>
-                            <h3>Commercial & Promo Edits</h3>
-                            <p>Premium commercial videos, product ads, and promo edits that drive engagement and sales.</p>
+                @foreach($services as $index => $service)
+                    <!-- Dynamic Service Card: {{ $service->title }} -->
+                    <div class="service-card-mockup reveal reveal-slide-up" style="--delay: {{ $index }};">
+                        <div class="card-left-content">
+                            <div>
+                                <span class="service-badge-mockup">{{ $service->service_code }}</span>
+                                <h3>{{ $service->title }}</h3>
+                                <p>{{ $service->description }}</p>
+                            </div>
+                            @if($service->video_id)
+                                <button class="btn-service-mockup video-card" data-video-id="{{ $service->video_id }}">
+                                    <span>Watch video</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                            @else
+                                <a href="{{ route('works') }}" class="btn-service-mockup">
+                                    <span>View Gallery</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </a>
+                            @endif
                         </div>
-                        <button class="btn-service-mockup video-card" data-video-id="18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9">
-                            <span>Watch video</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </button>
+                        
+                        @if($service->video_id)
+                            <div class="card-right-image video-card" data-video-id="{{ $service->video_id }}">
+                                <img src="{{ asset('images/' . $service->image_path) }}" alt="{{ $service->title }}">
+                                <div class="card-img-overlay-play">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </div>
+                            </div>
+                        @else
+                            <div class="card-right-image">
+                                <img src="{{ asset('images/' . $service->image_path) }}" alt="{{ $service->title }}">
+                            </div>
+                        @endif
                     </div>
-                    <div class="card-right-image video-card" data-video-id="18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9">
-                        <img src="{{ asset('images/project_10.png') }}" alt="Commercial Edits">
-                        <div class="card-img-overlay-play">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Reels & Social Media -->
-                <div class="service-card-mockup reveal reveal-slide-up" style="--delay: 1;">
-                    <div class="card-left-content">
-                        <div>
-                            <span class="service-badge-mockup">02 - REELS</span>
-                            <h3>Reels & Social Media</h3>
-                            <p>High-impact, viral vertical reels and shorts optimized for maximum reach and audience growth.</p>
-                        </div>
-                        <button class="btn-service-mockup video-card" data-video-id="10LCP3I_o48B4a5FQAEPSL1WCdTsyQmhs">
-                            <span>Watch video</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </button>
-                    </div>
-                    <div class="card-right-image video-card" data-video-id="10LCP3I_o48B4a5FQAEPSL1WCdTsyQmhs">
-                        <img src="{{ asset('images/project_11.png') }}" alt="Social Media Reels">
-                        <div class="card-img-overlay-play">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Cinematic Video Editing -->
-                <div class="service-card-mockup reveal reveal-slide-up" style="--delay: 2;">
-                    <div class="card-left-content">
-                        <div>
-                            <span class="service-badge-mockup">03 - CINEMATIC</span>
-                            <h3>Cinematic Video Editing</h3>
-                            <p>Luxury cinematic styling, advanced color grading, sound design, and storytelling cuts.</p>
-                        </div>
-                        <button class="btn-service-mockup video-card" data-video-id="1VamPZ_no_2ejRjfSzJdlb1PQJnlXNWmx">
-                            <span>Watch video</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </button>
-                    </div>
-                    <div class="card-right-image video-card" data-video-id="1VamPZ_no_2ejRjfSzJdlb1PQJnlXNWmx">
-                        <img src="{{ asset('images/project_12.png') }}" alt="Cinematic Editing">
-                        <div class="card-img-overlay-play">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4: YouTube Video Production -->
-                <div class="service-card-mockup reveal reveal-slide-up" style="--delay: 3;">
-                    <div class="card-left-content">
-                        <div>
-                            <span class="service-badge-mockup">04 - YOUTUBE</span>
-                            <h3>YouTube Production</h3>
-                            <p>Professional long-form video production featuring clean storytelling and motion graphics.</p>
-                        </div>
-                        <button class="btn-service-mockup video-card" data-video-id="10LCP3I_o48B4a5FQAEPSL1WCdTsyQmhs">
-                            <span>Watch video</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </button>
-                    </div>
-                    <div class="card-right-image video-card" data-video-id="10LCP3I_o48B4a5FQAEPSL1WCdTsyQmhs">
-                        <img src="{{ asset('images/project_11.png') }}" alt="YouTube Production">
-                        <div class="card-img-overlay-play">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 5: Brand Content Strategy -->
-                <div class="service-card-mockup reveal reveal-slide-up" style="--delay: 4;">
-                    <div class="card-left-content">
-                        <div>
-                            <span class="service-badge-mockup">05 - BRANDING</span>
-                            <h3>Brand Content Strategy</h3>
-                            <p>Visual branding and video strategy designed to build strong, memorable brand identities.</p>
-                        </div>
-                        <button class="btn-service-mockup video-card" data-video-id="18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9">
-                            <span>Watch video</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </button>
-                    </div>
-                    <div class="card-right-image video-card" data-video-id="18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9">
-                        <img src="{{ asset('images/final_short_form.png') }}" alt="Brand Strategy">
-                        <div class="card-img-overlay-play">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6: Poster & Promo Graphics -->
-                <div class="service-card-mockup reveal reveal-slide-up" style="--delay: 5;">
-                    <div class="card-left-content">
-                        <div>
-                            <span class="service-badge-mockup">06 - DESIGNS</span>
-                            <h3>Poster & Promo Graphics</h3>
-                            <p>High-end digital flyers, marketing posters, and promotional social media assets.</p>
-                        </div>
-                        <a href="{{ route('works') }}" class="btn-service-mockup">
-                            <span>View Gallery</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
-                    </div>
-                    <div class="card-right-image">
-                        <img src="{{ asset('images/keventers_eid.png') }}" alt="Promo Graphics">
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -542,7 +447,7 @@
                             </div>
                             <div class="contact-detail-text">
                                 <span>EMAIL US</span>
-                                <a href="mailto:famehousemedia@gmail.com">famehousemedia@gmail.com</a>
+                                <a href="mailto:{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}">{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</a>
                             </div>
                         </div>
                         
@@ -553,7 +458,7 @@
                             </div>
                             <div class="contact-detail-text">
                                 <span>CALL US</span>
-                                <a href="tel:+919876543210">+91 98765 43210</a>
+                                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</a>
                             </div>
                         </div>
                         
@@ -564,7 +469,7 @@
                             </div>
                             <div class="contact-detail-text">
                                 <span>STUDIO LOCATION</span>
-                                <p>New Delhi, India</p>
+                                <p>{{ $site_settings['contact_address'] ?? 'New Delhi, India' }}</p>
                             </div>
                         </div>
                     </div>
@@ -634,17 +539,17 @@
                     We edit, design, and direct high-impact cinematic stories that capture attention and build legendary digital presence.
                 </p>
                 <div class="footer-social-icons">
-                    <a href="#" aria-label="YouTube" class="social-icon-btn">
+                    <a href="{{ $site_settings['youtube_url'] ?? '#' }}" aria-label="YouTube" class="social-icon-btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
                     </a>
-                    <a href="https://www.instagram.com/famehousemedia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon-btn">
+                    <a href="{{ $site_settings['instagram_url'] ?? 'https://www.instagram.com/famehousemedia/' }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon-btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
-                    <a href="#" aria-label="LinkedIn" class="social-icon-btn">
+                    <a href="{{ $site_settings['linkedin_url'] ?? '#' }}" aria-label="LinkedIn" class="social-icon-btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                     </a>
-                    <a href="#" aria-label="Twitter" class="social-icon-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    <a href="{{ $site_settings['facebook_url'] ?? '#' }}" aria-label="Facebook" class="social-icon-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                     </a>
                 </div>
             </div>
@@ -679,11 +584,11 @@
                 <div class="contact-details-list">
                     <div class="contact-detail-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <a href="mailto:famehousemedia@gmail.com">famehousemedia@gmail.com</a>
+                        <a href="mailto:{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}">{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</a>
                     </div>
                     <div class="contact-detail-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>New Delhi, India</span>
+                        <span>{{ $site_settings['contact_address'] ?? 'New Delhi, India' }}</span>
                     </div>
                 </div>
                 <div class="newsletter-wrapper">
