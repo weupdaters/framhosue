@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $site_settings['meta_title'] ?? 'Vibhu | Portfolio' }}</title>
+    <title>{{ $site_settings['meta_title'] ?? 'Fame House | Portfolio' }}</title>
     <meta name="description" content="{{ $site_settings['meta_description'] ?? '' }}">
     <meta name="keywords" content="{{ $site_settings['meta_keywords'] ?? '' }}">
     <!-- Import style.css from public/assets -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('assets/premium-carousel/carousel.css') }}?v={{ time() }}">
+    <link rel="stylesheet" href="{{ asset('assets/premium-carousel/responsive.css') }}?v={{ time() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 </head>
 <body>
@@ -32,7 +34,10 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="btn-contact">call now</a>
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="btn-contact">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="phone-icon-header" style="margin-right: 6px; vertical-align: middle;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span class="contact-btn-text">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</span>
+                </a>
             </div>
         </div>
     </header>
@@ -158,6 +163,10 @@
                             A curated collection of design concepts, branding campaigns, and visual storytelling pieces crafted with precision.
                         </p>
                         <div class="slider-controls-v5">
+                            <a href="{{ route('works') }}" class="view-all-link-mockup" title="View All Works">
+                                <span class="view-all-dot"></span>
+                                <span class="view-all-text">VIEW ALL</span>
+                            </a>
                             <button class="control-btn-v5 prev-btn" id="portfolio-prev">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             </button>
@@ -215,6 +224,71 @@
             </div>
             
 
+        </div>
+    </section>
+
+    <!-- 3D Curved Carousel Section -->
+    <section id="premium-carousel" class="premium-carousel-section">
+        <!-- Background Premium Effects -->
+        <div class="premium-bg-effects">
+            <div class="premium-radial-glow"></div>
+            <div class="premium-noise-overlay"></div>
+            <div class="premium-floating-particles"></div>
+        </div>
+
+        <div class="premium-carousel-wrapper">
+            <!-- Header Block -->
+            <div class="premium-header-block">
+                <span class="premium-subtitle">BEHIND THE DESIGNS</span>
+                <h2 class="premium-title">Curious What Else <span>We've Created?</span></h2>
+                <p class="premium-section-desc">Explore more brand identities, packaging, and digital design work in our creative showcase.</p>
+                <a href="#portfolio" class="premium-cta-btn">
+                    <span>SEE MORE PROJECTS</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+            <!-- Stage & Track -->
+            <div class="premium-carousel-stage">
+                <div class="premium-carousel-track">
+                    <!-- Project Cards -->
+                    @foreach($featuredProjects as $index => $project)
+                        <div class="premium-carousel-card {{ ($project->video_id || $project->video_path) ? 'video-card' : '' }}" 
+                             data-index="{{ $index }}"
+                             data-project-id="{{ $project->id }}"
+                             data-project-title="{{ e($project->title) }}"
+                             data-category="{{ $project->category }}"
+                             {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!}
+                             {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}>
+                            <div class="premium-card-inner">
+                                <div class="premium-card-img-container">
+                                    <img src="{{ asset('images/' . $project->image_path) }}" alt="{{ $project->title }}" loading="lazy">
+                                    
+                                    <!-- Premium reflection inside overlay -->
+                                    <div class="premium-card-overlay">
+                                        <div class="premium-card-meta">
+                                            <span class="premium-card-tag">{{ $project->categoryDetails->name ?? ucfirst(str_replace('-', ' ', $project->category)) }}</span>
+                                            <h3 class="premium-card-title">{{ $project->title }}</h3>
+                                            <p class="premium-card-desc">
+                                                {{ Str::limit($project->description, 85, '...') }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Active Card Hover Indicator -->
+                                    @if($project->video_id || $project->video_path)
+                                        <div class="premium-play-indicator" aria-label="Play Reel">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Autoplay-only Carousel -->
         </div>
     </section>
 
@@ -422,65 +496,142 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
+
+        <!-- Decorative animated background orbs -->
+        <div class="contact-orb contact-orb-1"></div>
+        <div class="contact-orb contact-orb-2"></div>
+
         <div class="contact-container">
-            <div class="contact-layout">
-                <!-- Left Column: Info & Text -->
-                <div class="contact-info-col">
-                    <div class="contact-tag-row reveal reveal-slide-left">
-                        <span class="contact-tag">GET IN TOUCH</span>
-                        <span class="contact-tag-line"></span>
+
+            <!-- Top Header Row -->
+            <div class="contact-header-row reveal reveal-zoom-out">
+                <div class="contact-tag-row">
+                    <span class="contact-tag">GET IN TOUCH</span>
+                    <span class="contact-tag-line"></span>
+                </div>
+                <h2 class="contact-title">Let's Make <span>Something Great.</span></h2>
+                <p class="contact-desc">Have an upcoming project, creative campaign, or business query? We'd love to hear it — and turn your vision into cinema-quality reality.</p>
+            </div>
+
+            <!-- 3 Quick-Info Cards Row -->
+            <div class="contact-quick-cards reveal reveal-slide-up" style="--delay: 0.5;">
+
+                <!-- Card: Call -->
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="contact-quick-card contact-quick-card--call">
+                    <div class="cqc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     </div>
-                    <h2 class="contact-title reveal reveal-slide-left" style="--delay: 1;">
-                        Let's Make <br>
-                        <span>Something Great.</span>
-                    </h2>
-                    <div class="contact-brush-line"></div>
-                    <p class="contact-desc reveal reveal-slide-left" style="--delay: 2;">
-                        Have an upcoming project, creative campaign, or business query? Drop a message, and let's bring your ideas to life with state-of-the-art visuals.
-                    </p>
-                    
-                    <div class="contact-details-list reveal reveal-slide-left" style="--delay: 3;">
-                        <!-- Email -->
-                        <div class="contact-detail-item">
-                            <div class="contact-detail-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                            </div>
-                            <div class="contact-detail-text">
-                                <span>EMAIL US</span>
-                                <a href="mailto:{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}">{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</a>
-                            </div>
-                        </div>
-                        
-                        <!-- Phone -->
-                        <div class="contact-detail-item">
-                            <div class="contact-detail-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            </div>
-                            <div class="contact-detail-text">
-                                <span>CALL US</span>
-                                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</a>
-                            </div>
-                        </div>
-                        
-                        <!-- Location -->
-                        <div class="contact-detail-item">
-                            <div class="contact-detail-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            </div>
-                            <div class="contact-detail-text">
-                                <span>STUDIO LOCATION</span>
-                                <p>{{ $site_settings['contact_address'] ?? 'New Delhi, India' }}</p>
-                            </div>
-                        </div>
+                    <div class="cqc-content">
+                        <span class="cqc-label">CALL DIRECTLY</span>
+                        <strong class="cqc-value">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</strong>
+                        <span class="cqc-sub">Mon–Sat, 10 AM – 7 PM IST</span>
+                    </div>
+                    <div class="cqc-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                    <span class="cqc-live-dot"></span>
+                </a>
+
+                <!-- Card: Email -->
+                <a href="mailto:{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}" class="contact-quick-card">
+                    <div class="cqc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="cqc-content">
+                        <span class="cqc-label">EMAIL US</span>
+                        <strong class="cqc-value">{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</strong>
+                        <span class="cqc-sub">Response within 2 hours</span>
+                    </div>
+                    <div class="cqc-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+
+                <!-- Card: Location -->
+                <div class="contact-quick-card">
+                    <div class="cqc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="cqc-content">
+                        <span class="cqc-label">STUDIO LOCATION</span>
+                        <strong class="cqc-value">{{ $site_settings['contact_address'] ?? 'New Delhi, India' }}</strong>
+                        <span class="cqc-sub">Available for on-site shoots</span>
+                    </div>
+                    <div class="cqc-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                 </div>
-                
+
+            </div>
+
+            <!-- Main Layout: Left Info + Right Form -->
+            <div class="contact-layout">
+
+                <!-- Left Column -->
+                <div class="contact-info-col reveal reveal-slide-left" style="--delay: 0.8;">
+
+                    <!-- Why work with us -->
+                    <div class="contact-why-block">
+                        <h3 class="contact-why-title">Why Choose Us?</h3>
+                        <ul class="contact-why-list">
+                            <li>
+                                <span class="why-icon">✦</span>
+                                <div>
+                                    <strong>Cinematic Quality</strong>
+                                    <p>Every frame crafted with studio-grade equipment and post-production.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="why-icon">✦</span>
+                                <div>
+                                    <strong>On-Time Delivery</strong>
+                                    <p>We respect your timelines — always delivering ahead of deadlines.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="why-icon">✦</span>
+                                <div>
+                                    <strong>Dedicated Team</strong>
+                                    <p>A single point of contact who manages your project end-to-end.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="contact-social-block">
+                        <span class="contact-social-label">FOLLOW OUR WORK</span>
+                        <div class="contact-social-links">
+                            <a href="#" class="contact-social-btn" title="Instagram" target="_blank">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                <span>Instagram</span>
+                            </a>
+                            <a href="#" class="contact-social-btn" title="YouTube" target="_blank">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42A2.78 2.78 0 0 0 20.59 4.46C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon></svg>
+                                <span>YouTube</span>
+                            </a>
+                            <a href="#" class="contact-social-btn" title="LinkedIn" target="_blank">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
                 <!-- Right Column: Glass Form -->
                 <div class="contact-form-col">
                     <form action="{{ route('contact.submit') }}" method="POST" class="contact-glass-form reveal reveal-zoom-in" id="contact-form" style="--delay: 1;">
                         @csrf
+
+                        <!-- Form Header -->
+                        <div class="contact-form-header">
+                            <h3>Send Us a Message</h3>
+                            <p>Fill in the details and we'll get back to you within hours.</p>
+                        </div>
+
                         <div id="contact-form-alert" style="display: none; margin-bottom: 1.5rem; padding: 1.2rem; border-radius: 16px; font-size: 0.9rem; line-height: 1.4; border: 1px solid rgba(249, 199, 0, 0.25); background: rgba(249, 199, 0, 0.08); color: var(--primary-color); box-shadow: 0 10px 20px rgba(249, 199, 0, 0.05);"></div>
-                        
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="form-name">Your Name</label>
@@ -491,7 +642,24 @@
                                 <input type="email" id="form-email" name="email" placeholder="john@example.com" required>
                             </div>
                         </div>
-                        
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-phone">Phone Number</label>
+                                <input type="tel" id="form-phone" name="phone" placeholder="+91 98765 43210">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-budget">Estimated Budget</label>
+                                <select id="form-budget" name="budget">
+                                    <option value="" disabled selected>Select budget range...</option>
+                                    <option value="under-10k">Under ₹10,000</option>
+                                    <option value="10k-30k">₹10,000 – ₹30,000</option>
+                                    <option value="30k-75k">₹30,000 – ₹75,000</option>
+                                    <option value="75k-plus">₹75,000+</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="form-subject">Interested In</label>
                             <select id="form-subject" name="subject" required>
@@ -502,18 +670,26 @@
                                 <option value="custom">Custom Content Solution</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="form-message">Message</label>
-                            <textarea id="form-message" name="message" rows="5" placeholder="Tell us about your project or queries..." required></textarea>
+                            <label for="form-message">Your Message</label>
+                            <textarea id="form-message" name="message" rows="5" placeholder="Tell us about your project vision, deliverables, or timeline..." required></textarea>
                         </div>
-                        
-                        <button type="submit" class="contact-submit-btn" id="contact-submit-btn">
-                            <span>Send Message</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </button>
+
+                        <div class="contact-form-actions">
+                            <button type="submit" class="contact-submit-btn" id="contact-submit-btn">
+                                <span>Send Message</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                            <div class="form-guarantee-badge">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <span>100% private & secure. No spam, ever.</span>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
+
             </div>
         </div>
     </section>
@@ -627,6 +803,13 @@
         </div>
     </div>
 
+    <!-- GSAP & Premium 3D Carousel JS Split Files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="{{ asset('assets/premium-carousel/animation.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/premium-carousel/drag.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/premium-carousel/touch.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/premium-carousel/autoplay.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/premium-carousel/carousel.js') }}?v={{ time() }}"></script>
     <!-- Main JS Asset -->
     <script src="{{ asset('assets/main.js') }}?v={{ time() }}"></script>
 </body>

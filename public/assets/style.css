@@ -46,14 +46,30 @@ body {
 /* Header & Navbar */
 header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
     z-index: 1000;
-    background: rgba(11, 12, 16, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
-    transition: all var(--transition-speed) ease;
+    background: rgba(8, 10, 14, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 
+                inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@media (max-width: 968px) {
+    header {
+        top: 0.8rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 94%;
+        border-radius: 30px;
+    }
 }
 
 .nav-container {
@@ -457,7 +473,7 @@ header {
 .services-section-v3 {
     position: relative;
     background-color: #000000;
-    padding: 2rem 0;
+    padding: 8rem 0;
     width: 100%;
     overflow: hidden;
 }
@@ -761,7 +777,7 @@ header {
 /* About Us Section styling */
 .about-section {
     background-color: #000000;
-    padding: 2rem 0;
+    padding: 8rem 0;
     width: 100%;
     position: relative;
 }
@@ -1399,7 +1415,7 @@ header {
    ========================================== */
 .pricing-section-v3 {
     position: relative;
-    padding: 2rem 0;
+    padding: 8rem 0;
     background-color: #08080a; /* Reverted to dark theme background */
     width: 100%;
     overflow: hidden;
@@ -1910,7 +1926,7 @@ header {
    ========================================== */
 .contact-section {
     position: relative;
-    padding: 2rem 0;
+    padding: 8rem 0;
     background-color: #000000;
     width: 100%;
     overflow: hidden;
@@ -2425,7 +2441,7 @@ body.cursor-video .custom-cursor-ring {
 .portfolio-section-v5 {
     position: relative;
     background-color: #080a0e;
-    padding: 2rem 0;
+    padding: 8rem 0;
     width: 100%;
     overflow: hidden;
 }
@@ -3364,7 +3380,7 @@ body.cursor-video .custom-cursor-ring {
 .works-archive-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 2rem 2rem 2rem;
+    padding: 6rem 2rem 4rem 2rem;
 }
 
 .works-title-block {
@@ -3754,4 +3770,719 @@ body.modal-active .custom-cursor-ring {
 
 .portfolio-slide-card.show {
     animation: zoomReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   RESPONSIVE SECTION SPACING OVERRIDES
+   ========================================================================== */
+@media (max-width: 968px) {
+    .about-section,
+    .portfolio-section-v5,
+    .services-section-v3,
+    .pricing-section-v3,
+    .contact-section {
+        padding: 5rem 0;
+    }
+    
+    .works-archive-section {
+        padding: 4rem 1.5rem 3rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-section,
+    .portfolio-section-v5,
+    .services-section-v3,
+    .pricing-section-v3,
+    .contact-section {
+        padding: 4rem 0;
+    }
+    
+    .works-archive-section {
+        padding: 3rem 1rem 2rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   3D HEADER REDESIGN & INTERACTIVE EFFECTS
+   ========================================================================== */
+header {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Floating 3D capsule header on scroll */
+header.header-scrolled {
+    top: 0.8rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 92% !important;
+    max-width: 1240px;
+    margin: 0 auto;
+    border-radius: 40px;
+    background: rgba(8, 10, 14, 0.94) !important;
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 
+                0 0 25px rgba(249, 199, 0, 0.04), 
+                inset 0 1px 2px rgba(255, 255, 255, 0.15) !important;
+}
+
+header.header-scrolled .nav-container {
+    padding: 0.5rem 2rem;
+}
+
+/* Logo 3D Perspective Rotation */
+.logo-wrapper {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.logo-link:hover .logo-wrapper {
+    transform: rotateY(-8deg) rotateX(4deg) translateZ(5px);
+}
+
+.nav-logo, .nav-logo-hover {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Navbar links with 3D Underbar animation */
+.nav-links a {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    box-shadow: 0 0 8px var(--primary-color);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.nav-links a:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* 3D Call Now Button Redesign */
+.btn-contact {
+    position: relative;
+    overflow: hidden;
+    background: transparent !important;
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    padding: 0.65rem 1.8rem;
+    border-radius: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 12px rgba(249, 199, 0, 0.1);
+    transform-style: preserve-3d;
+}
+
+.btn-contact:hover {
+    background: var(--primary-color) !important;
+    color: #080a0e !important;
+    transform: translateY(-3px) translateZ(10px);
+    box-shadow: 0 10px 25px rgba(249, 199, 0, 0.4), 
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments for scrolled header */
+@media (max-width: 768px) {
+    header.header-scrolled {
+        width: 94% !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        top: 0.8rem;
+    }
+}
+
+/* ==========================================================================
+   REDESIGNED PORTFOLIO VIEW ALL / FILTER BUTTONS
+   ========================================================================== */
+.portfolio-tab-btn, .works-tab-btn {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #b0c4de !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 1px !important;
+    font-weight: 700 !important;
+    border-radius: 50px !important;
+    padding: 0.75rem 1.6rem !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.portfolio-tab-btn:hover, .works-tab-btn:hover {
+    background: rgba(249, 199, 0, 0.08) !important;
+    border-color: rgba(249, 199, 0, 0.4) !important;
+    color: #ffffff !important;
+    transform: translateY(-3px) translateZ(5px);
+    box-shadow: 0 8px 20px rgba(249, 199, 0, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.portfolio-tab-btn.active, .works-tab-btn.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #e0b200 100%) !important;
+    color: #080a0e !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 10px 24px rgba(249, 199, 0, 0.45),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* ==========================================================================
+   MORPHING VIEW ALL OPTION BUTTON (SLIDER CONTROLS)
+   ========================================================================== */
+.view-all-link-mockup {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    background: rgba(249, 199, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 10px rgba(249, 199, 0, 0.1);
+    margin-right: 0.5rem;
+}
+
+.view-all-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.view-all-text {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.view-all-link-mockup:hover {
+    width: 142px;
+    border-radius: 30px;
+    background: rgba(249, 199, 0, 0.12);
+    box-shadow: 0 8px 24px rgba(249, 199, 0, 0.3);
+    gap: 0.6rem;
+    padding: 0 1.1rem;
+}
+
+.view-all-link-mockup:hover .view-all-dot {
+    transform: scale(1.3);
+    box-shadow: 0 0 12px var(--primary-color);
+}
+
+.view-all-link-mockup:hover .view-all-text {
+    max-width: 100px;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   SHOWREEL 2026 CARD 3D PERSPECTIVE PARALLAX
+   ========================================================================== */
+.about-showreel-container {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.about-showreel-container .about-showreel-cover {
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.about-showreel-container:hover .showreel-badge-top {
+    transform: translate3d(15px, 0, 45px);
+    background: rgba(8, 10, 14, 0.9);
+    border-color: rgba(249, 199, 0, 0.3);
+}
+
+.about-showreel-container:hover .showreel-play-btn {
+    transform: translate3d(0, 0, 60px) scale(1.08);
+    box-shadow: 0 20px 40px rgba(249, 199, 0, 0.4);
+}
+
+.about-showreel-container:hover .showreel-info-bar {
+    transform: translate3d(0, 0, 35px);
+    background: rgba(8, 10, 14, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.showreel-badge-top,
+.showreel-play-btn,
+.showreel-info-bar {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.4s ease, 
+                border-color 0.4s ease !important;
+}
+
+/* ==========================================================================
+   CALL NOW BUTTON & CONTACT INFO REDESIGN
+   ========================================================================== */
+.phone-icon-header {
+    transition: transform 0.4s ease;
+    flex-shrink: 0;
+}
+
+.btn-contact:hover .phone-icon-header {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Mobile responsive swap for Call Button */
+@media (max-width: 576px) {
+    .btn-contact {
+        padding: 0.6rem 1.2rem !important;
+    }
+    .btn-contact .contact-btn-text {
+        font-size: 0;
+        display: none;
+    }
+    .btn-contact::after {
+        content: 'CALL NOW';
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+    }
+}
+
+/* Contact Info Status Badges */
+.contact-status-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.contact-status-badge {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.7rem 1.2rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: max-content;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.contact-status-badge:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(249, 199, 0, 0.15);
+    transform: translateX(5px);
+}
+
+.contact-status-badge span {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: #a0aec0;
+    letter-spacing: 0.5px;
+}
+
+.contact-status-badge strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.badge-pulse-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #39ff14; /* Lime green active */
+    border-radius: 50%;
+    box-shadow: 0 0 10px #39ff14;
+    animation: activePulse 1.8s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes activePulse {
+    0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
+    70% { transform: scale(1.2); opacity: 0.7; box-shadow: 0 0 0 8px rgba(57, 255, 20, 0); }
+    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+}
+
+.badge-icon-clock {
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+/* Contact Form Guarantee Badge */
+.form-guarantee-badge {
+    margin-top: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.form-guarantee-badge svg {
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.form-guarantee-badge span {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   CONTACT SECTION FULL REDESIGN — PREMIUM
+   ========================================================================== */
+
+/* Animated background orbs */
+.contact-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(90px);
+    z-index: 0;
+}
+.contact-orb-1 {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(249, 199, 0, 0.07) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    animation: orbFloat1 12s ease-in-out infinite;
+}
+.contact-orb-2 {
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(249, 199, 0, 0.04) 0%, transparent 70%);
+    bottom: 50px;
+    left: -80px;
+    animation: orbFloat2 15s ease-in-out infinite;
+}
+@keyframes orbFloat1 {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(-30px, 20px); }
+    66% { transform: translate(20px, -30px); }
+}
+@keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(25px, -25px); }
+}
+
+/* Contact header row (centered) */
+.contact-header-row {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 4rem auto;
+}
+.contact-header-row .contact-tag-row {
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.contact-header-row .contact-title {
+    margin-bottom: 1rem;
+}
+.contact-header-row .contact-desc {
+    margin: 0 auto;
+    max-width: 580px;
+    opacity: 0.8;
+}
+
+/* 3 Quick Info Cards */
+.contact-quick-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-quick-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 1.8rem 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    position: relative;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
+}
+a.contact-quick-card { cursor: pointer; }
+
+.contact-quick-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(249, 199, 0, 0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.contact-quick-card:hover::before { opacity: 1; }
+
+.contact-quick-card:hover {
+    border-color: rgba(249, 199, 0, 0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px rgba(249, 199, 0, 0.06);
+}
+
+/* Highlighted Call Card */
+.contact-quick-card--call {
+    background: linear-gradient(135deg, rgba(249, 199, 0, 0.07) 0%, rgba(249, 199, 0, 0.02) 100%);
+    border-color: rgba(249, 199, 0, 0.2);
+}
+.contact-quick-card--call:hover {
+    border-color: rgba(249, 199, 0, 0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(249, 199, 0, 0.12);
+}
+
+.cqc-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 14px;
+    background: rgba(249, 199, 0, 0.08);
+    border: 1px solid rgba(249, 199, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+.contact-quick-card:hover .cqc-icon {
+    background: rgba(249, 199, 0, 0.14);
+    transform: scale(1.08) rotate(-4deg);
+}
+
+.cqc-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 0;
+}
+.cqc-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.cqc-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cqc-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+}
+.cqc-arrow {
+    color: rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+a.contact-quick-card:hover .cqc-arrow {
+    color: var(--primary-color);
+    transform: translateX(3px);
+}
+
+/* Live green dot on Call card */
+.cqc-live-dot {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #39ff14;
+    box-shadow: 0 0 8px #39ff14;
+    animation: activePulse 1.8s infinite;
+}
+
+/* Why Block */
+.contact-why-block {
+    margin-bottom: 2.5rem;
+}
+.contact-why-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.3px;
+}
+.contact-why-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+.contact-why-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+}
+.contact-why-list li:hover {
+    background: rgba(249,199,0,0.03);
+    border-color: rgba(249,199,0,0.12);
+    transform: translateX(5px);
+}
+.why-icon {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    margin-top: 3px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 5px rgba(249,199,0,0.5));
+}
+.contact-why-list li div strong {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+.contact-why-list li div p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Social Block */
+.contact-social-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.contact-social-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+}
+.contact-social-links {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+.contact-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.contact-social-btn:hover {
+    background: rgba(249,199,0,0.08);
+    border-color: rgba(249,199,0,0.3);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Form Header */
+.contact-form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.contact-form-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.4rem 0;
+}
+.contact-form-header p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
+}
+
+/* Form Actions Row */
+.contact-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+.contact-form-actions .contact-submit-btn {
+    margin: 0;
+}
+
+/* Responsive: Quick cards stacking */
+@media (max-width: 968px) {
+    .contact-quick-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+    .cqc-value { font-size: 0.9rem; }
+}
+@media (max-width: 576px) {
+    .contact-form-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .contact-quick-cards {
+        margin-bottom: 2.5rem;
+    }
 }

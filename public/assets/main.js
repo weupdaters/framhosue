@@ -613,4 +613,60 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // ==========================================
+    // 7. HEADER TRANSITION ON SCROLL
+    // ==========================================
+    const siteHeader = document.querySelector('header');
+    if (siteHeader) {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                siteHeader.classList.add('header-scrolled');
+            } else {
+                siteHeader.classList.remove('header-scrolled');
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Run once on load
+    }
+
+    // ==========================================
+    // 8. 3D INTERACTIVE TILT FOR SHOWREEL CARD
+    // ==========================================
+    const showreelCard = document.querySelector('.about-showreel-container');
+    if (showreelCard) {
+        showreelCard.addEventListener('mousemove', (e) => {
+            const rect = showreelCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            const angleX = (yc - y) / 18; // Subtle rotation on X
+            const angleY = (x - xc) / 18; // Subtle rotation on Y
+            
+            showreelCard.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-5px)`;
+        });
+        
+        showreelCard.style.transition = 'transform 0.15s ease, box-shadow 0.3s ease';
+        
+        showreelCard.addEventListener('mouseleave', () => {
+            showreelCard.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease';
+            showreelCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+        });
+    }
+
+    // ==========================================
+    // 9. CLICK HANDLER FOR PREMIUM 3D CAROUSEL CARDS
+    // ==========================================
+    const premiumTrack = document.querySelector('.premium-carousel-track');
+    if (premiumTrack) {
+        premiumTrack.addEventListener('click', (e) => {
+            if (window.isCarouselDragging) return;
+            
+            const card = e.target.closest('.premium-carousel-card.active-card');
+            if (card) {
+                openModal(card);
+            }
+        });
+    }
 });

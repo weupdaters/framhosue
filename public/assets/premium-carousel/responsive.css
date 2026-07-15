@@ -1,0 +1,99 @@
+/* ==========================================================================
+   PREMIUM CAROUSEL RESPONSIVE STYLE SHEET
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    :root {
+        --card-width: 280px;
+        --card-height: 400px;
+    }
+    
+    .premium-carousel-stage {
+        height: 520px;
+        perspective: 1600px;
+    }
+    
+    .premium-carousel-section {
+        padding: 8rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --card-width: 250px;
+        --card-height: 360px;
+    }
+    
+    .premium-carousel-stage {
+        height: 480px;
+        perspective: 1200px;
+    }
+    
+    .premium-carousel-section {
+        padding: 6rem 0;
+    }
+    
+    .premium-nav-controls {
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    
+    .premium-arrow-btn {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .premium-indicator-container {
+        width: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --card-width: 220px;
+        --card-height: 320px;
+    }
+    
+    .premium-carousel-stage {
+        height: 420px;
+        perspective: 1000px;
+        perspective-origin: 50% 25%;
+    }
+    
+    /* Disable box reflection on mobile for rendering performance */
+    .premium-card-inner {
+        -webkit-box-reflect: none;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+    
+    .premium-card-overlay {
+        padding: 1.5rem 1.2rem;
+    }
+    
+    .premium-card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .premium-card-desc {
+        display: none; /* Hide descriptions on mobile to keep space clean */
+    }
+    
+    .premium-play-indicator {
+        top: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+        opacity: 0.8;
+        transform: scale(0.85);
+        pointer-events: auto;
+    }
+    
+    .premium-nav-controls {
+        gap: 1.5rem;
+    }
+    
+    .premium-indicator-container {
+        width: 120px;
+    }
+}
