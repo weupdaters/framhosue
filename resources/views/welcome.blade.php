@@ -65,6 +65,10 @@
     <link rel="stylesheet" href="{{ asset('assets/premium-carousel/carousel.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('assets/premium-carousel/responsive.css') }}?v={{ time() }}">
     <link rel="icon" type="image/png" href="{{ asset('images/final_short_form.png') }}">
+
+    @if(isset($site_settings['analytics_code']) && $site_settings['analytics_code'])
+        {!! $site_settings['analytics_code'] !!}
+    @endif
 </head>
 <body>
 

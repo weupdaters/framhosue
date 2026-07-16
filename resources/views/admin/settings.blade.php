@@ -460,6 +460,39 @@
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group form-group-full">
+                            <label for="sitemap_file">Upload Sitemap (sitemap.xml)</label>
+                            <input type="file" name="sitemap_file" id="sitemap_file" accept=".xml">
+                            @if(isset($sitemapExists) && $sitemapExists)
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: var(--primary-color)">✔ sitemap.xml exists.</span>
+                                    <a href="/sitemap.xml" target="_blank" style="font-size: 0.78rem; color: #55b2ff; text-decoration: underline; margin-left: 0.5rem;">View Sitemap</a>
+                                </div>
+                            @else
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.3)">No custom sitemap.xml uploaded yet.</span>
+                                </div>
+                            @endif
+                            @error('sitemap_file')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="robots_content">robots.txt Content</label>
+                            <textarea name="robots_content" id="robots_content" rows="4" placeholder="User-agent: *&#10;Disallow:" style="font-family: monospace; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; padding: 0.8rem; width: 100%; box-sizing: border-box;">{{ old('robots_content', $robotsContent ?? '') }}</textarea>
+                            @error('robots_content')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="analytics_code">Header Analytics / Tracking Code (Google Analytics, Pixel, etc.)</label>
+                            <textarea name="analytics_code" id="analytics_code" rows="5" placeholder="Paste tracking code scripts here. They will be injected into the website's <head> section." style="font-family: monospace; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; padding: 0.8rem; width: 100%; box-sizing: border-box;">{{ old('analytics_code', $settings['analytics_code'] ?? '') }}</textarea>
+                            @error('analytics_code')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     <!-- Logo & Branding Settings -->

@@ -7,6 +7,18 @@ use App\Models\Plan;
 
 // Home Page
 Route::get('/', function () {
+    try {
+        \App\Models\Visit::create([
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'url' => request()->fullUrl(),
+            'referrer' => request()->headers->get('referer'),
+            'page_name' => 'home',
+        ]);
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error("Visit tracking failed: " . $e->getMessage());
+    }
+
     // Retrieve all projects so that the frontend category filter has access to all content
     $featuredProjects = Project::orderBy('created_at', 'desc')->get();
     $plans = Plan::orderBy('order')->get();
@@ -16,6 +28,18 @@ Route::get('/', function () {
 
 // Works Gallery Page
 Route::get('/works', function () {
+    try {
+        \App\Models\Visit::create([
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'url' => request()->fullUrl(),
+            'referrer' => request()->headers->get('referer'),
+            'page_name' => 'works',
+        ]);
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error("Visit tracking failed: " . $e->getMessage());
+    }
+
     $projects = Project::orderBy('created_at', 'desc')->get();
     return view('works', compact('projects'));
 })->name('works');

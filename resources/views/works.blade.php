@@ -9,6 +9,10 @@
     <!-- Import style.css from public/assets -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ time() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+    @if(isset($site_settings['analytics_code']) && $site_settings['analytics_code'])
+        {!! $site_settings['analytics_code'] !!}
+    @endif
 </head>
 <body class="works-archive-body">
 

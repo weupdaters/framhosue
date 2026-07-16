@@ -343,6 +343,34 @@
                 </div>
             @endif
 
+            <!-- Analytics Overview Cards -->
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2.5rem;">
+                <div class="stat-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-color);"></div>
+                    <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Total Page Views</span>
+                    <h3 style="font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0 0 0; color: #ffffff;">{{ number_format($totalViews) }}</h3>
+                    <p style="font-size: 0.76rem; color: var(--primary-color); margin: 0.3rem 0 0 0;">Cumulative traffic</p>
+                </div>
+                <div class="stat-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #55b2ff;"></div>
+                    <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Today's Views</span>
+                    <h3 style="font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0 0 0; color: #ffffff;">{{ number_format($todayViews) }}</h3>
+                    <p style="font-size: 0.76rem; color: #55b2ff; margin: 0.3rem 0 0 0;">Last 24 hours</p>
+                </div>
+                <div class="stat-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #ff3e6c;"></div>
+                    <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Home Page Hits</span>
+                    <h3 style="font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0 0 0; color: #ffffff;">{{ number_format($homeViews) }}</h3>
+                    <p style="font-size: 0.76rem; color: #ff3e6c; margin: 0.3rem 0 0 0;">welcome.blade.php</p>
+                </div>
+                <div class="stat-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #b8ff34;"></div>
+                    <span style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Works Page Hits</span>
+                    <h3 style="font-size: 2.2rem; font-weight: 800; margin: 0.5rem 0 0 0; color: #ffffff;">{{ number_format($worksViews) }}</h3>
+                    <p style="font-size: 0.76rem; color: #b8ff34; margin: 0.3rem 0 0 0;">works.blade.php</p>
+                </div>
+            </div>
+
             <div class="content-card">
                 <div class="table-responsive">
                     <table class="projects-table">
@@ -396,6 +424,45 @@
                                 <tr>
                                     <td colspan="6" style="text-align: center; padding: 4rem 0; color: rgba(255,255,255,0.3);">
                                         No projects found. Click "Add New Work" to upload your first project.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Visitors Log -->
+            <div class="content-card" style="margin-top: 2.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem 0; letter-spacing: -0.5px;">Recent Website Visitors</h3>
+                <div class="table-responsive">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Page</th>
+                                <th>IP Address</th>
+                                <th>Referrer</th>
+                                <th>Device / User Agent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($recentVisits as $visit)
+                                <tr>
+                                    <td style="font-size: 0.85rem; color: rgba(255,255,255,0.6)">{{ $visit->created_at->diffForHumans() }}</td>
+                                    <td>
+                                        <span class="badge-cat {{ $visit->page_name == 'home' ? 'graphics' : 'video' }}">
+                                            {{ strtoupper($visit->page_name) }}
+                                        </span>
+                                    </td>
+                                    <td style="font-size: 0.85rem; font-family: monospace; color: rgba(255,255,255,0.7)">{{ $visit->ip_address }}</td>
+                                    <td style="font-size: 0.85rem; color: rgba(255,255,255,0.5)">{{ Str::limit($visit->referrer ?: 'Direct / None', 40) }}</td>
+                                    <td style="font-size: 0.85rem; color: rgba(255,255,255,0.5)">{{ Str::limit($visit->user_agent, 65) }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 2rem 0; color: rgba(255,255,255,0.3);">
+                                        No traffic recorded yet. Visits will appear here once users load the website.
                                     </td>
                                 </tr>
                             @endforelse

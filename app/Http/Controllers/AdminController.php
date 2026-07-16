@@ -44,7 +44,21 @@ class AdminController extends Controller
     public function dashboard()
     {
         $projects = Project::orderBy('created_at', 'desc')->get();
-        return view('admin.dashboard', compact('projects'));
+        
+        $totalViews = \App\Models\Visit::count();
+        $todayViews = \App\Models\Visit::whereDate('created_at', \Carbon\Carbon::today())->count();
+        $homeViews = \App\Models\Visit::where('page_name', 'home')->count();
+        $worksViews = \App\Models\Visit::where('page_name', 'works')->count();
+        $recentVisits = \App\Models\Visit::orderBy('created_at', 'desc')->take(10)->get();
+
+        return view('admin.dashboard', compact(
+            'projects', 
+            'totalViews', 
+            'todayViews', 
+            'homeViews', 
+            'worksViews', 
+            'recentVisits'
+        ));
     }
 
     // Show create project form
@@ -470,7 +484,15 @@ class AdminController extends Controller
     public function settingsEdit()
     {
         $settings = \App\Models\Setting::pluck('value', 'key')->all();
-        return view('admin.settings', compact('settings'));
+        
+        // Read robots.txt
+        $robotsPath = public_path('robots.txt');
+        $robotsContent = file_exists($robotsPath) ? file_get_contents($robotsPath) : "User-agent: *\nDisallow:";
+        
+        // Check if sitemap.xml exists
+        $sitemapExists = file_exists(public_path('sitemap.xml'));
+
+        return view('admin.settings', compact('settings', 'robotsContent', 'sitemapExists'));
     }
 
     // Update website settings
@@ -523,6 +545,9 @@ class AdminController extends Controller
             'hero_poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'site_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'site_logo_expanded' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'analytics_code' => 'nullable|string',
+            'robots_content' => 'nullable|string',
+            'sitemap_file' => 'nullable|file|mimes:xml|max:5120',
         ]);
 
         // Remove files from data array to process them separately
@@ -540,6 +565,12 @@ class AdminController extends Controller
         }
         if (isset($data['site_logo_expanded'])) {
             unset($data['site_logo_expanded']);
+        }
+        if (isset($data['robots_content'])) {
+            unset($data['robots_content']);
+        }
+        if (isset($data['sitemap_file'])) {
+            unset($data['sitemap_file']);
         }
 
         // Parse about_video_id if it is set
@@ -589,6 +620,25 @@ class AdminController extends Controller
             $logoExpName = 'logo_exp_' . time() . '_' . uniqid() . '.' . $logoExp->getClientOriginalExtension();
             $logoExp->move(public_path('images'), $logoExpName);
             \App\Models\Setting::updateOrCreate(['key' => 'site_logo_expanded'], ['value' => $logoExpName]);
+        }
+
+        // Handle robots.txt update
+        if ($request->has('robots_content')) {
+            try {
+                file_put_contents(public_path('robots.txt'), $request->input('robots_content'));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Failed to write robots.txt: " . $e->getMessage());
+            }
+        }
+
+        // Handle sitemap file upload
+        if ($request->hasFile('sitemap_file')) {
+            try {
+                $sitemap = $request->file('sitemap_file');
+                $sitemap->move(public_path(), 'sitemap.xml');
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Failed to upload sitemap.xml: " . $e->getMessage());
+            }
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully!');
