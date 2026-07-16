@@ -95,6 +95,14 @@
     <!-- Script assets for works filtering and playing -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Blurred background helper for contained images
+            document.querySelectorAll('.archive-card-img-wrapper').forEach(wrapper => {
+                const img = wrapper.querySelector('img');
+                if (img) {
+                    wrapper.style.setProperty('--bg-image', `url('${img.src}')`);
+                }
+            });
+
             // Filter Tabs
             const filterButtons = document.querySelectorAll('.works-tab-btn');
             const archiveCards = document.querySelectorAll('.archive-card');

@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Blurred background helper for homepage contained slider cards
+    document.querySelectorAll('.card-img-container').forEach(wrapper => {
+        const img = wrapper.querySelector('img');
+        if (img) {
+            wrapper.style.setProperty('--bg-image', `url('${img.src}')`);
+        }
+    });
+
     // Horizontal Swiper Slider Navigation Logic
     const viewport = document.getElementById('portfolio-slider-viewport');
     const prevStackBtn = document.getElementById('portfolio-prev');
