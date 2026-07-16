@@ -3738,20 +3738,24 @@ body.cursor-video .custom-cursor-ring {
 
 .archive-card {
     position: relative;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    background: #0d0f14;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 18px;
     overflow: hidden;
-    aspect-ratio: 1.28; /* Square-ish landscape ratio matching project screenshots */
+    aspect-ratio: 1.777; /* Standard 16:9 landscape aspect ratio */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.4s ease, 
+                scale 0.4s ease;
     display: flex;
     flex-direction: column;
 }
 
 /* Make vertical reels cards look like actual phone proportions! */
 .archive-card.card-vertical-reel {
-    aspect-ratio: 0.56; /* 9:16 vertical ratio! Looks extremely authentic */
+    aspect-ratio: 0.5625; /* 9:16 vertical ratio! Looks extremely authentic */
     grid-row: span 2; /* Spans 2 grid rows so vertical reels stand out beautifully! */
 }
 
@@ -3760,14 +3764,18 @@ body.cursor-video .custom-cursor-ring {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-color: #06080c; /* clean dark backdrop for contained images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .archive-card-img-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Displays full image, never cut off! */
     display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Dynamic details panel overlays at bottom of each card */
@@ -3776,16 +3784,16 @@ body.cursor-video .custom-cursor-ring {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to top, rgba(8, 10, 14, 0.95) 0%, rgba(8, 10, 14, 0.6) 70%, transparent 100%);
+    background: linear-gradient(to top, rgba(8, 10, 14, 0.98) 0%, rgba(8, 10, 14, 0.7) 70%, transparent 100%);
     padding: 1.5rem 1.2rem 1.2rem 1.2rem;
     box-sizing: border-box;
     z-index: 3;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    transform: translateY(10px);
-    opacity: 0.9;
-    transition: all 0.4s ease;
+    transform: translateY(100%); /* Slide completely out of view */
+    opacity: 0; /* Fully invisible when not hovered */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .archive-card-category {
@@ -3832,7 +3840,7 @@ body.cursor-video .custom-cursor-ring {
 }
 
 .archive-card:hover .archive-card-img-wrapper img {
-    transform: scale(1.06);
+    transform: scale(1.04);
 }
 
 .archive-card:hover .archive-card-details {
