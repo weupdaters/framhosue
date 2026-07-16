@@ -637,6 +637,65 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // General Contact Form AJAX Submission
+    const generalForm = document.getElementById('general-contact-form');
+    const generalAlert = document.getElementById('general-contact-alert');
+    const generalSubmitBtn = document.getElementById('general-submit-btn');
+
+    if (generalForm && generalAlert && generalSubmitBtn) {
+        generalForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const originalBtnContent = generalSubmitBtn.innerHTML;
+            generalSubmitBtn.disabled = true;
+            generalSubmitBtn.innerHTML = `<span>Sending...</span><svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle><path d="M4 12a8 8 0 0 1 8-8"></path></svg>`;
+
+            const formData = new FormData(generalForm);
+            const actionUrl = generalForm.getAttribute('action');
+
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                generalSubmitBtn.disabled = false;
+                generalSubmitBtn.innerHTML = originalBtnContent;
+
+                if (data.success) {
+                    generalAlert.style.borderColor = 'rgba(184, 255, 52, 0.25)';
+                    generalAlert.style.background = 'rgba(184, 255, 52, 0.08)';
+                    generalAlert.style.color = 'var(--primary-color)';
+                    generalAlert.textContent = data.message;
+                    generalAlert.style.display = 'block';
+                    generalForm.reset();
+                    setTimeout(() => { generalAlert.style.display = 'none'; }, 8000);
+                } else {
+                    generalAlert.style.borderColor = 'rgba(255, 62, 108, 0.4)';
+                    generalAlert.style.background = 'rgba(255, 62, 108, 0.08)';
+                    generalAlert.style.color = '#ff3e6c';
+                    generalAlert.textContent = 'Invalid input fields. Please correct and try again.';
+                    generalAlert.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                generalSubmitBtn.disabled = false;
+                generalSubmitBtn.innerHTML = originalBtnContent;
+                generalAlert.style.borderColor = 'rgba(255, 62, 108, 0.4)';
+                generalAlert.style.background = 'rgba(255, 62, 108, 0.08)';
+                generalAlert.style.color = '#ff3e6c';
+                generalAlert.textContent = 'Server error! Please check your connection and try again.';
+                generalAlert.style.display = 'block';
+            });
+        });
+    }
+
     // ==========================================
     // 6. INTERACTIVE MULTI-STEP QUESTIONNAIRE
     // ==========================================
@@ -801,11 +860,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Scroll smoothly to contact
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
+        // Scroll smoothly to pricing section
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
             window.scrollTo({
-                top: contactSection.offsetTop - 50,
+                top: pricingSection.offsetTop - 50,
                 behavior: 'smooth'
             });
         }

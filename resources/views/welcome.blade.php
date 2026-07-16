@@ -510,255 +510,12 @@
                 </div>
             </div>
             
-            <div class="pricing-content-layout">
-                <!-- Left Side: Pricing Grid (3 Cards) -->
-                <div class="pricing-grid-v3">
-                    @forelse($plans as $index => $plan)
-                        <div class="pricing-card-v3 {{ $plan->is_popular ? 'highlighted-plan' : '' }} reveal reveal-slide-up" style="--delay: {{ $index * 1 }};">
-                            @if($plan->is_popular)
-                                <div class="popular-ribbon">MOST POPULAR</div>
-                            @endif
-                            
-                            <div class="card-icon-badge">
-                                @if($plan->is_popular)
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                @elseif($index % 3 === 0)
-                                    <span class="badge-symbol" style="font-size: 1.5rem; font-weight: 800; color: var(--primary-color);">₹</span>
-                                @else
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                                @endif
-                            </div>
-                            
-                            <h3 class="card-title-v3">{{ $plan->name }}</h3>
-                            <div class="pricing-price-box">
-                                <span class="price-currency">₹</span>
-                                <span class="price-amount">{{ $plan->price }}</span>
-                                <span class="price-duration">{{ $plan->duration }}</span>
-                            </div>
-                            
-                            <ul class="pricing-features-list">
-                                @foreach($plan->features ?? [] as $feature)
-                                    <li>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="check-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>{{ $feature }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            
-                            <a href="#contact" class="get-started-btn {{ $plan->is_popular ? 'card-action-btn-solid' : 'card-action-btn-outline' }}" data-plan="{{ strtolower($plan->name) }}">Get Started</a>
-                        </div>
-                    @empty
-                        <div class="custom-pricing-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 5rem 3rem; border-radius: 24px; border: 1px solid rgba(184, 255, 52, 0.15); background: linear-gradient(180deg, rgba(184, 255, 52, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%); backdrop-filter: blur(10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; position: relative; overflow: hidden;">
-                            <div class="placeholder-glow" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(184, 255, 52, 0.03) 0%, transparent 60%); pointer-events: none;"></div>
-                            <div class="icon-circle" style="width: 70px; height: 70px; background: rgba(184, 255, 52, 0.08); border: 1px solid rgba(184, 255, 52, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; color: var(--primary-color);">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            </div>
-                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; margin: 0; color: #ffffff; letter-spacing: -0.5px;">No Preset Plans Fit?</h3>
-                            <p style="font-family: 'Outfit', sans-serif; font-size: 0.98rem; color: rgba(255,255,255,0.6); max-width: 500px; margin: 0; line-height: 1.6;">
-                                We design custom-tailored content packages that perfectly match your creative vision, requirements, and publishing frequency.
-                            </p>
-                            <a href="#contact" class="custom-pricing-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.8rem; background: var(--primary-color); color: #080a0e; font-weight: 700; padding: 1.1rem 2.2rem; border-radius: 12px; font-size: 0.92rem; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 20px rgba(184, 255, 52, 0.15);">
-                                <span>Build Your Package</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
-                        </div>
-                    @endforelse
-                </div>
-                
-                <!-- Right Side: Editorial Callout Card -->
-                <div class="pricing-editorial-card reveal reveal-slide-right" style="--delay: 1;">
-                    <div class="editorial-icon-badge">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    </div>
-                    <h3 class="editorial-title">
-                        One vision.<br>
-                        Three packages.<br>
-                        All made to<br>
-                        <span class="editorial-highlight">scale your brand.</span>
-                    </h3>
-                    <div class="editorial-divider"></div>
-                    <p class="editorial-desc">
-                        Whether you're a solo creator or a growing agency, we've got a plan that fits your goals.
-                    </p>
-                    <div class="editorial-wave-graphic"></div>
-                </div>
-            </div>
+            <div class="pricing-form-container reveal reveal-zoom-in" style="max-width: 680px; margin: 3rem auto 0 auto; width: 100%;">
+                <div class="contact-form-col" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 3.5rem; position: relative; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); box-sizing: border-box; width: 100%;">
+                    <!-- Top neon green glow border -->
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--primary-color) 50%, transparent 100%);"></div>
 
-            <!-- Bottom Horizontal Features Bar -->
-            <div class="pricing-footer-features-bar reveal reveal-slide-up" style="--delay: 2;">
-                <div class="footer-feature-item">
-                    <div class="feature-icon-wrapper-mini">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    </div>
-                    <div class="feature-text-mini">
-                        <strong>Fast Turnaround</strong>
-                        <span>On-time, every time.</span>
-                    </div>
-                </div>
-                <div class="footer-feature-item">
-                    <div class="feature-icon-wrapper-mini">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    </div>
-                    <div class="feature-text-mini">
-                        <strong>Premium Quality</strong>
-                        <span>Top-tier edits & design.</span>
-                    </div>
-                </div>
-                <div class="footer-feature-item">
-                    <div class="feature-icon-wrapper-mini">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
-                    </div>
-                    <div class="feature-text-mini">
-                        <strong>Priority Support</strong>
-                        <span>We're here to help.</span>
-                    </div>
-                </div>
-                <div class="footer-feature-item">
-                    <div class="feature-icon-wrapper-mini">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    </div>
-                    <div class="feature-text-mini">
-                        <strong>Cancel Anytime</strong>
-                        <span>No contracts. No hassle.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-
-        <!-- Decorative animated background orbs -->
-        <div class="contact-orb contact-orb-1"></div>
-        <div class="contact-orb contact-orb-2"></div>
-
-        <div class="contact-container">
-
-            <!-- Top Header Row -->
-            <div class="contact-header-row reveal reveal-zoom-out">
-                <div class="contact-tag-row">
-                    <span class="contact-tag">GET IN TOUCH</span>
-                    <span class="contact-tag-line"></span>
-                </div>
-                <h2 class="contact-title">Let's Make <span>Something Great.</span></h2>
-                <p class="contact-desc">Have an upcoming project, creative campaign, or business query? We'd love to hear it — and turn your vision into cinema-quality reality.</p>
-            </div>
-
-            <!-- 3 Quick-Info Cards Row -->
-            <div class="contact-quick-cards reveal reveal-slide-up" style="--delay: 0.5;">
-
-                <!-- Card: Call -->
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="contact-quick-card contact-quick-card--call">
-                    <div class="cqc-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    </div>
-                    <div class="cqc-content">
-                        <span class="cqc-label">CALL DIRECTLY</span>
-                        <strong class="cqc-value">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</strong>
-                        <span class="cqc-sub">Mon–Sat, 10 AM – 7 PM IST</span>
-                    </div>
-                    <div class="cqc-arrow">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                    <span class="cqc-live-dot"></span>
-                </a>
-
-                <!-- Card: Email -->
-                <a href="mailto:{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}" class="contact-quick-card">
-                    <div class="cqc-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </div>
-                    <div class="cqc-content">
-                        <span class="cqc-label">EMAIL US</span>
-                        <strong class="cqc-value">{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</strong>
-                        <span class="cqc-sub">Response within 2 hours</span>
-                    </div>
-                    <div class="cqc-arrow">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-
-                <!-- Card: Location -->
-                <div class="contact-quick-card">
-                    <div class="cqc-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    </div>
-                    <div class="cqc-content">
-                        <span class="cqc-label">STUDIO LOCATION</span>
-                        <strong class="cqc-value">{{ $site_settings['contact_address'] ?? 'New Delhi, India' }}</strong>
-                        <span class="cqc-sub">Available for on-site shoots</span>
-                    </div>
-                    <div class="cqc-arrow">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Main Layout: Left Info + Right Form -->
-            <div class="contact-layout">
-
-                <!-- Left Column -->
-                <div class="contact-info-col reveal reveal-slide-left" style="--delay: 0.8;">
-
-                    <!-- Why work with us -->
-                    <div class="contact-why-block">
-                        <h3 class="contact-why-title">Why Choose Us?</h3>
-                        <ul class="contact-why-list">
-                            <li>
-                                <span class="why-icon">✦</span>
-                                <div>
-                                    <strong>Cinematic Quality</strong>
-                                    <p>Every frame crafted with studio-grade equipment and post-production.</p>
-                                </div>
-                            </li>
-                            <li>
-                                <span class="why-icon">✦</span>
-                                <div>
-                                    <strong>On-Time Delivery</strong>
-                                    <p>We respect your timelines — always delivering ahead of deadlines.</p>
-                                </div>
-                            </li>
-                            <li>
-                                <span class="why-icon">✦</span>
-                                <div>
-                                    <strong>Dedicated Team</strong>
-                                    <p>A single point of contact who manages your project end-to-end.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Social Links -->
-                    <div class="contact-social-block">
-                        <span class="contact-social-label">FOLLOW OUR WORK</span>
-                        <div class="contact-social-links">
-                            @foreach ($socialPlatforms as $key => $platform)
-                                @php
-                                    $urlKey = $key . '_url';
-                                    $showKey = 'show_' . $key;
-                                    $urlValue = $site_settings[$urlKey] ?? '';
-                                    if (empty($urlValue) && in_array($key, ['youtube', 'instagram', 'linkedin', 'facebook'])) {
-                                        $urlValue = $platform['default_url'];
-                                    }
-                                    $showValue = $site_settings[$showKey] ?? '1';
-                                @endphp
-                                @if (!empty($urlValue) && $urlValue !== '#' && $showValue === '1')
-                                    <a href="{{ $urlValue }}" class="contact-social-btn" title="{{ $platform['name'] }}" target="_blank">
-                                        {!! $platform['icon'] !!}
-                                        <span>{{ $platform['name'] }}</span>
-                                    </a>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Right Column: Glass Form -->
-                <div class="contact-form-col">
-                    <form action="{{ route('contact.submit') }}" method="POST" class="contact-glass-form reveal reveal-zoom-in" id="contact-form" style="--delay: 1;">
+                    <form action="{{ route('contact.submit') }}" method="POST" class="contact-glass-form" id="contact-form" style="display: flex; flex-direction: column; gap: 1.8rem;">
                         @csrf
 
                         <!-- Form Header / Multi-Step Progress Tracker -->
@@ -971,7 +728,218 @@
                                 <span>100% private & secure. We respond in under 2 hours.</span>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </div>
 
+            <!-- Bottom Horizontal Features Bar -->
+            <div class="pricing-footer-features-bar reveal reveal-slide-up" style="--delay: 2;">
+                <div class="footer-feature-item">
+                    <div class="feature-icon-wrapper-mini">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    </div>
+                    <div class="feature-text-mini">
+                        <strong>Fast Turnaround</strong>
+                        <span>On-time, every time.</span>
+                    </div>
+                </div>
+                <div class="footer-feature-item">
+                    <div class="feature-icon-wrapper-mini">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <div class="feature-text-mini">
+                        <strong>Premium Quality</strong>
+                        <span>Top-tier edits & design.</span>
+                    </div>
+                </div>
+                <div class="footer-feature-item">
+                    <div class="feature-icon-wrapper-mini">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                    </div>
+                    <div class="feature-text-mini">
+                        <strong>Priority Support</strong>
+                        <span>We're here to help.</span>
+                    </div>
+                </div>
+                <div class="footer-feature-item">
+                    <div class="feature-icon-wrapper-mini">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <div class="feature-text-mini">
+                        <strong>Cancel Anytime</strong>
+                        <span>No contracts. No hassle.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+
+        <!-- Decorative animated background orbs -->
+        <div class="contact-orb contact-orb-1"></div>
+        <div class="contact-orb contact-orb-2"></div>
+
+        <div class="contact-container">
+
+            <!-- Top Header Row -->
+            <div class="contact-header-row reveal reveal-zoom-out">
+                <div class="contact-tag-row">
+                    <span class="contact-tag">GET IN TOUCH</span>
+                    <span class="contact-tag-line"></span>
+                </div>
+                <h2 class="contact-title">Let's Make <span>Something Great.</span></h2>
+                <p class="contact-desc">Have an upcoming project, creative campaign, or business query? We'd love to hear it — and turn your vision into cinema-quality reality.</p>
+            </div>
+
+            <!-- 3 Quick-Info Cards Row -->
+            <div class="contact-quick-cards reveal reveal-slide-up" style="--delay: 0.5;">
+
+                <!-- Card: Call -->
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $site_settings['contact_phone'] ?? '+919876543210') }}" class="contact-quick-card contact-quick-card--call">
+                    <div class="cqc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <div class="cqc-content">
+                        <span class="cqc-label">CALL DIRECTLY</span>
+                        <strong class="cqc-value">{{ $site_settings['contact_phone'] ?? '+91 98765 43210' }}</strong>
+                        <span class="cqc-sub">Mon–Sat, 10 AM – 7 PM IST</span>
+                    </div>
+                    <div class="cqc-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                    <span class="cqc-live-dot"></span>
+                </a>
+
+                <!-- Card: Email -->
+                <a href="mailto:{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}" class="contact-quick-card">
+                    <div class="cqc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="cqc-content">
+                        <span class="cqc-label">EMAIL US</span>
+                        <strong class="cqc-value">{{ $site_settings['contact_email'] ?? 'famehousemedia@gmail.com' }}</strong>
+                        <span class="cqc-sub">Response within 2 hours</span>
+                    </div>
+                    <div class="cqc-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+
+                <!-- Card: Location -->
+                <div class="contact-quick-card">
+                    <div class="cqc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="cqc-content">
+                        <span class="cqc-label">STUDIO LOCATION</span>
+                        <strong class="cqc-value">{{ $site_settings['contact_address'] ?? 'New Delhi, India' }}</strong>
+                        <span class="cqc-sub">Available for on-site shoots</span>
+                    </div>
+                    <div class="cqc-arrow">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Main Layout: Left Info + Right Form -->
+            <div class="contact-layout">
+
+                <!-- Left Column -->
+                <div class="contact-info-col reveal reveal-slide-left" style="--delay: 0.8;">
+
+                    <!-- Why work with us -->
+                    <div class="contact-why-block">
+                        <h3 class="contact-why-title">Why Choose Us?</h3>
+                        <ul class="contact-why-list">
+                            <li>
+                                <span class="why-icon">✦</span>
+                                <div>
+                                    <strong>Cinematic Quality</strong>
+                                    <p>Every frame crafted with studio-grade equipment and post-production.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="why-icon">✦</span>
+                                <div>
+                                    <strong>On-Time Delivery</strong>
+                                    <p>We respect your timelines — always delivering ahead of deadlines.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="why-icon">✦</span>
+                                <div>
+                                    <strong>Dedicated Team</strong>
+                                    <p>A single point of contact who manages your project end-to-end.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="contact-social-block">
+                        <span class="contact-social-label">FOLLOW OUR WORK</span>
+                        <div class="contact-social-links">
+                            @foreach ($socialPlatforms as $key => $platform)
+                                @php
+                                    $urlKey = $key . '_url';
+                                    $showKey = 'show_' . $key;
+                                    $urlValue = $site_settings[$urlKey] ?? '';
+                                    if (empty($urlValue) && in_array($key, ['youtube', 'instagram', 'linkedin', 'facebook'])) {
+                                        $urlValue = $platform['default_url'];
+                                    }
+                                    $showValue = $site_settings[$showKey] ?? '1';
+                                @endphp
+                                @if (!empty($urlValue) && $urlValue !== '#' && $showValue === '1')
+                                    <a href="{{ $urlValue }}" class="contact-social-btn" title="{{ $platform['name'] }}" target="_blank">
+                                        {!! $platform['icon'] !!}
+                                        <span>{{ $platform['name'] }}</span>
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Simple General Inquiry Form -->
+                <div class="contact-form-col">
+                    <form action="{{ route('contact.submit') }}" method="POST" class="contact-glass-form reveal reveal-zoom-in" id="general-contact-form" style="--delay: 1; display: flex; flex-direction: column; gap: 1.5rem;">
+                        @csrf
+                        <div class="step-header" style="margin-bottom: 0.5rem;">
+                            <h3>Send Us A Message</h3>
+                            <p>For general inquiries, collaboration ideas, or custom projects.</p>
+                        </div>
+                        
+                        <div id="general-contact-alert" style="display: none; margin-bottom: 1rem; padding: 1.2rem; border-radius: 16px; font-size: 0.9rem; line-height: 1.4; border: 1px solid rgba(184, 255, 52, 0.25); background: rgba(184, 255, 52, 0.08); color: var(--primary-color);"></div>
+
+                        <div class="form-group">
+                            <label for="general-name">Full Name</label>
+                            <input type="text" name="name" id="general-name" placeholder="John Doe" required style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.1rem; color: #fff; width: 100%; box-sizing: border-box;">
+                        </div>
+
+                        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="form-group">
+                                <label for="general-email">Email Address</label>
+                                <input type="email" name="email" id="general-email" placeholder="john@example.com" required style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.1rem; color: #fff; width: 100%; box-sizing: border-box;">
+                            </div>
+                            <div class="form-group">
+                                <label for="general-phone">Phone Number (Optional)</label>
+                                <input type="text" name="phone" id="general-phone" placeholder="+91 98765 43210" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.1rem; color: #fff; width: 100%; box-sizing: border-box;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="general-message">Your Message</label>
+                            <textarea name="message" id="general-message" rows="5" placeholder="Tell us about your project or inquiry..." required style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.1rem; color: #fff; width: 100%; box-sizing: border-box;"></textarea>
+                        </div>
+
+                        <button type="submit" class="contact-submit-btn" id="general-submit-btn" style="border: none; padding: 1rem 2.2rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; background: var(--primary-color); color: #080a0e; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <span>Send Message</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
                     </form>
                 </div>
 
