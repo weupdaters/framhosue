@@ -299,6 +299,114 @@
             font-weight: 600;
             margin-top: 0.3rem;
         }
+
+        /* Social settings grid & toggle switch */
+        .social-setting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .social-setting-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .social-setting-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .social-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .social-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .social-icon-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: var(--primary-color);
+        }
+        .social-icon-preview svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2px;
+        }
+        .social-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .switch-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+        }
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(22px);
+            background-color: #080a0e;
+        }
+        .slider.round {
+            border-radius: 22px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -384,38 +492,87 @@
 
                     <!-- SECTION 3: Social Media URL Links -->
                     <div class="settings-section-title">Social Media Links</div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="instagram_url">Instagram Page URL</label>
-                            <input type="text" name="instagram_url" id="instagram_url" value="{{ old('instagram_url', $settings['instagram_url'] ?? '') }}" placeholder="https://instagram.com/username">
-                            @error('instagram_url')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="social-setting-grid">
+                        @php
+                            $platforms = [
+                                'instagram' => [
+                                    'name' => 'Instagram',
+                                    'placeholder' => 'https://instagram.com/username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>'
+                                ],
+                                'youtube' => [
+                                    'name' => 'YouTube',
+                                    'placeholder' => 'https://youtube.com/c/channelname',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>'
+                                ],
+                                'linkedin' => [
+                                    'name' => 'LinkedIn',
+                                    'placeholder' => 'https://linkedin.com/in/username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>'
+                                ],
+                                'facebook' => [
+                                    'name' => 'Facebook',
+                                    'placeholder' => 'https://facebook.com/username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>'
+                                ],
+                                'twitter' => [
+                                    'name' => 'Twitter / X',
+                                    'placeholder' => 'https://x.com/username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>'
+                                ],
+                                'tiktok' => [
+                                    'name' => 'TikTok',
+                                    'placeholder' => 'https://tiktok.com/@username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>'
+                                ],
+                                'whatsapp' => [
+                                    'name' => 'WhatsApp',
+                                    'placeholder' => 'https://wa.me/phonenumber',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>'
+                                ],
+                                'threads' => [
+                                    'name' => 'Threads',
+                                    'placeholder' => 'https://threads.net/@username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c2.25 0 4.33-.74 6-2l-1.5-1.5c-1.27.96-2.81 1.5-4.5 1.5-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8v1c0 1.1-.9 2-2 2s-2-.9-2-2v-1c0-2.21-1.79-4-4-4-2.21 0-4 1.79-4 4s1.79 4 4 4c1.1 0 2.1-.45 2.82-1.18.53.7 1.39 1.18 2.38 1.18 2.21 0 4-1.79 4-4v-1c0-5.52-4.48-10-10-10zm0 6c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2s-2-.9-2-2v-1c0-1.1.9-2 2-2z"/></svg>'
+                                ],
+                                'snapchat' => [
+                                    'name' => 'Snapchat',
+                                    'placeholder' => 'https://snapchat.com/add/username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c-1.2 0-2.4.6-3 1.7A5 5 0 0 0 7.8 7c-.2.9-.1 1.8.2 2.6-.6.6-1 1.4-1.2 2.3a4.7 4.7 0 0 0 3.3 5.4c.5.5.7 1.2.5 1.8a2.3 2.3 0 0 0 2.2 2.3h.4a2.3 2.3 0 0 0 2.2-2.3c-.2-.6 0-1.3.5-1.8a4.7 4.7 0 0 0 3.3-5.4c-.2-.9-.6-1.7-1.2-2.3.3-.8.4-1.7.2-2.6a5 5 0 0 0-1.2-2.3c-.6-1.1-1.8-1.7-3-1.7z"/></svg>'
+                                ]
+                            ];
+                        @endphp
 
-                        <div class="form-group">
-                            <label for="youtube_url">YouTube Channel URL</label>
-                            <input type="text" name="youtube_url" id="youtube_url" value="{{ old('youtube_url', $settings['youtube_url'] ?? '') }}" placeholder="https://youtube.com/c/channelname">
-                            @error('youtube_url')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="linkedin_url">LinkedIn Profile URL</label>
-                            <input type="text" name="linkedin_url" id="linkedin_url" value="{{ old('linkedin_url', $settings['linkedin_url'] ?? '') }}" placeholder="https://linkedin.com/in/username">
-                            @error('linkedin_url')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="facebook_url">Facebook Profile URL</label>
-                            <input type="text" name="facebook_url" id="facebook_url" value="{{ old('facebook_url', $settings['facebook_url'] ?? '') }}" placeholder="https://facebook.com/username">
-                            @error('facebook_url')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @foreach ($platforms as $key => $platform)
+                            @php
+                                $urlKey = $key . '_url';
+                                $showKey = 'show_' . $key;
+                                $urlValue = old($urlKey, $settings[$urlKey] ?? '');
+                                $showValue = old($showKey, $settings[$showKey] ?? '1');
+                            @endphp
+                            <div class="social-setting-card">
+                                <div class="social-header">
+                                    <div class="social-title-group">
+                                        <span class="social-icon-preview">{!! $platform['icon'] !!}</span>
+                                        <span class="social-name">{{ $platform['name'] }}</span>
+                                    </div>
+                                    <div class="switch-container">
+                                        <span class="switch-label">Show</span>
+                                        <label class="switch">
+                                            <input type="hidden" name="{{ $showKey }}" value="0">
+                                            <input type="checkbox" name="{{ $showKey }}" value="1" {{ $showValue == '1' ? 'checked' : '' }}>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <input type="text" name="{{ $urlKey }}" id="{{ $urlKey }}" value="{{ $urlValue }}" placeholder="{{ $platform['placeholder'] }}">
+                                    @error($urlKey)
+                                        <div class="error-message">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
                     <!-- SECTION 4: Carousel Settings -->

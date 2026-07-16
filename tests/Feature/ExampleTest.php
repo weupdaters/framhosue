@@ -102,6 +102,11 @@ class ExampleTest extends TestCase
             'youtube_url' => 'https://youtube.com/mychannel',
             'linkedin_url' => 'https://linkedin.com/in/myprofile',
             'facebook_url' => 'https://facebook.com/mypage',
+            'twitter_url' => 'https://x.com/myaccount',
+            'tiktok_url' => 'https://tiktok.com/@myaccount',
+            'show_instagram' => '1',
+            'show_youtube' => '0',
+            'show_twitter' => '1',
         ]);
 
         $response->assertRedirect(route('admin.settings.index'));
@@ -109,5 +114,9 @@ class ExampleTest extends TestCase
         // Check it persisted in database
         $this->assertEquals('Updated Meta Title via Post', \App\Models\Setting::where('key', 'meta_title')->value('value'));
         $this->assertEquals('updated-admin-email@site.com', \App\Models\Setting::where('key', 'contact_email')->value('value'));
+        $this->assertEquals('https://x.com/myaccount', \App\Models\Setting::where('key', 'twitter_url')->value('value'));
+        $this->assertEquals('https://tiktok.com/@myaccount', \App\Models\Setting::where('key', 'tiktok_url')->value('value'));
+        $this->assertEquals('1', \App\Models\Setting::where('key', 'show_instagram')->value('value'));
+        $this->assertEquals('0', \App\Models\Setting::where('key', 'show_youtube')->value('value'));
     }
 }

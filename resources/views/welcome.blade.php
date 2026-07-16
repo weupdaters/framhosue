@@ -1,3 +1,52 @@
+@php
+    $socialPlatforms = [
+        'youtube' => [
+            'name' => 'YouTube',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>',
+            'default_url' => 'https://www.youtube.com/'
+        ],
+        'instagram' => [
+            'name' => 'Instagram',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>',
+            'default_url' => 'https://www.instagram.com/famehousemedia/'
+        ],
+        'linkedin' => [
+            'name' => 'LinkedIn',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>',
+            'default_url' => 'https://www.linkedin.com/'
+        ],
+        'facebook' => [
+            'name' => 'Facebook',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>',
+            'default_url' => 'https://www.facebook.com/'
+        ],
+        'twitter' => [
+            'name' => 'Twitter / X',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>',
+            'default_url' => '#'
+        ],
+        'tiktok' => [
+            'name' => 'TikTok',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>',
+            'default_url' => '#'
+        ],
+        'whatsapp' => [
+            'name' => 'WhatsApp',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>',
+            'default_url' => '#'
+        ],
+        'threads' => [
+            'name' => 'Threads',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c2.25 0 4.33-.74 6-2l-1.5-1.5c-1.27.96-2.81 1.5-4.5 1.5-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8v1c0 1.1-.9 2-2 2s-2-.9-2-2v-1c0-2.21-1.79-4-4-4-2.21 0-4 1.79-4 4s1.79 4 4 4c1.1 0 2.1-.45 2.82-1.18.53.7 1.39 1.18 2.38 1.18 2.21 0 4-1.79 4-4v-1c0-5.52-4.48-10-10-10zm0 6c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2s-2-.9-2-2v-1c0-1.1.9-2 2-2z"/></svg>',
+            'default_url' => '#'
+        ],
+        'snapchat' => [
+            'name' => 'Snapchat',
+            'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.2 0-2.4.6-3 1.7A5 5 0 0 0 7.8 7c-.2.9-.1 1.8.2 2.6-.6.6-1 1.4-1.2 2.3a4.7 4.7 0 0 0 3.3 5.4c.5.5.7 1.2.5 1.8a2.3 2.3 0 0 0 2.2 2.3h.4a2.3 2.3 0 0 0 2.2-2.3c-.2-.6 0-1.3.5-1.8a4.7 4.7 0 0 0 3.3-5.4c-.2-.9-.6-1.7-1.2-2.3.3-.8.4-1.7.2-2.6a5 5 0 0 0-1.2-2.3c-.6-1.1-1.8-1.7-3-1.7z"/></svg>',
+            'default_url' => '#'
+        ]
+    ];
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,10 +186,22 @@
                     <div class="bar-socials">
                         <span class="socials-title">FOLLOW US</span>
                         <div class="social-icons-wrapper">
-                            <a href="{{ $site_settings['youtube_url'] ?? '#' }}" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                            <a href="{{ $site_settings['instagram_url'] ?? 'https://www.instagram.com/famehousemedia/' }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                            <a href="{{ $site_settings['linkedin_url'] ?? '#' }}" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-                            <a href="{{ $site_settings['facebook_url'] ?? '#' }}" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                            @foreach ($socialPlatforms as $key => $platform)
+                                @php
+                                    $urlKey = $key . '_url';
+                                    $showKey = 'show_' . $key;
+                                    $urlValue = $site_settings[$urlKey] ?? '';
+                                    if (empty($urlValue) && in_array($key, ['youtube', 'instagram', 'linkedin', 'facebook'])) {
+                                        $urlValue = $platform['default_url'];
+                                    }
+                                    $showValue = $site_settings[$showKey] ?? '1';
+                                @endphp
+                                @if (!empty($urlValue) && $urlValue !== '#' && $showValue === '1')
+                                    <a href="{{ $urlValue }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $platform['name'] }}">
+                                        {!! $platform['icon'] !!}
+                                    </a>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -658,18 +719,23 @@
                     <div class="contact-social-block">
                         <span class="contact-social-label">FOLLOW OUR WORK</span>
                         <div class="contact-social-links">
-                            <a href="#" class="contact-social-btn" title="Instagram" target="_blank">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                                <span>Instagram</span>
-                            </a>
-                            <a href="#" class="contact-social-btn" title="YouTube" target="_blank">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42A2.78 2.78 0 0 0 20.59 4.46C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon></svg>
-                                <span>YouTube</span>
-                            </a>
-                            <a href="#" class="contact-social-btn" title="LinkedIn" target="_blank">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                                <span>LinkedIn</span>
-                            </a>
+                            @foreach ($socialPlatforms as $key => $platform)
+                                @php
+                                    $urlKey = $key . '_url';
+                                    $showKey = 'show_' . $key;
+                                    $urlValue = $site_settings[$urlKey] ?? '';
+                                    if (empty($urlValue) && in_array($key, ['youtube', 'instagram', 'linkedin', 'facebook'])) {
+                                        $urlValue = $platform['default_url'];
+                                    }
+                                    $showValue = $site_settings[$showKey] ?? '1';
+                                @endphp
+                                @if (!empty($urlValue) && $urlValue !== '#' && $showValue === '1')
+                                    <a href="{{ $urlValue }}" class="contact-social-btn" title="{{ $platform['name'] }}" target="_blank">
+                                        {!! $platform['icon'] !!}
+                                        <span>{{ $platform['name'] }}</span>
+                                    </a>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
 
@@ -771,18 +837,22 @@
                     We edit, design, and direct high-impact cinematic stories that capture attention and build legendary digital presence.
                 </p>
                 <div class="footer-social-icons">
-                    <a href="{{ $site_settings['youtube_url'] ?? '#' }}" aria-label="YouTube" class="social-icon-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                    </a>
-                    <a href="{{ $site_settings['instagram_url'] ?? 'https://www.instagram.com/famehousemedia/' }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    </a>
-                    <a href="{{ $site_settings['linkedin_url'] ?? '#' }}" aria-label="LinkedIn" class="social-icon-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    </a>
-                    <a href="{{ $site_settings['facebook_url'] ?? '#' }}" aria-label="Facebook" class="social-icon-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                    </a>
+                    @foreach ($socialPlatforms as $key => $platform)
+                        @php
+                            $urlKey = $key . '_url';
+                            $showKey = 'show_' . $key;
+                            $urlValue = $site_settings[$urlKey] ?? '';
+                            if (empty($urlValue) && in_array($key, ['youtube', 'instagram', 'linkedin', 'facebook'])) {
+                                $urlValue = $platform['default_url'];
+                            }
+                            $showValue = $site_settings[$showKey] ?? '1';
+                        @endphp
+                        @if (!empty($urlValue) && $urlValue !== '#' && $showValue === '1')
+                            <a href="{{ $urlValue }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $platform['name'] }}" class="social-icon-btn">
+                                {!! $platform['icon'] !!}
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
