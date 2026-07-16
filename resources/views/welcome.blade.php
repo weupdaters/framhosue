@@ -637,10 +637,10 @@
                             <input type="hidden" name="budget" id="selected-budget" value="">
                             
                             <div class="budget-grid">
-                                <div class="option-card" data-value="under-10k">
+                                <div class="option-card" data-value="1k-10k">
                                     <span class="currency-tag">₹</span>
                                     <div class="option-meta">
-                                        <h4>Under ₹10,000</h4>
+                                        <h4>₹1,000 – ₹10,000</h4>
                                         <p>Basic or trial package</p>
                                     </div>
                                     <span class="check-circle"></span>
@@ -653,22 +653,35 @@
                                     </div>
                                     <span class="check-circle"></span>
                                 </div>
-                                <div class="option-card" data-value="30k-75k">
+                                <div class="option-card" data-value="30k-100k">
                                     <span class="currency-tag">₹₹₹</span>
                                     <div class="option-meta">
-                                        <h4>₹30,000 – ₹75,000</h4>
+                                        <h4>₹30,000 – ₹1,00,000</h4>
                                         <p>Premium content campaigns</p>
                                     </div>
                                     <span class="check-circle"></span>
                                 </div>
-                                <div class="option-card" data-value="75k-plus">
+                                <div class="option-card" data-value="100k-plus">
                                     <span class="currency-tag">₹₹₹₹</span>
                                     <div class="option-meta">
-                                        <h4>₹75,000+</h4>
+                                        <h4>₹1,00,000+</h4>
                                         <p>Full scale enterprise/agency production</p>
                                     </div>
                                     <span class="check-circle"></span>
                                 </div>
+                                <div class="option-card" data-value="Custom Budget" id="custom-budget-card" style="grid-column: span 2;">
+                                    <span class="currency-tag" style="font-size: 1.2rem;">✍️</span>
+                                    <div class="option-meta">
+                                        <h4>Custom Budget / Range</h4>
+                                        <p>Specify your own budget or custom range</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="custom-budget-input-wrapper" style="display: none; margin-top: 1.5rem; transition: all 0.3s ease;">
+                                <label for="custom-budget-value" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.5); font-weight: 700; margin-bottom: 0.6rem; display: block;">Specify Your Budget / Range (₹)</label>
+                                <input type="text" id="custom-budget-value" placeholder="e.g. ₹50,000 or ₹1,50,000 - ₹2,00,000" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.1rem; color: #fff; width: 100%; box-sizing: border-box;">
                             </div>
                             
                             <div class="step-actions">

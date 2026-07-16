@@ -602,6 +602,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     contactForm.reset();
                     if (typeof subjectCards !== 'undefined') subjectCards.forEach(c => c.classList.remove('selected'));
                     if (typeof budgetCards !== 'undefined') budgetCards.forEach(c => c.classList.remove('selected'));
+                    const customBudgetWrapper = document.getElementById('custom-budget-input-wrapper');
+                    const customBudgetValue = document.getElementById('custom-budget-value');
+                    if (customBudgetWrapper) customBudgetWrapper.style.display = 'none';
+                    if (customBudgetValue) customBudgetValue.value = '';
                     const subInput = document.getElementById('selected-subject');
                     const budInput = document.getElementById('selected-budget');
                     if (subInput) subInput.value = '';
@@ -764,20 +768,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const budgetInput = document.getElementById('selected-budget');
     const budgetCards = document.querySelectorAll('#step-2 .option-card');
+    const customBudgetWrapper = document.getElementById('custom-budget-input-wrapper');
+    const customBudgetValue = document.getElementById('custom-budget-value');
     
     if (budgetInput && budgetCards.length > 0) {
         budgetCards.forEach(card => {
             card.addEventListener('click', () => {
                 budgetCards.forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
-                budgetInput.value = card.getAttribute('data-value');
                 
-                // Auto-advance to Step 3
-                setTimeout(() => {
-                    goToStep(3);
-                }, 350);
+                const val = card.getAttribute('data-value');
+                if (val === 'Custom Budget') {
+                    if (customBudgetWrapper) customBudgetWrapper.style.display = 'block';
+                    budgetInput.value = customBudgetValue ? (customBudgetValue.value ? 'Custom: ' + customBudgetValue.value : 'Custom Budget') : 'Custom Budget';
+                } else {
+                    if (customBudgetWrapper) customBudgetWrapper.style.display = 'none';
+                    budgetInput.value = val;
+                    
+                    // Auto-advance to Step 3
+                    setTimeout(() => {
+                        goToStep(3);
+                    }, 350);
+                }
             });
         });
+
+        if (customBudgetValue) {
+            customBudgetValue.addEventListener('input', () => {
+                const customCard = document.getElementById('custom-budget-card');
+                if (customCard && customCard.classList.contains('selected')) {
+                    budgetInput.value = customBudgetValue.value ? 'Custom: ' + customBudgetValue.value : 'Custom Budget';
+                }
+            });
+        }
     }
 
     // Step Nav buttons
