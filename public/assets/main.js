@@ -318,14 +318,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     iframe.style.display = 'block';
                     if (iframeContainer) iframeContainer.style.display = 'block';
                     modal.classList.add('active');
-                } else if (videoId.length > 20) {
-                    // Google Drive preview URL (works reliably without virus download check warnings)
-                    iframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                } else if (videoId.startsWith('youtube:')) {
+                    const ytId = videoId.replace('youtube:', '');
+                    iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
+                    iframe.style.display = 'block';
+                    if (iframeContainer) iframeContainer.style.display = 'block';
+                    modal.classList.add('active');
+                } else if (videoId.startsWith('vimeo:')) {
+                    const vmId = videoId.replace('vimeo:', '');
+                    iframe.src = `https://player.vimeo.com/video/${vmId}?autoplay=1`;
+                    iframe.style.display = 'block';
+                    if (iframeContainer) iframeContainer.style.display = 'block';
+                    modal.classList.add('active');
+                } else if (videoId.startsWith('drive:')) {
+                    const drId = videoId.replace('drive:', '');
+                    iframe.src = `https://drive.google.com/file/d/${drId}/preview`;
                     iframe.style.display = 'block';
                     if (iframeContainer) iframeContainer.style.display = 'block';
                     modal.classList.add('active');
                 } else {
-                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    // Fallback for older seeded items
+                    if (videoId.length > 20) {
+                        iframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                    } else {
+                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    }
                     iframe.style.display = 'block';
                     if (iframeContainer) iframeContainer.style.display = 'block';
                     modal.classList.add('active');

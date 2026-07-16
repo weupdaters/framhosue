@@ -321,9 +321,9 @@
 
                     <!-- Video ID / URL -->
                     <div class="form-group">
-                        <label for="video_id">Reel / Video Link or Google Drive/YouTube ID (Optional)</label>
-                        <input type="text" id="video_id" name="video_id" value="{{ old('video_id', $service->video_id ?? '') }}" placeholder="e.g., 18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9 or YouTube URL">
-                        <p style="font-size: 0.72rem; color: rgba(255,255,255,0.4); margin: 0.3rem 0 0 0;">Enter Google Drive video ID or YouTube URL to enable video overlay playback on homepage card.</p>
+                        <label for="video_id">Video Link or ID (YouTube, Vimeo, or Google Drive) (Optional)</label>
+                        <input type="text" id="video_id" name="video_id" value="{{ old('video_id', $service->video_id ?? '') }}" placeholder="e.g. YouTube, Vimeo, or Google Drive URL/ID">
+                        <p style="font-size: 0.72rem; color: rgba(255,255,255,0.4); margin: 0.3rem 0 0 0;">Supports full link or ID from YouTube, Vimeo, and Google Drive to enable autoplay playback on homepage.</p>
                         @error('video_id')
                             <div class="error-message">{{ $message }}</div>
                         @enderror

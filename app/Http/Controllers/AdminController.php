@@ -55,6 +55,7 @@ class AdminController extends Controller
     }
 
     // Helper to extract YouTube video ID or Instagram shortcode from a URL
+    // Helper to extract YouTube video ID, Vimeo ID, Google Drive ID or Instagram shortcode from a URL
     private function parseVideoId($url)
     {
         if (empty($url)) return null;
@@ -64,11 +65,35 @@ class AdminController extends Controller
             return 'instagram:' . $matches[1];
         }
 
-        if (strlen($url) === 11) return $url;
+        // If it matches a Vimeo URL
+        if (preg_match('/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/i', $url, $matches)) {
+            return 'vimeo:' . $matches[1];
+        }
 
-        $pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i';
-        if (preg_match($pattern, $url, $matches)) {
-            return $matches[1];
+        // If it matches a Google Drive URL
+        if (preg_match('/(?:drive\.google\.com\/file\/d\/|drive\.google\.com\/open\?id=)([a-zA-Z0-9_-]{25,})/i', $url, $matches)) {
+            return 'drive:' . $matches[1];
+        }
+
+        // If it matches a YouTube URL
+        $youtubePattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i';
+        if (preg_match($youtubePattern, $url, $matches)) {
+            return 'youtube:' . $matches[1];
+        }
+
+        // Check if raw Vimeo ID (numeric only)
+        if (is_numeric($url)) {
+            return 'vimeo:' . $url;
+        }
+
+        // Check if raw Google Drive ID (length > 20 and alphanumeric with dashes)
+        if (strlen($url) > 20 && preg_match('/^[a-zA-Z0-9_-]+$/', $url)) {
+            return 'drive:' . $url;
+        }
+
+        // Check if raw YouTube ID (typically 11 characters)
+        if (strlen($url) === 11) {
+            return 'youtube:' . $url;
         }
 
         return $url;

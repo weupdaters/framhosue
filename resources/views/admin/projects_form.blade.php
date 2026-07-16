@@ -397,9 +397,9 @@
 
                         <!-- Video ID (optional) -->
                         <div class="form-group">
-                            <label for="video_id">YouTube Video Link or ID (Optional)</label>
-                            <input type="text" name="video_id" id="video_id" value="{{ old('video_id', $project->video_id ?? '') }}" placeholder="e.g. https://www.youtube.com/watch?v=1KaDy7BBLweHUU7EyL55GIV1OYAxT8Mbk">
-                            <span style="font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem;">Copy-paste the whole YouTube link or short ID. We'll parse it automatically.</span>
+                            <label for="video_id">Video Link or ID (YouTube, Vimeo, or Google Drive) (Optional)</label>
+                            <input type="text" name="video_id" id="video_id" value="{{ old('video_id', $project->video_id ?? '') }}" placeholder="e.g. YouTube, Vimeo, or Google Drive URL/ID">
+                            <span style="font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem;">Supports full link or ID from YouTube, Vimeo, and Google Drive. We'll parse it automatically.</span>
                             @error('video_id')
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
