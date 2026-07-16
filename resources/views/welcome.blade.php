@@ -73,9 +73,9 @@
         <div class="nav-container">
             <a href="#" class="logo-link">
                 <div class="logo-wrapper">
-                    <img src="{{ asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo">
+                    <img src="{{ isset($site_settings['site_logo']) && $site_settings['site_logo'] ? asset('images/' . $site_settings['site_logo']) : asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo">
                     <div class="logo-expand-container">
-                        <img src="{{ asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover">
+                        <img src="{{ isset($site_settings['site_logo_expanded']) && $site_settings['site_logo_expanded'] ? asset('images/' . $site_settings['site_logo_expanded']) : asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover">
                     </div>
                 </div>
             </a>
@@ -995,9 +995,9 @@
             <div class="footer-column brand-column">
                 <a href="#" class="logo-link" style="margin-bottom: 1.5rem;">
                     <div class="logo-wrapper">
-                        <img src="{{ asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 50px;">
+                        <img src="{{ isset($site_settings['site_logo']) && $site_settings['site_logo'] ? asset('images/' . $site_settings['site_logo']) : asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 50px;">
                         <div class="logo-expand-container">
-                            <img src="{{ asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 100px;">
+                            <img src="{{ isset($site_settings['site_logo_expanded']) && $site_settings['site_logo_expanded'] ? asset('images/' . $site_settings['site_logo_expanded']) : asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 100px;">
                         </div>
                     </div>
                 </a>
@@ -1076,7 +1076,9 @@
         <!-- Footer Bottom Bar -->
         <div class="footer-bottom-bar">
             <div class="footer-bottom-container">
-                <p class="copyright-text">&copy; {{ date('Y') }} Fame House. Crafted with passion.</p>
+                <p class="copyright-text">
+                    &copy; {{ date('Y') }} Fame House. Crafted with passion. | Website design by <a href="https://www.weupdaters.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none; font-weight: 600; transition: color 0.3s;">Weupdaters</a>
+                </p>
 
                 <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>

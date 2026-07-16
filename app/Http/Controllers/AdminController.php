@@ -521,6 +521,8 @@ class AdminController extends Controller
             'hero_bg_video_url' => 'nullable|string|max:2000',
             'hero_bg_video' => 'nullable|file|mimes:mp4,ogg,webm,qt,mov|max:102400',
             'hero_poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+            'site_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'site_logo_expanded' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         // Remove files from data array to process them separately
@@ -532,6 +534,12 @@ class AdminController extends Controller
         }
         if (isset($data['hero_poster'])) {
             unset($data['hero_poster']);
+        }
+        if (isset($data['site_logo'])) {
+            unset($data['site_logo']);
+        }
+        if (isset($data['site_logo_expanded'])) {
+            unset($data['site_logo_expanded']);
         }
 
         // Parse about_video_id if it is set
@@ -565,6 +573,22 @@ class AdminController extends Controller
             $posterName = 'poster_' . time() . '_' . uniqid() . '.' . $poster->getClientOriginalExtension();
             $poster->move(public_path('images'), $posterName);
             \App\Models\Setting::updateOrCreate(['key' => 'hero_poster'], ['value' => $posterName]);
+        }
+
+        // Handle site_logo file upload
+        if ($request->hasFile('site_logo')) {
+            $logo = $request->file('site_logo');
+            $logoName = 'logo_' . time() . '_' . uniqid() . '.' . $logo->getClientOriginalExtension();
+            $logo->move(public_path('images'), $logoName);
+            \App\Models\Setting::updateOrCreate(['key' => 'site_logo'], ['value' => $logoName]);
+        }
+
+        // Handle site_logo_expanded file upload
+        if ($request->hasFile('site_logo_expanded')) {
+            $logoExp = $request->file('site_logo_expanded');
+            $logoExpName = 'logo_exp_' . time() . '_' . uniqid() . '.' . $logoExp->getClientOriginalExtension();
+            $logoExp->move(public_path('images'), $logoExpName);
+            \App\Models\Setting::updateOrCreate(['key' => 'site_logo_expanded'], ['value' => $logoExpName]);
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully!');

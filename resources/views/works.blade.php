@@ -21,9 +21,9 @@
             </a>
             <a href="{{ route('home') }}" class="logo-link">
                 <div class="logo-wrapper">
-                    <img src="{{ asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 50px;">
+                    <img src="{{ isset($site_settings['site_logo']) && $site_settings['site_logo'] ? asset('images/' . $site_settings['site_logo']) : asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 50px;">
                     <div class="logo-expand-container">
-                        <img src="{{ asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 100px;">
+                        <img src="{{ isset($site_settings['site_logo_expanded']) && $site_settings['site_logo_expanded'] ? asset('images/' . $site_settings['site_logo_expanded']) : asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 100px;">
                     </div>
                 </div>
             </a>

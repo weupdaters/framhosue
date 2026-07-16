@@ -462,6 +462,42 @@
                         </div>
                     </div>
 
+                    <!-- Logo & Branding Settings -->
+                    <div class="settings-section-title">Logo & Branding</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="site_logo">Website Logo (Short Form Badge)</label>
+                            <input type="file" name="site_logo" id="site_logo" accept="image/*">
+                            @if(isset($settings['site_logo']) && $settings['site_logo'])
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Short Logo:</span>
+                                    <div class="thumbnail-preview" style="width: 80px; height: 50px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; background: #000; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; padding: 5px;">
+                                        <img src="{{ asset('images/' . $settings['site_logo']) }}" alt="Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                    </div>
+                                </div>
+                            @endif
+                            @error('site_logo')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="site_logo_expanded">Hover Expanded Logo (Text Image)</label>
+                            <input type="file" name="site_logo_expanded" id="site_logo_expanded" accept="image/*">
+                            @if(isset($settings['site_logo_expanded']) && $settings['site_logo_expanded'])
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Expanded Logo:</span>
+                                    <div class="thumbnail-preview" style="width: 140px; height: 50px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; background: #000; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; padding: 5px;">
+                                        <img src="{{ asset('images/' . $settings['site_logo_expanded']) }}" alt="Preview" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                    </div>
+                                </div>
+                            @endif
+                            @error('site_logo_expanded')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
                     <!-- SECTION 2: Contact Information -->
                     <div class="settings-section-title">Contact Info</div>
                     <div class="form-grid">
