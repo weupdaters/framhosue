@@ -583,6 +583,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Reset fields
                     contactForm.reset();
+                    if (typeof subjectCards !== 'undefined') subjectCards.forEach(c => c.classList.remove('selected'));
+                    if (typeof budgetCards !== 'undefined') budgetCards.forEach(c => c.classList.remove('selected'));
+                    const subInput = document.getElementById('selected-subject');
+                    const budInput = document.getElementById('selected-budget');
+                    if (subInput) subInput.value = '';
+                    if (budInput) budInput.value = '';
+                    if (typeof goToStep === 'function') goToStep(1);
 
                     // Scroll to alert
                     contactAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -614,19 +621,193 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 6. AUTO SELECT PLAN FROM GET STARTED BUTTONS
+    // 6. INTERACTIVE MULTI-STEP QUESTIONNAIRE
     // ==========================================
-    const getStartedBtns = document.querySelectorAll('.get-started-btn');
-    const formSubjectSelect = document.getElementById('form-subject');
+    const formSteps = document.querySelectorAll('.form-step');
+    const stepNodes = document.querySelectorAll('.step-node');
+    const progressFill = document.getElementById('step-progress-fill');
+    
+    let currentStep = 1;
+    const totalSteps = 4;
 
-    if (getStartedBtns.length > 0 && formSubjectSelect) {
-        getStartedBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const planValue = btn.getAttribute('data-plan');
-                if (planValue) {
-                    formSubjectSelect.value = planValue;
+    const updateProgressBar = (step) => {
+        if (!progressFill) return;
+        const percentage = ((step - 1) / (totalSteps - 1)) * 100;
+        progressFill.style.width = `${percentage}%`;
+    };
+
+    window.goToStep = (stepNumber) => {
+        if (stepNumber < 1 || stepNumber > totalSteps) return;
+        
+        // Hide all steps
+        formSteps.forEach(step => {
+            step.classList.remove('active');
+        });
+
+        // Show active step
+        const activeStepEl = document.getElementById(`step-${stepNumber}`);
+        if (activeStepEl) {
+            activeStepEl.classList.add('active');
+        }
+
+        // Update progress bar
+        updateProgressBar(stepNumber);
+
+        // Update step nodes
+        stepNodes.forEach(node => {
+            const stepVal = parseInt(node.getAttribute('data-step'));
+            node.classList.remove('active', 'completed');
+            if (stepVal === stepNumber) {
+                node.classList.add('active');
+            } else if (stepVal < stepNumber) {
+                node.classList.add('completed');
+            }
+        });
+
+        currentStep = stepNumber;
+    };
+
+    // Card Selection handlers
+    const subjectInput = document.getElementById('selected-subject');
+    const subjectCards = document.querySelectorAll('#step-1 .option-card');
+    
+    if (subjectInput && subjectCards.length > 0) {
+        subjectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                subjectCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                subjectInput.value = card.getAttribute('data-value');
+                
+                // Auto-advance to Step 2
+                setTimeout(() => {
+                    goToStep(2);
+                }, 350);
+            });
+        });
+    }
+
+    const budgetInput = document.getElementById('selected-budget');
+    const budgetCards = document.querySelectorAll('#step-2 .option-card');
+    
+    if (budgetInput && budgetCards.length > 0) {
+        budgetCards.forEach(card => {
+            card.addEventListener('click', () => {
+                budgetCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                budgetInput.value = card.getAttribute('data-value');
+                
+                // Auto-advance to Step 3
+                setTimeout(() => {
+                    goToStep(3);
+                }, 350);
+            });
+        });
+    }
+
+    // Step Nav buttons
+    const nextButtons = document.querySelectorAll('.btn-next');
+    const prevButtons = document.querySelectorAll('.btn-prev');
+
+    nextButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const nextStep = parseInt(btn.getAttribute('data-next'));
+            
+            // Validation
+            if (currentStep === 1 && !subjectInput.value) {
+                alert('Please select a service package to continue.');
+                return;
+            }
+            if (currentStep === 2 && !budgetInput.value) {
+                alert('Please select your estimated budget to continue.');
+                return;
+            }
+            if (currentStep === 3) {
+                const messageText = document.getElementById('form-message');
+                if (messageText && !messageText.value.trim()) {
+                    alert('Please tell us a bit about your project vision to continue.');
+                    return;
+                }
+            }
+
+            goToStep(nextStep);
+        });
+    });
+
+    prevButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const prevStep = parseInt(btn.getAttribute('data-prev'));
+            goToStep(prevStep);
+        });
+    });
+
+    // Make step nodes clickable for completed steps
+    stepNodes.forEach(node => {
+        node.addEventListener('click', () => {
+            const targetStep = parseInt(node.getAttribute('data-step'));
+            if (targetStep < currentStep) {
+                goToStep(targetStep);
+            } else if (targetStep === 2 && subjectInput.value) {
+                goToStep(2);
+            } else if (targetStep === 3 && subjectInput.value && budgetInput.value) {
+                goToStep(3);
+            }
+        });
+    });
+
+    // Auto-select from CTA / plans buttons
+    const getStartedBtns = document.querySelectorAll('.get-started-btn');
+    const customPricingBtn = document.querySelector('.custom-pricing-btn');
+
+    const handleExternalSelect = (planVal) => {
+        goToStep(1);
+        
+        let matched = false;
+        if (subjectCards.length > 0) {
+            subjectCards.forEach(card => {
+                const val = card.getAttribute('data-value').toLowerCase();
+                if (planVal && (val.includes(planVal.toLowerCase()) || planVal.toLowerCase().includes(val))) {
+                    subjectCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    if (subjectInput) subjectInput.value = card.getAttribute('data-value');
+                    matched = true;
                 }
             });
+
+            if (!matched) {
+                subjectCards.forEach(card => {
+                    if (card.getAttribute('data-value') === 'Custom Content Solution') {
+                        subjectCards.forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        if (subjectInput) subjectInput.value = 'Custom Content Solution';
+                    }
+                });
+            }
+        }
+
+        // Scroll smoothly to contact
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            window.scrollTo({
+                top: contactSection.offsetTop - 50,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    if (getStartedBtns.length > 0) {
+        getStartedBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const planValue = btn.getAttribute('data-plan');
+                handleExternalSelect(planValue);
+            });
+        });
+    }
+
+    if (customPricingBtn) {
+        customPricingBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            handleExternalSelect('custom');
         });
     }
 

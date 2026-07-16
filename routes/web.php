@@ -56,6 +56,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/plans/{plan}/edit', [AdminController::class, 'plansEdit'])->name('admin.plans.edit');
         Route::post('/plans/{plan}/update', [AdminController::class, 'plansUpdate'])->name('admin.plans.update');
         Route::post('/plans/{plan}/delete', [AdminController::class, 'plansDelete'])->name('admin.plans.delete');
+
+        // Services CRUD
+        Route::get('/services', [AdminController::class, 'servicesIndex'])->name('admin.services.index');
+        Route::get('/services/create', [AdminController::class, 'servicesCreate'])->name('admin.services.create');
+        Route::post('/services/store', [AdminController::class, 'servicesStore'])->name('admin.services.store');
+        Route::get('/services/{service}/edit', [AdminController::class, 'servicesEdit'])->name('admin.services.edit');
+        Route::post('/services/{service}/update', [AdminController::class, 'servicesUpdate'])->name('admin.services.update');
+        Route::post('/services/{service}/delete', [AdminController::class, 'servicesDelete'])->name('admin.services.delete');
         
         // Settings CRUD
         Route::get('/settings', [AdminController::class, 'settingsEdit'])->name('admin.settings.index');

@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Plan;
+use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -273,11 +274,15 @@ class AdminController extends Controller
             'message' => 'required|string|max:5000',
         ]);
 
+        $fullMessage = "Budget: " . ($request->input('budget') ?: 'Not specified') . "\n";
+        $fullMessage .= "Phone: " . ($request->input('phone') ?: 'Not provided') . "\n\n";
+        $fullMessage .= "Project Details:\n" . $request->message;
+
         Contact::create([
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
-            'message' => $request->message,
+            'message' => $fullMessage,
         ]);
 
         return response()->json([
@@ -434,5 +439,105 @@ class AdminController extends Controller
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully!');
+    }
+
+    // List all services for Admin
+    public function servicesIndex()
+    {
+        $services = Service::orderBy('order')->get();
+        return view('admin.services_index', compact('services'));
+    }
+
+    // Show service creation form
+    public function servicesCreate()
+    {
+        return view('admin.services_form');
+    }
+
+    // Store service
+    public function servicesStore(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'service_code' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'video_id' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'order' => 'required|integer',
+        ]);
+
+        $service = new Service();
+        $service->title = $request->title;
+        $service->service_code = $request->service_code;
+        $service->description = $request->description;
+        $service->video_id = $this->parseVideoId($request->video_id);
+        $service->order = $request->order;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $service->image_path = $filename;
+        }
+
+        $service->save();
+
+        return redirect()->route('admin.services.index')->with('success', 'Service created successfully!');
+    }
+
+    // Show service edit form
+    public function servicesEdit(Service $service)
+    {
+        return view('admin.services_form', compact('service'));
+    }
+
+    // Update service
+    public function servicesUpdate(Request $request, Service $service)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'service_code' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'video_id' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'order' => 'required|integer',
+        ]);
+
+        $service->title = $request->title;
+        $service->service_code = $request->service_code;
+        $service->description = $request->description;
+        $service->video_id = $this->parseVideoId($request->video_id);
+        $service->order = $request->order;
+
+        if ($request->hasFile('image')) {
+            // Delete old file if it exists and is not seeded default
+            $oldPath = public_path('images/' . $service->image_path);
+            if (File::exists($oldPath) && !in_array($service->image_path, ['project_10.png', 'project_11.png', 'project_12.png', 'final_short_form.png', 'keventers_eid.png'])) {
+                File::delete($oldPath);
+            }
+
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $service->image_path = $filename;
+        }
+
+        $service->save();
+
+        return redirect()->route('admin.services.index')->with('success', 'Service updated successfully!');
+    }
+
+    // Delete service
+    public function servicesDelete(Service $service)
+    {
+        // Delete image file if exists and not seeded default
+        $oldPath = public_path('images/' . $service->image_path);
+        if (File::exists($oldPath) && !in_array($service->image_path, ['project_10.png', 'project_11.png', 'project_12.png', 'final_short_form.png', 'keventers_eid.png'])) {
+            File::delete($oldPath);
+        }
+
+        $service->delete();
+
+        return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully!');
     }
 }

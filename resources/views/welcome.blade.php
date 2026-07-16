@@ -549,8 +549,19 @@
                             <a href="#contact" class="get-started-btn {{ $plan->is_popular ? 'card-action-btn-solid' : 'card-action-btn-outline' }}" data-plan="{{ strtolower($plan->name) }}">Get Started</a>
                         </div>
                     @empty
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; border-radius: 20px; border: 1px dashed rgba(255,255,255,0.08); background: rgba(255,255,255,0.01); color: rgba(255, 255, 255, 0.4); font-size: 0.95rem;">
-                            Pricing plans are currently being updated. Please contact us directly for customized offers.
+                        <div class="custom-pricing-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 5rem 3rem; border-radius: 24px; border: 1px solid rgba(184, 255, 52, 0.15); background: linear-gradient(180deg, rgba(184, 255, 52, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%); backdrop-filter: blur(10px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; position: relative; overflow: hidden;">
+                            <div class="placeholder-glow" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(184, 255, 52, 0.03) 0%, transparent 60%); pointer-events: none;"></div>
+                            <div class="icon-circle" style="width: 70px; height: 70px; background: rgba(184, 255, 52, 0.08); border: 1px solid rgba(184, 255, 52, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; color: var(--primary-color);">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; margin: 0; color: #ffffff; letter-spacing: -0.5px;">No Preset Plans Fit?</h3>
+                            <p style="font-family: 'Outfit', sans-serif; font-size: 0.98rem; color: rgba(255,255,255,0.6); max-width: 500px; margin: 0; line-height: 1.6;">
+                                We design custom-tailored content packages that perfectly match your creative vision, requirements, and publishing frequency.
+                            </p>
+                            <a href="#contact" class="custom-pricing-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.8rem; background: var(--primary-color); color: #080a0e; font-weight: 700; padding: 1.1rem 2.2rem; border-radius: 12px; font-size: 0.92rem; border: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 20px rgba(184, 255, 52, 0.15);">
+                                <span>Build Your Package</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
                         </div>
                     @endforelse
                 </div>
@@ -751,66 +762,214 @@
                     <form action="{{ route('contact.submit') }}" method="POST" class="contact-glass-form reveal reveal-zoom-in" id="contact-form" style="--delay: 1;">
                         @csrf
 
-                        <!-- Form Header -->
-                        <div class="contact-form-header">
-                            <h3>Send Us a Message</h3>
-                            <p>Fill in the details and we'll get back to you within hours.</p>
+                        <!-- Form Header / Multi-Step Progress Tracker -->
+                        <div class="step-progress-wrapper">
+                            <div class="step-progress-bar">
+                                <div class="step-progress-fill" id="step-progress-fill"></div>
+                            </div>
+                            <div class="step-nodes">
+                                <div class="step-node active" data-step="1">
+                                    <div class="node-circle">1</div>
+                                    <span class="node-label">Service</span>
+                                </div>
+                                <div class="step-node" data-step="2">
+                                    <div class="node-circle">2</div>
+                                    <span class="node-label">Budget</span>
+                                </div>
+                                <div class="step-node" data-step="3">
+                                    <div class="node-circle">3</div>
+                                    <span class="node-label">Vision</span>
+                                </div>
+                                <div class="step-node" data-step="4">
+                                    <div class="node-circle">4</div>
+                                    <span class="node-label">Details</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="contact-form-alert" style="display: none; margin-bottom: 1.5rem; padding: 1.2rem; border-radius: 16px; font-size: 0.9rem; line-height: 1.4; border: 1px solid rgba(184, 255, 52, 0.25); background: rgba(184, 255, 52, 0.08); color: var(--primary-color); box-shadow: 0 10px 20px rgba(184, 255, 52, 0.05);"></div>
 
-                        <div class="form-row">
+                        <!-- Step 1: Services -->
+                        <div class="form-step active" id="step-1">
+                            <div class="step-header">
+                                <h3>What service package are you interested in?</h3>
+                                <p>Select the option that best matches your project needs.</p>
+                            </div>
+                            <input type="hidden" name="subject" id="selected-subject" value="" required>
+                            
+                            <div class="options-grid scrollable-options">
+                                <!-- Option 1: Commercial Video -->
+                                <div class="option-card" data-value="Cinematic Video Editing">
+                                    <div class="option-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+                                    </div>
+                                    <div class="option-meta">
+                                        <h4>Cinematic Video Editing</h4>
+                                        <p>Commercials, ads, promo videos</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <!-- Option 2: Shorts & Reels -->
+                                <div class="option-card" data-value="Vertical Reels & Shorts">
+                                    <div class="option-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect><path d="M12 2v20"></path></svg>
+                                    </div>
+                                    <div class="option-meta">
+                                        <h4>Vertical Reels & Shorts</h4>
+                                        <p>Instagram Reels, YouTube Shorts, TikToks</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <!-- Option 3: Graphic Design -->
+                                <div class="option-card" data-value="Graphic Design & Thumbnails">
+                                    <div class="option-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    </div>
+                                    <div class="option-meta">
+                                        <h4>Graphic Design & Thumbnails</h4>
+                                        <p>Posters, banners, YouTube thumbnails</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <!-- Option 4: YouTube Editing -->
+                                <div class="option-card" data-value="YouTube Production">
+                                    <div class="option-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                                    </div>
+                                    <div class="option-meta">
+                                        <h4>YouTube Production</h4>
+                                        <p>Long-form video editing and production</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <!-- Option 5: Brand Content -->
+                                <div class="option-card" data-value="Brand Content Strategy">
+                                    <div class="option-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+                                    </div>
+                                    <div class="option-meta">
+                                        <h4>Brand Content Strategy</h4>
+                                        <p>Video identity, target positioning, scripts</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <!-- Option 6: Custom Request -->
+                                <div class="option-card" data-value="Custom Content Solution">
+                                    <div class="option-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    </div>
+                                    <div class="option-meta">
+                                        <h4>Custom Content Solution</h4>
+                                        <p>A tailored mix of different production deliverables</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="step-actions">
+                                <div></div>
+                                <button type="button" class="step-btn btn-next" data-next="2">Next Step</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Budget -->
+                        <div class="form-step" id="step-2">
+                            <div class="step-header">
+                                <h3>What is your estimated monthly budget?</h3>
+                                <p>This helps us understand the scale and speed of deliverables.</p>
+                            </div>
+                            <input type="hidden" name="budget" id="selected-budget" value="">
+                            
+                            <div class="budget-grid">
+                                <div class="option-card" data-value="under-10k">
+                                    <span class="currency-tag">₹</span>
+                                    <div class="option-meta">
+                                        <h4>Under ₹10,000</h4>
+                                        <p>Basic or trial package</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <div class="option-card" data-value="10k-30k">
+                                    <span class="currency-tag">₹₹</span>
+                                    <div class="option-meta">
+                                        <h4>₹10,000 – ₹30,000</h4>
+                                        <p>Standard editing & design support</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <div class="option-card" data-value="30k-75k">
+                                    <span class="currency-tag">₹₹₹</span>
+                                    <div class="option-meta">
+                                        <h4>₹30,000 – ₹75,000</h4>
+                                        <p>Premium content campaigns</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                                <div class="option-card" data-value="75k-plus">
+                                    <span class="currency-tag">₹₹₹₹</span>
+                                    <div class="option-meta">
+                                        <h4>₹75,000+</h4>
+                                        <p>Full scale enterprise/agency production</p>
+                                    </div>
+                                    <span class="check-circle"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="step-actions">
+                                <button type="button" class="step-btn btn-prev" data-prev="1">Back</button>
+                                <button type="button" class="step-btn btn-next" data-next="3">Next Step</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Vision / Message -->
+                        <div class="form-step" id="step-3">
+                            <div class="step-header">
+                                <h3>Tell us about your project vision</h3>
+                                <p>Describe what you need, timelines, specific examples, or deliverables.</p>
+                            </div>
                             <div class="form-group">
-                                <label for="form-name">Your Name</label>
+                                <textarea id="form-message" name="message" rows="6" placeholder="Describe your brand, editing style preference, quantity of content, or any specific reference works you like..." required></textarea>
+                            </div>
+                            
+                            <div class="step-actions">
+                                <button type="button" class="step-btn btn-prev" data-prev="2">Back</button>
+                                <button type="button" class="step-btn btn-next" data-next="4">Next Step</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Contact Details -->
+                        <div class="form-step" id="step-4">
+                            <div class="step-header">
+                                <h3>Let's stay connected</h3>
+                                <p>Provide your contact details so we can send a custom proposal.</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="form-name">Your Full Name</label>
                                 <input type="text" id="form-name" name="name" placeholder="John Doe" required>
                             </div>
-                            <div class="form-group">
-                                <label for="form-email">Email Address</label>
-                                <input type="email" id="form-email" name="email" placeholder="john@example.com" required>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="form-email">Email Address</label>
+                                    <input type="email" id="form-email" name="email" placeholder="john@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-phone">Phone Number (Optional)</label>
+                                    <input type="tel" id="form-phone" name="phone" placeholder="+91 98765 43210">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="form-phone">Phone Number</label>
-                                <input type="tel" id="form-phone" name="phone" placeholder="+91 98765 43210">
+                            
+                            <div class="step-actions" style="margin-top: 2rem;">
+                                <button type="button" class="step-btn btn-prev" data-prev="3">Back</button>
+                                <button type="submit" class="contact-submit-btn" id="contact-submit-btn">
+                                    <span>Send Project Proposal</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label for="form-budget">Estimated Budget</label>
-                                <select id="form-budget" name="budget">
-                                    <option value="" disabled selected>Select budget range...</option>
-                                    <option value="under-10k">Under ₹10,000</option>
-                                    <option value="10k-30k">₹10,000 – ₹30,000</option>
-                                    <option value="30k-75k">₹30,000 – ₹75,000</option>
-                                    <option value="75k-plus">₹75,000+</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="form-subject">Interested In</label>
-                            <select id="form-subject" name="subject" required>
-                                <option value="" disabled selected>Select service package...</option>
-                                @foreach($plans as $p)
-                                    <option value="{{ strtolower($p->name) }}">{{ $p->name }} (₹{{ $p->price }}{{ $p->duration }})</option>
-                                @endforeach
-                                <option value="custom">Custom Content Solution</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="form-message">Your Message</label>
-                            <textarea id="form-message" name="message" rows="5" placeholder="Tell us about your project vision, deliverables, or timeline..." required></textarea>
-                        </div>
-
-                        <div class="contact-form-actions">
-                            <button type="submit" class="contact-submit-btn" id="contact-submit-btn">
-                                <span>Send Message</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </button>
-                            <div class="form-guarantee-badge">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <span>100% private & secure. No spam, ever.</span>
+                            <div class="form-guarantee-badge" style="margin-top: 1.5rem; justify-content: center;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <span>100% private & secure. We respond in under 2 hours.</span>
                             </div>
                         </div>
 

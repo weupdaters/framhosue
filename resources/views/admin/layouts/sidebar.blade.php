@@ -26,6 +26,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('admin.services.index') }}" class="menu-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
+                <img src="https://img.icons8.com/color/48/support.png" alt="Services" style="width: 20px; height: 20px;">
+                <span>Services</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('admin.messages.index') }}" class="menu-link {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
                 <img src="https://img.icons8.com/color/48/chat.png" alt="Messages" style="width: 20px; height: 20px;">
                 <span>Messages</span>
