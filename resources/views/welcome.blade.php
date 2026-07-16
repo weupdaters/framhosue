@@ -148,11 +148,10 @@
                     <span class="about-tag-badge">CREATIVE PRODUCTION</span>
                 </div>
                 <h2 class="about-title reveal reveal-slide-left" style="--delay: 1;">
-                    WE TELL STORIES <br>
-                    THAT STAY <span class="about-italic-highlight">WITH YOU.</span>
+                    {!! $site_settings['about_title'] ?? "WE TELL STORIES <br>\n                    THAT STAY <span class=\"about-italic-highlight\">WITH YOU.</span>" !!}
                 </h2>
                 <p class="about-desc reveal reveal-slide-left" style="--delay: 2;">
-                    Fame House Media is a creative production and branding studio passionate about turning ideas into powerful visual experiences. We blend strategy, storytelling, and cinematic quality to help brands connect, inspire, and stand out.
+                    {{ $site_settings['about_description'] ?? 'Fame House Media is a creative production and branding studio passionate about turning ideas into powerful visual experiences. We blend strategy, storytelling, and cinematic quality to help brands connect, inspire, and stand out.' }}
                 </p>
                 
                 <div class="about-capsule-features reveal reveal-slide-left" style="--delay: 3;">
@@ -213,8 +212,8 @@
             </div>
             
             <div class="about-image-side reveal reveal-zoom-out" style="--delay: 1;">
-                <div class="about-showreel-container video-card" data-video-id="18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9">
-                    <div class="about-showreel-cover" style="background-image: url('{{ asset('images/services_camera_bg.png') }}')">
+                <div class="about-showreel-container video-card" data-video-id="{{ $site_settings['about_video_id'] ?? '18xUMuIQu_PmSJCCqjxI-gNPflPs4Jxg9' }}">
+                    <div class="about-showreel-cover" style="background-image: url('{{ isset($site_settings['about_thumbnail']) ? asset('images/' . $site_settings['about_thumbnail']) : asset('images/services_camera_bg.png') }}')">
                         <!-- Ambient Theater Glow -->
                         <div class="showreel-glow-backdrop"></div>
                         

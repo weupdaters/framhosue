@@ -461,10 +461,32 @@ class AdminController extends Controller
             'carousel_title' => 'nullable|string|max:255',
             'carousel_desc' => 'nullable|string',
             'carousel_cta_text' => 'nullable|string|max:255',
+            'about_title' => 'nullable|string|max:255',
+            'about_description' => 'nullable|string',
+            'about_video_id' => 'nullable|string|max:255',
+            'about_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
+
+        // Remove about_thumbnail from data array to process it separately
+        if (isset($data['about_thumbnail'])) {
+            unset($data['about_thumbnail']);
+        }
+
+        // Parse about_video_id if it is set
+        if (!empty($data['about_video_id'])) {
+            $data['about_video_id'] = $this->parseVideoId($data['about_video_id']);
+        }
 
         foreach ($data as $key => $value) {
             \App\Models\Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        // Handle about_thumbnail file upload
+        if ($request->hasFile('about_thumbnail')) {
+            $image = $request->file('about_thumbnail');
+            $imageName = 'about_' . time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            \App\Models\Setting::updateOrCreate(['key' => 'about_thumbnail'], ['value' => $imageName]);
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully!');

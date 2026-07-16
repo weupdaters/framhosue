@@ -431,7 +431,7 @@
             @endif
 
             <div class="form-card">
-                <form action="{{ route('admin.settings.update') }}" method="POST">
+                <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <!-- SECTION 1: SEO & Metadata -->
@@ -611,6 +611,51 @@
                             <label for="carousel_desc">Carousel Description</label>
                             <textarea name="carousel_desc" id="carousel_desc" rows="2" placeholder="Explore more brand identities, packaging... Description text below the heading.">{{ old('carousel_desc', $settings['carousel_desc'] ?? 'Explore more brand identities, packaging, and digital design work in our creative showcase.') }}</textarea>
                             @error('carousel_desc')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: About Us Settings -->
+                    <div class="settings-section-title">About Us Section Settings</div>
+                    <div class="form-grid">
+                        <div class="form-group form-group-full">
+                            <label for="about_title">About Title (Main Heading)</label>
+                            <input type="text" name="about_title" id="about_title" value="{{ old('about_title', $settings['about_title'] ?? '') }}" placeholder="e.g. WE TELL STORIES <br> THAT STAY <span class=&quot;about-italic-highlight&quot;>WITH YOU.</span>">
+                            <span style="font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem;">Supports HTML tag rendering for italics/highlights.</span>
+                            @error('about_title')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="about_description">About Description (Content)</label>
+                            <textarea name="about_description" id="about_description" rows="4" placeholder="Description text in the about section...">{{ old('about_description', $settings['about_description'] ?? '') }}</textarea>
+                            @error('about_description')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="about_video_id">About Video Link or ID (YouTube, Vimeo, or Google Drive) (Optional)</label>
+                            <input type="text" name="about_video_id" id="about_video_id" value="{{ old('about_video_id', $settings['about_video_id'] ?? '') }}" placeholder="e.g. YouTube, Vimeo, or Google Drive URL/ID">
+                            @error('about_video_id')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="about_thumbnail">About Thumbnail / Cover Image (Optional)</label>
+                            <input type="file" name="about_thumbnail" id="about_thumbnail" accept="image/*">
+                            @if(isset($settings['about_thumbnail']) && $settings['about_thumbnail'])
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Thumbnail:</span>
+                                    <div class="thumbnail-preview" style="width: 140px; height: 90px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; background: #000; margin-top: 0.5rem;">
+                                        <img src="{{ asset('images/' . $settings['about_thumbnail']) }}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                </div>
+                            @endif
+                            @error('about_thumbnail')
                                 <div class="error-message">{{ $message }}</div>
                             @enderror
                         </div>
