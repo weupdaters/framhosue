@@ -365,6 +365,68 @@
         .alert-success svg {
             flex-shrink: 0;
         }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                padding: 1.5rem 2rem;
+            }
+            .sidebar .logo-link {
+                margin-bottom: 1.5rem !important;
+            }
+            .sidebar-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .logout-btn-wrapper {
+                margin-top: 0;
+                width: auto;
+            }
+            .workspace {
+                padding: 2.5rem 2rem;
+            }
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                padding: 1.2rem 1.5rem;
+            }
+            .sidebar-menu {
+                gap: 0.4rem;
+            }
+            .workspace {
+                padding: 2rem 1rem;
+            }
+            .content-card {
+                padding: 1.5rem 1.2rem;
+            }
+            .workspace-header {
+                flex-direction: column;
+                align-items: start;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+            .categories-table th, .categories-table td {
+                padding: 1rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+        }
     </style>
 </head>
 <body>
