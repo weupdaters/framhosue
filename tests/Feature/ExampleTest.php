@@ -104,9 +104,11 @@ class ExampleTest extends TestCase
             'facebook_url' => 'https://facebook.com/mypage',
             'twitter_url' => 'https://x.com/myaccount',
             'tiktok_url' => 'https://tiktok.com/@myaccount',
+            'behance_url' => 'https://www.behance.net/myaccount',
             'show_instagram' => '1',
             'show_youtube' => '0',
             'show_twitter' => '1',
+            'show_behance' => '1',
         ]);
 
         $response->assertRedirect(route('admin.settings.index'));
@@ -116,7 +118,9 @@ class ExampleTest extends TestCase
         $this->assertEquals('updated-admin-email@site.com', \App\Models\Setting::where('key', 'contact_email')->value('value'));
         $this->assertEquals('https://x.com/myaccount', \App\Models\Setting::where('key', 'twitter_url')->value('value'));
         $this->assertEquals('https://tiktok.com/@myaccount', \App\Models\Setting::where('key', 'tiktok_url')->value('value'));
+        $this->assertEquals('https://www.behance.net/myaccount', \App\Models\Setting::where('key', 'behance_url')->value('value'));
         $this->assertEquals('1', \App\Models\Setting::where('key', 'show_instagram')->value('value'));
         $this->assertEquals('0', \App\Models\Setting::where('key', 'show_youtube')->value('value'));
+        $this->assertEquals('1', \App\Models\Setting::where('key', 'show_behance')->value('value'));
     }
 }

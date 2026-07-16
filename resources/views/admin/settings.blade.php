@@ -539,6 +539,11 @@
                                     'name' => 'Snapchat',
                                     'placeholder' => 'https://snapchat.com/add/username',
                                     'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c-1.2 0-2.4.6-3 1.7A5 5 0 0 0 7.8 7c-.2.9-.1 1.8.2 2.6-.6.6-1 1.4-1.2 2.3a4.7 4.7 0 0 0 3.3 5.4c.5.5.7 1.2.5 1.8a2.3 2.3 0 0 0 2.2 2.3h.4a2.3 2.3 0 0 0 2.2-2.3c-.2-.6 0-1.3.5-1.8a4.7 4.7 0 0 0 3.3-5.4c-.2-.9-.6-1.7-1.2-2.3.3-.8.4-1.7.2-2.6a5 5 0 0 0-1.2-2.3c-.6-1.1-1.8-1.7-3-1.7z"/></svg>'
+                                ],
+                                'behance' => [
+                                    'name' => 'Behance',
+                                    'placeholder' => 'https://www.behance.net/username',
+                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h3M9 12a2 2 0 1 1 0-4h3v4M9 12a2 2 0 1 0 0 4h3v-4M18 11.5a3.5 3.5 0 0 0-7 0v1.5h7v-1.5zM14 7h6"/></svg>'
                                 ]
                             ];
                         @endphp
