@@ -299,9 +299,11 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'subject' => 'required|string|max:255',
+            'subject' => 'nullable|string|max:255',
             'message' => 'required|string|max:5000',
         ]);
+
+        $subject = $request->input('subject') ?: 'General Inquiry';
 
         $fullMessage = "Budget: " . ($request->input('budget') ?: 'Not specified') . "\n";
         $fullMessage .= "Phone: " . ($request->input('phone') ?: 'Not provided') . "\n\n";
@@ -310,9 +312,53 @@ class AdminController extends Controller
         Contact::create([
             'name' => $request->name,
             'email' => $request->email,
-            'subject' => $request->subject,
+            'subject' => $subject,
             'message' => $fullMessage,
         ]);
+
+        // Send Admin Notification Email
+        try {
+            $adminEmail = \App\Models\Setting::where('key', 'contact_email')->value('value') ?: 'portfolio@weupdaters.com';
+            
+            $htmlContent = "
+                <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>
+                    <h2 style='color: #080a0e; border-bottom: 2px solid #b8ff34; padding-bottom: 10px;'>New Website Inquiry</h2>
+                    <table style='width: 100%; border-collapse: collapse; margin-top: 15px;'>
+                        <tr>
+                            <td style='padding: 8px; font-weight: bold; width: 150px;'>Name:</td>
+                            <td style='padding: 8px;'>{$request->name}</td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 8px; font-weight: bold;'>Email:</td>
+                            <td style='padding: 8px;'><a href='mailto:{$request->email}'>{$request->email}</a></td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 8px; font-weight: bold;'>Phone:</td>
+                            <td style='padding: 8px;'>" . ($request->input('phone') ?: 'Not provided') . "</td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 8px; font-weight: bold;'>Subject / Service:</td>
+                            <td style='padding: 8px;'>{$subject}</td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 8px; font-weight: bold;'>Budget:</td>
+                            <td style='padding: 8px;'>" . ($request->input('budget') ?: 'Not specified') . "</td>
+                        </tr>
+                    </table>
+                    <div style='margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 8px;'>
+                        <h4 style='margin-top: 0;'>Message Details:</h4>
+                        <p style='line-height: 1.6; white-space: pre-wrap;'>" . e($request->message) . "</p>
+                    </div>
+                </div>
+            ";
+
+            \Illuminate\Support\Facades\Mail::html($htmlContent, function ($message) use ($adminEmail, $request, $subject) {
+                $message->to($adminEmail)
+                        ->subject("New Inquiry: " . $subject . " from " . $request->name);
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Mail sending failed: " . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
