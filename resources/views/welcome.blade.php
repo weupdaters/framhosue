@@ -510,8 +510,8 @@
                 </div>
             </div>
             
-            <div class="pricing-form-container reveal reveal-zoom-in" style="max-width: 680px; margin: 3rem auto 0 auto; width: 100%;">
-                <div class="contact-form-col" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 3.5rem; position: relative; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); box-sizing: border-box; width: 100%;">
+            <div class="pricing-content-layout" style="margin-top: 3rem;">
+                <div class="contact-form-col reveal reveal-zoom-in" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 3.5rem; position: relative; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); box-sizing: border-box; width: 100%;">
                     <!-- Top neon green glow border -->
                     <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent 0%, var(--primary-color) 50%, transparent 100%);"></div>
 
@@ -729,6 +729,24 @@
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <!-- Right Side: Editorial Callout Card -->
+                <div class="pricing-editorial-card reveal reveal-slide-right" style="--delay: 1;">
+                    <div class="editorial-icon-badge">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3 class="editorial-title">
+                        One vision.<br>
+                        Three packages.<br>
+                        All made to<br>
+                        <span class="editorial-highlight">scale your brand.</span>
+                    </h3>
+                    <div class="editorial-divider"></div>
+                    <p class="editorial-desc">
+                        Whether you're a solo creator or a growing agency, we've got a plan that fits your goals.
+                    </p>
+                    <div class="editorial-wave-graphic"></div>
                 </div>
             </div>
 
