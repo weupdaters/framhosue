@@ -511,11 +511,27 @@ class AdminController extends Controller
             'about_description' => 'nullable|string',
             'about_video_id' => 'nullable|string|max:255',
             'about_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'hero_tag' => 'nullable|string|max:255',
+            'hero_title' => 'nullable|string|max:2000',
+            'hero_desc' => 'nullable|string|max:5000',
+            'hero_cta1_text' => 'nullable|string|max:255',
+            'hero_cta1_link' => 'nullable|string|max:255',
+            'hero_cta2_text' => 'nullable|string|max:255',
+            'hero_cta2_link' => 'nullable|string|max:255',
+            'hero_bg_video_url' => 'nullable|string|max:2000',
+            'hero_bg_video' => 'nullable|file|mimes:mp4,ogg,webm,qt,mov|max:102400',
+            'hero_poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
         ]);
 
-        // Remove about_thumbnail from data array to process it separately
+        // Remove files from data array to process them separately
         if (isset($data['about_thumbnail'])) {
             unset($data['about_thumbnail']);
+        }
+        if (isset($data['hero_bg_video'])) {
+            unset($data['hero_bg_video']);
+        }
+        if (isset($data['hero_poster'])) {
+            unset($data['hero_poster']);
         }
 
         // Parse about_video_id if it is set
@@ -533,6 +549,22 @@ class AdminController extends Controller
             $imageName = 'about_' . time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
             \App\Models\Setting::updateOrCreate(['key' => 'about_thumbnail'], ['value' => $imageName]);
+        }
+
+        // Handle hero_bg_video file upload
+        if ($request->hasFile('hero_bg_video')) {
+            $video = $request->file('hero_bg_video');
+            $videoName = 'hero_' . time() . '_' . uniqid() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path(), $videoName);
+            \App\Models\Setting::updateOrCreate(['key' => 'hero_bg_video'], ['value' => $videoName]);
+        }
+
+        // Handle hero_poster file upload
+        if ($request->hasFile('hero_poster')) {
+            $poster = $request->file('hero_poster');
+            $posterName = 'poster_' . time() . '_' . uniqid() . '.' . $poster->getClientOriginalExtension();
+            $poster->move(public_path('images'), $posterName);
+            \App\Models\Setting::updateOrCreate(['key' => 'hero_poster'], ['value' => $posterName]);
         }
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully!');

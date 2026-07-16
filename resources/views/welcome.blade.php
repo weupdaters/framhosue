@@ -93,8 +93,14 @@
     <section id="home" class="hero">
         <!-- Full Screen Ambient Video Layer -->
         <div class="hero-video-container">
-            <video class="hero-bg-video" autoplay loop muted playsinline poster="{{ asset('images/banner.png') }}">
-                <source src="{{ asset('Create_a_second_seamless_lo.mp4') }}" type="video/mp4">
+            <video class="hero-bg-video" autoplay loop muted playsinline poster="{{ isset($site_settings['hero_poster']) && $site_settings['hero_poster'] ? asset('images/' . $site_settings['hero_poster']) : asset('images/banner.png') }}">
+                @if(isset($site_settings['hero_bg_video']) && $site_settings['hero_bg_video'])
+                    <source src="{{ asset($site_settings['hero_bg_video']) }}" type="video/mp4">
+                @elseif(isset($site_settings['hero_bg_video_url']) && $site_settings['hero_bg_video_url'])
+                    <source src="{{ $site_settings['hero_bg_video_url'] }}" type="video/mp4">
+                @else
+                    <source src="{{ asset('Create_a_second_seamless_lo.mp4') }}" type="video/mp4">
+                @endif
             </video>
             <!-- Ambient Cinema Vignette Overlays -->
             <div class="hero-video-overlay-dark"></div>
@@ -105,28 +111,26 @@
         <div class="hero-content-wrapper">
             <div class="hero-brand-category">
                 <span class="category-dash"></span>
-                <span class="category-text">CREATIVE VISION. IMMERSIVE REALITY.</span>
+                <span class="category-text">{{ $site_settings['hero_tag'] ?? 'CREATIVE VISION. IMMERSIVE REALITY.' }}</span>
             </div>
             
             <h1 class="hero-editorial-title">
-                WE EDIT.<br>
-                WE CREATE.<br>
-                <span>WE TELL STORIES.</span>
+                {!! $site_settings['hero_title'] ?? 'WE EDIT.<br>WE CREATE.<br><span>WE TELL STORIES.</span>' !!}
             </h1>
             
             <p class="hero-editorial-desc">
-                Crafting premium visual campaigns, cinematic narrative showreels, and dynamic branding reels that leave an indelible impression.
+                {{ $site_settings['hero_desc'] ?? 'Crafting premium visual campaigns, cinematic narrative showreels, and dynamic branding reels that leave an indelible impression.' }}
             </p>
 
             <div class="hero-cta-wrapper">
-                <a href="#portfolio" class="hero-btn-primary">
-                    <span class="btn-text">EXPLORE WORKS</span>
+                <a href="{{ $site_settings['hero_cta1_link'] ?? '#portfolio' }}" class="hero-btn-primary">
+                    <span class="btn-text">{{ $site_settings['hero_cta1_text'] ?? 'EXPLORE WORKS' }}</span>
                     <span class="btn-icon">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </span>
                 </a>
-                <a href="#about" class="hero-btn-secondary">
-                    <span>THE STUDIO</span>
+                <a href="{{ $site_settings['hero_cta2_link'] ?? '#about' }}" class="hero-btn-secondary">
+                    <span>{{ $site_settings['hero_cta2_text'] ?? 'THE STUDIO' }}</span>
                 </a>
             </div>
         </div>

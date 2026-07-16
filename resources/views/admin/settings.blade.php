@@ -661,6 +661,104 @@
                         </div>
                     </div>
 
+                    <!-- SECTION 6: Hero Settings -->
+                    <div class="settings-section-title">Hero Section Settings</div>
+                    <div class="form-grid">
+                        <div class="form-group form-group-full">
+                            <label for="hero_tag">Hero Small Tag Line</label>
+                            <input type="text" name="hero_tag" id="hero_tag" value="{{ old('hero_tag', $settings['hero_tag'] ?? '') }}" placeholder="e.g. CREATIVE VISION. IMMERSIVE REALITY.">
+                            @error('hero_tag')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="hero_title">Hero Main Title (Heading)</label>
+                            <textarea name="hero_title" id="hero_title" rows="3" placeholder="e.g. WE EDIT.<br>WE CREATE.<br><span>WE TELL STORIES.</span>">{{ old('hero_title', $settings['hero_title'] ?? '') }}</textarea>
+                            <span style="font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem;">Supports HTML tag rendering like &lt;br&gt; and &lt;span&gt; for colored text.</span>
+                            @error('hero_title')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="hero_desc">Hero Subtitle / Description</label>
+                            <textarea name="hero_desc" id="hero_desc" rows="3" placeholder="Description text beneath the main heading...">{{ old('hero_desc', $settings['hero_desc'] ?? '') }}</textarea>
+                            @error('hero_desc')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hero_cta1_text">CTA Button 1 Text (Left)</label>
+                            <input type="text" name="hero_cta1_text" id="hero_cta1_text" value="{{ old('hero_cta1_text', $settings['hero_cta1_text'] ?? '') }}" placeholder="e.g. EXPLORE WORKS">
+                            @error('hero_cta1_text')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hero_cta1_link">CTA Button 1 Link/Target</label>
+                            <input type="text" name="hero_cta1_link" id="hero_cta1_link" value="{{ old('hero_cta1_link', $settings['hero_cta1_link'] ?? '') }}" placeholder="e.g. #portfolio">
+                            @error('hero_cta1_link')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hero_cta2_text">CTA Button 2 Text (Right)</label>
+                            <input type="text" name="hero_cta2_text" id="hero_cta2_text" value="{{ old('hero_cta2_text', $settings['hero_cta2_text'] ?? '') }}" placeholder="e.g. THE STUDIO">
+                            @error('hero_cta2_text')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hero_cta2_link">CTA Button 2 Link/Target</label>
+                            <input type="text" name="hero_cta2_link" id="hero_cta2_link" value="{{ old('hero_cta2_link', $settings['hero_cta2_link'] ?? '') }}" placeholder="e.g. #about">
+                            @error('hero_cta2_link')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hero_bg_video_url">Background Video Link / Name (Optional)</label>
+                            <input type="text" name="hero_bg_video_url" id="hero_bg_video_url" value="{{ old('hero_bg_video_url', $settings['hero_bg_video_url'] ?? '') }}" placeholder="e.g. mp4 filename or custom URL">
+                            @error('hero_bg_video_url')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hero_bg_video">Upload Background Video File (MP4) (Optional)</label>
+                            <input type="file" name="hero_bg_video" id="hero_bg_video" accept="video/mp4">
+                            @if(isset($settings['hero_bg_video']) && $settings['hero_bg_video'])
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Video: {{ $settings['hero_bg_video'] }}</span>
+                                </div>
+                            @endif
+                            @error('hero_bg_video')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="hero_poster">Upload Background Poster Image (Optional)</label>
+                            <input type="file" name="hero_poster" id="hero_poster" accept="image/*">
+                            @if(isset($settings['hero_poster']) && $settings['hero_poster'])
+                                <div style="margin-top: 0.5rem;">
+                                    <span style="font-size: 0.78rem; color: rgba(255,255,255,0.4)">Current Poster:</span>
+                                    <div class="thumbnail-preview" style="width: 140px; height: 90px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; background: #000; margin-top: 0.5rem;">
+                                        <img src="{{ asset('images/' . $settings['hero_poster']) }}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                </div>
+                            @endif
+                            @error('hero_poster')
+                                <div class="error-message">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
                     <!-- Submit Buttons -->
                     <div class="btn-row">
                         <button type="submit" class="btn-submit">
