@@ -155,10 +155,21 @@
                             modalIframe.src = `https://www.instagram.com/reel/${igId}/embed`;
                             if (modalContent) modalContent.classList.add('modal-vertical');
                             if (iframeContainer) iframeContainer.classList.add('modal-vertical');
-                        } else if (videoId.length > 20) {
-                            modalIframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                        } else if (videoId.startsWith('youtube:')) {
+                            const ytId = videoId.replace('youtube:', '');
+                            modalIframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
+                        } else if (videoId.startsWith('vimeo:')) {
+                            const vmId = videoId.replace('vimeo:', '');
+                            modalIframe.src = `https://player.vimeo.com/video/${vmId}?autoplay=1`;
+                        } else if (videoId.startsWith('drive:')) {
+                            const drId = videoId.replace('drive:', '');
+                            modalIframe.src = `https://drive.google.com/file/d/${drId}/preview`;
                         } else {
-                            modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                            if (videoId.length > 20) {
+                                modalIframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
+                            } else {
+                                modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                            }
                         }
                         modalIframe.style.display = 'block';
                         if (iframeContainer) iframeContainer.style.display = 'block';

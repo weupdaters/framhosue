@@ -54,7 +54,6 @@ class AdminController extends Controller
         return view('admin.projects_form', compact('categories'));
     }
 
-    // Helper to extract YouTube video ID or Instagram shortcode from a URL
     // Helper to extract YouTube video ID, Vimeo ID, Google Drive ID or Instagram shortcode from a URL
     private function parseVideoId($url)
     {
@@ -65,14 +64,19 @@ class AdminController extends Controller
             return 'instagram:' . $matches[1];
         }
 
-        // If it matches a Vimeo URL
-        if (preg_match('/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/i', $url, $matches)) {
+        // If it matches a Vimeo URL (anywhere in the URL, find the numeric ID)
+        if (preg_match('/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)(?:channels\/[^\/]+\/|groups\/[^\/]+\/videos\/|manage\/videos\/)?([0-9]+)/i', $url, $matches)) {
             return 'vimeo:' . $matches[1];
         }
 
         // If it matches a Google Drive URL
         if (preg_match('/(?:drive\.google\.com\/file\/d\/|drive\.google\.com\/open\?id=)([a-zA-Z0-9_-]{25,})/i', $url, $matches)) {
             return 'drive:' . $matches[1];
+        }
+
+        // If it matches a YouTube Shorts URL
+        if (preg_match('/(?:youtube\.com\/shorts\/)([^"&?\/ ]{11})/i', $url, $matches)) {
+            return 'youtube:' . $matches[1];
         }
 
         // If it matches a YouTube URL
