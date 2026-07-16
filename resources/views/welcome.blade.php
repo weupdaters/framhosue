@@ -335,6 +335,7 @@
         </div>
     </section>
 
+    {{--
     <!-- 3D Curved Carousel Section -->
     <section id="premium-carousel" class="premium-carousel-section">
         <!-- Background Premium Effects -->
@@ -416,6 +417,7 @@
             <!-- Autoplay-only Carousel -->
         </div>
     </section>
+    --}}
 
 
     <!-- Portfolio Showcase Section -->
