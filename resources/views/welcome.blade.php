@@ -481,12 +481,11 @@
                         
                         @if($service->video_id)
                             <div class="card-right-image video-card" data-video-id="{{ $service->video_id }}">
-                                <img src="{{ asset('images/' . $service->image_path) }}" alt="{{ $service->title }}">
-                                <div class="card-img-overlay-play">
+                                <div class="services-big-icon-wrapper">
                                     @if(($service->icon_type ?? 'camera') === 'play')
-                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="services-big-icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                     @else
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
                                             <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
                                             <rect x="5" y="9" width="8" height="6" rx="0.5" ry="0.5" />
                                             <path d="M7 3h8" />
@@ -499,7 +498,20 @@
                             </div>
                         @else
                             <div class="card-right-image">
-                                <img src="{{ asset('images/' . $service->image_path) }}" alt="{{ $service->title }}">
+                                <div class="services-big-icon-wrapper">
+                                    @if(($service->icon_type ?? 'camera') === 'play')
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="services-big-icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    @else
+                                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                                            <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
+                                            <rect x="5" y="9" width="8" height="6" rx="0.5" ry="0.5" />
+                                            <path d="M7 3h8" />
+                                            <path d="M9 3v3" />
+                                            <path d="M13 3v3" />
+                                            <path d="M16 10l6-3v10l-6-3z" />
+                                        </svg>
+                                    @endif
+                                </div>
                             </div>
                         @endif
                     </div>
