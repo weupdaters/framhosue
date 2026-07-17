@@ -667,6 +667,7 @@ class AdminController extends Controller
             'video_id' => 'nullable|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'required|integer',
+            'icon_type' => 'nullable|string|in:camera,play',
         ]);
 
         $service = new Service();
@@ -675,6 +676,7 @@ class AdminController extends Controller
         $service->description = $request->description;
         $service->video_id = $this->parseVideoId($request->video_id);
         $service->order = $request->order;
+        $service->icon_type = $request->input('icon_type', 'camera');
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -704,6 +706,7 @@ class AdminController extends Controller
             'video_id' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'required|integer',
+            'icon_type' => 'nullable|string|in:camera,play',
         ]);
 
         $service->title = $request->title;
@@ -711,6 +714,7 @@ class AdminController extends Controller
         $service->description = $request->description;
         $service->video_id = $this->parseVideoId($request->video_id);
         $service->order = $request->order;
+        $service->icon_type = $request->input('icon_type', 'camera');
 
         if ($request->hasFile('image')) {
             // Delete old file if it exists and is not seeded default

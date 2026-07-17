@@ -295,6 +295,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Video ID / URL</th>
+                                <th>Showcase Icon</th>
                                 <th style="width: 150px; text-align: center;">Actions</th>
                             </tr>
                         </thead>
@@ -323,6 +324,11 @@
                                             <span style="color: rgba(255,255,255,0.25); font-size: 0.85rem;">None</span>
                                         @endif
                                     </td>
+                                    <td>
+                                        <span style="text-transform: capitalize; font-size: 0.85rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);">
+                                            {{ $service->icon_type ?? 'camera' }}
+                                        </span>
+                                    </td>
                                     <td style="text-align: center;">
                                         <div class="action-buttons" style="justify-content: center;">
                                             <a href="{{ route('admin.services.edit', $service->id) }}" class="action-btn edit">Edit</a>
@@ -335,7 +341,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 4rem 0; color: rgba(255, 255, 255, 0.3);">
+                                        <td colspan="8" style="text-align: center; padding: 4rem 0; color: rgba(255, 255, 255, 0.3);">
                                         <img src="https://img.icons8.com/color/96/support.png" alt="No Services" style="width: 64px; height: 64px; opacity: 0.2; margin-bottom: 1rem;"><br>
                                         No services found. Click "Add New Service" to set up your offerings.
                                     </td>

@@ -16,5 +16,6 @@ class Service extends Model
         'video_id',
         'image_path',
         'order',
+        'icon_type',
     ];
 }

@@ -170,6 +170,7 @@
         .form-group input[type="text"],
         .form-group input[type="number"],
         .form-group input[type="file"],
+        .form-group select,
         .form-group textarea {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -184,6 +185,7 @@
         }
 
         .form-group input:focus,
+        .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-color);
@@ -325,6 +327,19 @@
                         <input type="text" id="video_id" name="video_id" value="{{ old('video_id', $service->video_id ?? '') }}" placeholder="e.g. YouTube, Vimeo, or Google Drive URL/ID">
                         <p style="font-size: 0.72rem; color: rgba(255,255,255,0.4); margin: 0.3rem 0 0 0;">Supports full link or ID from YouTube, Vimeo, and Google Drive to enable autoplay playback on homepage.</p>
                         @error('video_id')
+                            <div class="error-message">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Showcase Icon Option -->
+                    <div class="form-group">
+                        <label for="icon_type">Showcase Icon Option</label>
+                        <select id="icon_type" name="icon_type">
+                            <option value="camera" {{ old('icon_type', $service->icon_type ?? 'camera') == 'camera' ? 'selected' : '' }}>Video Camera Icon (Lime Outline)</option>
+                            <option value="play" {{ old('icon_type', $service->icon_type ?? 'camera') == 'play' ? 'selected' : '' }}>Play Button Icon (Standard Triangle)</option>
+                        </select>
+                        <p style="font-size: 0.72rem; color: rgba(255,255,255,0.4); margin: 0.3rem 0 0 0;">Choose which overlay icon to display on the service card thumbnail when a video is attached.</p>
+                        @error('icon_type')
                             <div class="error-message">{{ $message }}</div>
                         @enderror
                     </div>
