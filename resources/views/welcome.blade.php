@@ -100,7 +100,8 @@
       </div>
       <div style="display: flex; align-items: center; gap: 0.8rem;">
         <a href="#contact" class="top-nav-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
@@ -538,7 +539,8 @@
 
           <div class="services-desc-col-v3">
             <p class="services-desc-text-v3">
-                From concept to final delivery, we provide cinematography, video production, editing, motion graphics, and creative design to help brands tell better stories..
+              From concept to final delivery, we provide cinematography, video production, editing, motion graphics, and
+              creative design to help brands tell better stories..
             </p>
           </div>
         </div>
@@ -1421,7 +1423,7 @@
             <line x1="12" y1="1" x2="12" y2="23"></line>
             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
           </svg>
-          <span class="bottom-nav-text">Pricing</span>
+          <span class="bottom-nav-text">Get Quote</span>
         </a>
       </li>
       <li class="bottom-nav-item">
