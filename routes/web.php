@@ -20,7 +20,8 @@ Route::get('/', function () {
     }
 
     // Retrieve all projects so that the frontend category filter has access to all content
-    $featuredProjects = Project::orderBy('created_at', 'desc')->get();
+    // Retrieve all projects ordered by sort_order
+    $featuredProjects = Project::orderBy('sort_order', 'asc')->orderBy('created_at', 'desc')->get();
     $plans = Plan::orderBy('order')->get();
     $services = \App\Models\Service::orderBy('order')->get();
     return view('welcome', compact('featuredProjects', 'plans', 'services'));
@@ -40,7 +41,7 @@ Route::get('/works', function () {
         \Illuminate\Support\Facades\Log::error("Visit tracking failed: " . $e->getMessage());
     }
 
-    $projects = Project::orderBy('created_at', 'desc')->get();
+    $projects = Project::orderBy('sort_order', 'asc')->orderBy('created_at', 'desc')->get();
     return view('works', compact('projects'));
 })->name('works');
 
@@ -60,6 +61,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/projects/{project}/edit', [AdminController::class, 'edit'])->name('admin.projects.edit');
         Route::post('/projects/{project}/update', [AdminController::class, 'update'])->name('admin.projects.update');
         Route::post('/projects/{project}/delete', [AdminController::class, 'delete'])->name('admin.projects.delete');
+        Route::post('/projects/{project}/move-up', [AdminController::class, 'moveUp'])->name('admin.projects.move-up');
+        Route::post('/projects/{project}/move-down', [AdminController::class, 'moveDown'])->name('admin.projects.move-down');
         
         // Categories CRUD
         Route::get('/categories', [AdminController::class, 'categoriesIndex'])->name('admin.categories.index');

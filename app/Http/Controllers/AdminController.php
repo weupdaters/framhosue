@@ -43,7 +43,8 @@ class AdminController extends Controller
     // Display admin dashboard listing all projects
     public function dashboard()
     {
-        $projects = Project::orderBy('created_at', 'desc')->get();
+        $this->normalizeProjectOrders();
+        $projects = Project::orderBy('sort_order', 'asc')->orderBy('created_at', 'desc')->get();
         
         $totalViews = \App\Models\Visit::count();
         $todayViews = \App\Models\Visit::whereDate('created_at', \Carbon\Carbon::today())->count();
@@ -160,6 +161,8 @@ class AdminController extends Controller
             $project->video_path = $filename;
         }
 
+        $project->sort_order = 1;
+        Project::query()->increment('sort_order');
         $project->save();
 
         return redirect()->route('admin.dashboard')->with('success', 'Project added successfully!');
@@ -245,7 +248,65 @@ class AdminController extends Controller
 
         $project->delete();
 
+        $this->normalizeProjectOrders();
+
         return redirect()->route('admin.dashboard')->with('success', 'Project deleted successfully!');
+    }
+
+    // Helper to keep project sort_orders normalized 1, 2, 3...
+    private function normalizeProjectOrders()
+    {
+        $projects = Project::orderBy('sort_order', 'asc')->orderBy('created_at', 'desc')->get();
+        $index = 1;
+        foreach ($projects as $proj) {
+            if ($proj->sort_order !== $index) {
+                $proj->sort_order = $index;
+                $proj->save();
+            }
+            $index++;
+        }
+    }
+
+    // Move project order UP (towards #1)
+    public function moveUp(Project $project)
+    {
+        $this->normalizeProjectOrders();
+
+        $previousProject = Project::where('sort_order', '<', $project->sort_order)
+            ->orderBy('sort_order', 'desc')
+            ->first();
+
+        if ($previousProject) {
+            $tempOrder = $project->sort_order;
+            $project->sort_order = $previousProject->sort_order;
+            $previousProject->sort_order = $tempOrder;
+
+            $project->save();
+            $previousProject->save();
+        }
+
+        return back()->with('success', 'Project moved up successfully!');
+    }
+
+    // Move project order DOWN (towards bottom)
+    public function moveDown(Project $project)
+    {
+        $this->normalizeProjectOrders();
+
+        $nextProject = Project::where('sort_order', '>', $project->sort_order)
+            ->orderBy('sort_order', 'asc')
+            ->first();
+
+        if ($nextProject) {
+            $tempOrder = $project->sort_order;
+            $project->sort_order = $nextProject->sort_order;
+            $nextProject->sort_order = $tempOrder;
+
+            $project->save();
+            $nextProject->save();
+        }
+
+        return back()->with('success', 'Project moved down successfully!');
     }
 
     // Handle logout

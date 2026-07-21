@@ -300,6 +300,56 @@
             border-color: #ff3e6c;
         }
 
+        .order-control-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .order-btn-pill {
+            background: rgba(184, 255, 52, 0.08);
+            border: 1px solid rgba(184, 255, 52, 0.3);
+            color: var(--primary-color);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.2s ease;
+            padding: 0;
+        }
+
+        .order-btn-pill:hover:not(.disabled) {
+            background: var(--primary-color);
+            color: #080a0e;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .order-btn-pill.disabled {
+            background: transparent;
+            opacity: 0.2;
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .order-num-badge {
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #ffffff;
+            min-width: 24px;
+            text-align: center;
+        }
+
         .alert-success {
             background: rgba(179, 245, 0, 0.06);
             border: 1px solid rgba(179, 245, 0, 0.2);
@@ -376,6 +426,7 @@
                     <table class="projects-table">
                         <thead>
                             <tr>
+                                <th style="width: 120px; text-align: center;">Order</th>
                                 <th style="width: 80px;">Preview</th>
                                 <th>Project Title</th>
                                 <th>Category</th>
@@ -387,6 +438,29 @@
                         <tbody>
                             @forelse($projects as $project)
                                 <tr>
+                                    <td style="text-align: center;">
+                                        <div class="order-control-wrapper">
+                                            @if(!$loop->first)
+                                                <form action="{{ route('admin.projects.move-up', $project->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button type="submit" class="order-btn-pill" title="Move Up (Order ↑)">▲</button>
+                                                </form>
+                                            @else
+                                                <span class="order-btn-pill disabled" title="Already at top">▲</span>
+                                            @endif
+
+                                            <span class="order-num-badge">#{{ $loop->iteration }}</span>
+
+                                            @if(!$loop->last)
+                                                <form action="{{ route('admin.projects.move-down', $project->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button type="submit" class="order-btn-pill" title="Move Down (Order ↓)">▼</button>
+                                                </form>
+                                            @else
+                                                <span class="order-btn-pill disabled" title="Already at bottom">▼</span>
+                                            @endif
+                                        </div>
+                                    </td>
                                     <td>
                                         <div class="thumbnail-wrapper">
                                             <img src="{{ asset('images/' . $project->image_path) }}" alt="{{ $project->title }}" class="thumbnail-img">
@@ -422,7 +496,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" style="text-align: center; padding: 4rem 0; color: rgba(255,255,255,0.3);">
+                                    <td colspan="7" style="text-align: center; padding: 4rem 0; color: rgba(255,255,255,0.3);">
                                         No projects found. Click "Add New Work" to upload your first project.
                                     </td>
                                 </tr>

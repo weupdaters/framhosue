@@ -123,4 +123,43 @@ class ExampleTest extends TestCase
         $this->assertEquals('0', \App\Models\Setting::where('key', 'show_youtube')->value('value'));
         $this->assertEquals('1', \App\Models\Setting::where('key', 'show_behance')->value('value'));
     }
+
+    public function test_admin_can_reorder_projects(): void
+    {
+        $user = User::factory()->create();
+
+        $projA = \App\Models\Project::create([
+            'title' => 'Project A',
+            'category' => 'video',
+            'image_path' => 'default.png',
+            'sort_order' => 1,
+        ]);
+
+        $projB = \App\Models\Project::create([
+            'title' => 'Project B',
+            'category' => 'reels',
+            'image_path' => 'default.png',
+            'sort_order' => 2,
+        ]);
+
+        // Move Project B up
+        $response = $this->actingAs($user)->post(route('admin.projects.move-up', $projB->id));
+        $response->assertStatus(302);
+
+        $projA->refresh();
+        $projB->refresh();
+
+        $this->assertEquals(2, $projA->sort_order);
+        $this->assertEquals(1, $projB->sort_order);
+
+        // Move Project B down
+        $response2 = $this->actingAs($user)->post(route('admin.projects.move-down', $projB->id));
+        $response2->assertStatus(302);
+
+        $projA->refresh();
+        $projB->refresh();
+
+        $this->assertEquals(1, $projA->sort_order);
+        $this->assertEquals(2, $projB->sort_order);
+    }
 }

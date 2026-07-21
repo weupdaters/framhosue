@@ -15,6 +15,7 @@ class Project extends Model
         'video_path',
         'is_featured',
         'is_vertical_reel',
+        'sort_order',
     ];
 
     protected $casts = [
