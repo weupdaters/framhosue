@@ -50,31 +50,9 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .logo-expand-container {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%) scale(0.95);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            width: 170px;
-        }
-
+        .logo-expand-container,
         .nav-logo-hover {
-            display: block;
-            max-width: 100%;
-            height: auto !important;
-        }
-
-        .logo-link:hover .nav-logo {
-            opacity: 0;
-            transform: translateY(-50%) scale(0.9);
-        }
-
-        .logo-link:hover .logo-expand-container {
-            opacity: 1;
-            transform: translateY(-50%) scale(1);
+            display: none !important;
         }
 
         .sidebar-menu {
@@ -612,7 +590,7 @@
                                 'behance' => [
                                     'name' => 'Behance',
                                     'placeholder' => 'https://www.behance.net/username',
-                                    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h3M9 12a2 2 0 1 1 0-4h3v4M9 12a2 2 0 1 0 0 4h3v-4M18 11.5a3.5 3.5 0 0 0-7 0v1.5h7v-1.5zM14 7h6"/></svg>'
+                                    'icon' => '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7v-2h7v2zm-1.708 3.791c-1.378 0-2.316.924-2.35 2.128h4.633c-.02-1.228-.962-2.128-2.283-2.128zm.082 5.568c1.034 0 1.942-.493 2.158-1.503h1.839c-.318 1.932-2.086 3.144-4.004 3.144-2.614 0-4.368-1.748-4.368-4.417 0-2.553 1.701-4.43 4.316-4.43 2.663 0 4.179 1.836 4.179 4.43 0 .324-.027.644-.056.876h-6.417c.07 1.082.946 1.9 2.353 1.9zm-13.874-3.359h-2.5v-3h2.5c.827 0 1.5.673 1.5 1.5s-.673 1.5-1.5 1.5zm-2.5 5h2.8c.994 0 1.8-.806 1.8-1.8s-.806-1.8-1.8-1.8h-2.8v3.6zm0-10h4.2c1.93 0 3.5 1.57 3.5 3.5 0 1.157-.563 2.181-1.429 2.812 1.144.62 1.929 1.815 1.929 3.188 0 2.043-1.657 3.7-3.7 3.7h-4.5c-.827 0-1.5-.673-1.5-1.5v-10.2c0-.827.673-1.5 1.5-1.5z"/></svg>'
                                 ]
                             ];
                         @endphp

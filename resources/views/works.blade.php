@@ -26,9 +26,6 @@
             <a href="{{ route('home') }}" class="logo-link">
                 <div class="logo-wrapper">
                     <img src="{{ isset($site_settings['site_logo']) && $site_settings['site_logo'] ? asset('images/' . $site_settings['site_logo']) : asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 50px;">
-                    <div class="logo-expand-container">
-                        <img src="{{ isset($site_settings['site_logo_expanded']) && $site_settings['site_logo_expanded'] ? asset('images/' . $site_settings['site_logo_expanded']) : asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 100px;">
-                    </div>
                 </div>
             </a>
             <div style="display: flex; align-items: center; gap: 0.8rem;">
@@ -127,7 +124,90 @@
                 });
             });
 
-            // Video Playback Modal
+            // Video Playback Modal & Parser Helper
+            function parseVideoSource(videoId, videoPath) {
+                if (videoPath) {
+                    let path = videoPath.startsWith('/') ? videoPath : `{{ asset('videos') }}/${videoPath}`;
+                    return { type: 'video', src: path };
+                }
+
+                if (!videoId) return null;
+                let str = String(videoId).trim();
+                if (!str) return null;
+
+                const igMatch = str.match(/(?:instagram\.com\/(?:p|reel|tv)\/|instagram:)([a-zA-Z0-9_-]+)/i);
+                if (igMatch) {
+                    return {
+                        type: 'iframe',
+                        src: `https://www.instagram.com/reel/${igMatch[1]}/embed`,
+                        isVertical: true
+                    };
+                }
+
+                const ytIdMatch = str.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/|youtube:)([a-zA-Z0-9_-]{11})/i);
+                if (ytIdMatch) {
+                    const ytId = ytIdMatch[1];
+                    const isShort = str.includes('/shorts/');
+                    return {
+                        type: 'iframe',
+                        src: `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`,
+                        isVertical: isShort
+                    };
+                }
+
+                const vmMatch = str.match(/(?:vimeo\.com\/|vimeo:)([0-9]+)/i);
+                if (vmMatch) {
+                    return {
+                        type: 'iframe',
+                        src: `https://player.vimeo.com/video/${vmMatch[1]}?autoplay=1`
+                    };
+                }
+
+                const drMatch = str.match(/(?:drive\.google\.com\/file\/d\/|drive:)([a-zA-Z0-9_-]+)/i);
+                if (drMatch) {
+                    return {
+                        type: 'iframe',
+                        src: `https://drive.google.com/file/d/${drMatch[1]}/preview`
+                    };
+                }
+
+                if (str.startsWith('http://') || str.startsWith('https://')) {
+                    if (str.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) {
+                        return { type: 'video', src: str };
+                    }
+                    try {
+                        const urlObj = new URL(str);
+                        const vParam = urlObj.searchParams.get('v');
+                        if (vParam) {
+                            return {
+                                type: 'iframe',
+                                src: `https://www.youtube.com/embed/${vParam}?autoplay=1&rel=0`
+                            };
+                        }
+                    } catch(e) {}
+                    return { type: 'iframe', src: str };
+                }
+
+                if (/^[a-zA-Z0-9_-]{11}$/.test(str)) {
+                    return {
+                        type: 'iframe',
+                        src: `https://www.youtube.com/embed/${str}?autoplay=1&rel=0`
+                    };
+                }
+
+                if (str.length > 20) {
+                    return {
+                        type: 'iframe',
+                        src: `https://drive.google.com/file/d/${str}/preview`
+                    };
+                }
+
+                return {
+                    type: 'iframe',
+                    src: `https://www.youtube.com/embed/${str}?autoplay=1&rel=0`
+                };
+            }
+
             const videoModal = document.getElementById('video-modal');
             const modalIframe = document.getElementById('modal-video-iframe');
             const modalVideoPlayer = document.getElementById('modal-video-player');
@@ -150,42 +230,38 @@
 
                     // Hide everything by default
                     modalIframe.style.display = 'none';
+                    modalIframe.src = '';
                     modalVideoPlayer.style.display = 'none';
-                    if (imagePlayer) imagePlayer.style.display = 'none';
+                    modalVideoPlayer.src = '';
+                    if (imagePlayer) {
+                        imagePlayer.style.display = 'none';
+                        imagePlayer.src = '';
+                    }
 
                     // Show native cursor inside modal
                     document.body.classList.add('modal-active');
 
-                    if (videoPath) {
-                        modalVideoPlayer.src = `{{ asset('videos') }}/${videoPath}`;
-                        modalVideoPlayer.style.display = 'block';
-                        if (iframeContainer) iframeContainer.style.display = 'block';
-                        videoModal.classList.add('active');
-                    } else if (videoId) {
-                        if (videoId.startsWith('instagram:')) {
-                            const igId = videoId.replace('instagram:', '');
-                            modalIframe.src = `https://www.instagram.com/reel/${igId}/embed`;
+                    const cardIsVertical = card.classList.contains('card-vertical-reel') || card.getAttribute('data-category') === 'reels';
+                    const mediaSource = parseVideoSource(videoId, videoPath);
+
+                    if (mediaSource) {
+                        if (mediaSource.isVertical || cardIsVertical) {
                             if (modalContent) modalContent.classList.add('modal-vertical');
                             if (iframeContainer) iframeContainer.classList.add('modal-vertical');
-                        } else if (videoId.startsWith('youtube:')) {
-                            const ytId = videoId.replace('youtube:', '');
-                            modalIframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
-                        } else if (videoId.startsWith('vimeo:')) {
-                            const vmId = videoId.replace('vimeo:', '');
-                            modalIframe.src = `https://player.vimeo.com/video/${vmId}?autoplay=1`;
-                        } else if (videoId.startsWith('drive:')) {
-                            const drId = videoId.replace('drive:', '');
-                            modalIframe.src = `https://drive.google.com/file/d/${drId}/preview`;
-                        } else {
-                            if (videoId.length > 20) {
-                                modalIframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
-                            } else {
-                                modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                            }
                         }
-                        modalIframe.style.display = 'block';
-                        if (iframeContainer) iframeContainer.style.display = 'block';
-                        videoModal.classList.add('active');
+
+                        if (mediaSource.type === 'video') {
+                            modalVideoPlayer.src = mediaSource.src;
+                            modalVideoPlayer.style.display = 'block';
+                            if (iframeContainer) iframeContainer.style.display = 'block';
+                            videoModal.classList.add('active');
+                            modalVideoPlayer.play().catch(e => console.log("Native video autoplay blocked:", e));
+                        } else if (mediaSource.type === 'iframe') {
+                            modalIframe.src = mediaSource.src;
+                            modalIframe.style.display = 'block';
+                            if (iframeContainer) iframeContainer.style.display = 'block';
+                            videoModal.classList.add('active');
+                        }
                     } else {
                         // Image/Graphic item!
                         const imgEl = card.querySelector('img');

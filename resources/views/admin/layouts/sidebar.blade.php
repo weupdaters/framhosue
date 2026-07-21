@@ -3,9 +3,6 @@
     <a href="{{ route('home') }}" class="logo-link" style="margin-bottom: 3.5rem;">
         <div class="logo-wrapper">
             <img src="{{ asset('images/final short form logo.png') }}" alt="Logo" class="nav-logo" style="height: 38px;">
-            <div class="logo-expand-container">
-                <img src="{{ asset('images/FAMEHOUSE psd copy.png') }}" alt="Hover Logo" class="nav-logo-hover" style="height: 76px;">
-            </div>
         </div>
     </a>
 

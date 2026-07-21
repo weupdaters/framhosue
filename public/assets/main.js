@@ -274,9 +274,99 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Video Modal Logic
-    const gridEl = document.getElementById('portfolio-grid');
-    const sliderViewport = document.getElementById('portfolio-slider-viewport');
+    // Video Modal Logic & Link Parser Helper
+    function parseVideoSource(videoId, videoPath) {
+        if (videoPath) {
+            let path = videoPath.startsWith('/') ? videoPath : `/videos/${videoPath}`;
+            return { type: 'video', src: path };
+        }
+
+        if (!videoId) return null;
+        let str = String(videoId).trim();
+        if (!str) return null;
+
+        // 1. Instagram check
+        const igMatch = str.match(/(?:instagram\.com\/(?:p|reel|tv)\/|instagram:)([a-zA-Z0-9_-]+)/i);
+        if (igMatch) {
+            return {
+                type: 'iframe',
+                src: `https://www.instagram.com/reel/${igMatch[1]}/embed`,
+                isVertical: true
+            };
+        }
+
+        // 2. YouTube check (Full URLs, shorts, embed, youtube: prefixed, or 11-char ID)
+        const ytIdMatch = str.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/|youtube:)([a-zA-Z0-9_-]{11})/i);
+        if (ytIdMatch) {
+            const ytId = ytIdMatch[1];
+            const isShort = str.includes('/shorts/');
+            return {
+                type: 'iframe',
+                src: `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`,
+                isVertical: isShort
+            };
+        }
+
+        // 3. Vimeo check
+        const vmMatch = str.match(/(?:vimeo\.com\/|vimeo:)([0-9]+)/i);
+        if (vmMatch) {
+            return {
+                type: 'iframe',
+                src: `https://player.vimeo.com/video/${vmMatch[1]}?autoplay=1`
+            };
+        }
+
+        // 4. Google Drive check
+        const drMatch = str.match(/(?:drive\.google\.com\/file\/d\/|drive:)([a-zA-Z0-9_-]+)/i);
+        if (drMatch) {
+            return {
+                type: 'iframe',
+                src: `https://drive.google.com/file/d/${drMatch[1]}/preview`
+            };
+        }
+
+        // 5. Direct HTTP/HTTPS link check
+        if (str.startsWith('http://') || str.startsWith('https://')) {
+            if (str.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) {
+                return { type: 'video', src: str };
+            }
+            try {
+                const urlObj = new URL(str);
+                const vParam = urlObj.searchParams.get('v');
+                if (vParam) {
+                    return {
+                        type: 'iframe',
+                        src: `https://www.youtube.com/embed/${vParam}?autoplay=1&rel=0`
+                    };
+                }
+            } catch(e) {}
+
+            return { type: 'iframe', src: str };
+        }
+
+        // 6. Standard 11-char YouTube ID fallback
+        if (/^[a-zA-Z0-9_-]{11}$/.test(str)) {
+            return {
+                type: 'iframe',
+                src: `https://www.youtube.com/embed/${str}?autoplay=1&rel=0`
+            };
+        }
+
+        // 7. Long ID fallback (likely Google Drive ID)
+        if (str.length > 20) {
+            return {
+                type: 'iframe',
+                src: `https://drive.google.com/file/d/${str}/preview`
+            };
+        }
+
+        // Final YouTube fallback
+        return {
+            type: 'iframe',
+            src: `https://www.youtube.com/embed/${str}?autoplay=1&rel=0`
+        };
+    }
+
     const modal = document.getElementById('video-modal');
     const iframe = document.getElementById('modal-video-iframe');
     const videoPlayer = document.getElementById('modal-video-player');
@@ -295,68 +385,49 @@ document.addEventListener('DOMContentLoaded', function() {
             if (iframeContainer) iframeContainer.classList.remove('modal-vertical');
 
             // Hide everything by default
-            if (iframe) iframe.style.display = 'none';
-            if (videoPlayer) videoPlayer.style.display = 'none';
-            if (imagePlayer) imagePlayer.style.display = 'none';
+            if (iframe) {
+                iframe.style.display = 'none';
+                iframe.src = '';
+            }
+            if (videoPlayer) {
+                videoPlayer.style.display = 'none';
+                videoPlayer.src = '';
+            }
+            if (imagePlayer) {
+                imagePlayer.style.display = 'none';
+                imagePlayer.src = '';
+            }
 
             // Show native cursor inside modal
             document.body.classList.add('modal-active');
             document.body.style.overflow = 'hidden';
 
-            const isVertical = card.getAttribute('data-is-vertical') === '1' || card.getAttribute('data-category') === 'reels';
+            const cardIsVertical = card.getAttribute('data-is-vertical') === '1' || card.getAttribute('data-category') === 'reels';
+            const mediaSource = parseVideoSource(videoId, videoPath);
 
-            if (isVertical) {
-                if (modalContent) modalContent.classList.add('modal-vertical');
-                if (iframeContainer) iframeContainer.classList.add('modal-vertical');
-            } else {
-                if (modalContent) modalContent.classList.remove('modal-vertical');
-                if (iframeContainer) iframeContainer.classList.remove('modal-vertical');
-            }
-
-            if (videoPath) {
-                videoPlayer.src = `/videos/${videoPath}`;
-                videoPlayer.style.display = 'block';
-                if (iframeContainer) iframeContainer.style.display = 'block';
-                modal.classList.add('active');
-                videoPlayer.play().catch(e => console.log("Native video autoplay blocked:", e));
-            } else if (videoId) {
-                if (videoId.startsWith('instagram:')) {
-                    const igId = videoId.replace('instagram:', '');
-                    iframe.src = `https://www.instagram.com/reel/${igId}/embed`;
-                    iframe.style.display = 'block';
-                    if (iframeContainer) iframeContainer.style.display = 'block';
-                    modal.classList.add('active');
-                } else if (videoId.startsWith('youtube:')) {
-                    const ytId = videoId.replace('youtube:', '');
-                    iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
-                    iframe.style.display = 'block';
-                    if (iframeContainer) iframeContainer.style.display = 'block';
-                    modal.classList.add('active');
-                } else if (videoId.startsWith('vimeo:')) {
-                    const vmId = videoId.replace('vimeo:', '');
-                    iframe.src = `https://player.vimeo.com/video/${vmId}?autoplay=1`;
-                    iframe.style.display = 'block';
-                    if (iframeContainer) iframeContainer.style.display = 'block';
-                    modal.classList.add('active');
-                } else if (videoId.startsWith('drive:')) {
-                    const drId = videoId.replace('drive:', '');
-                    iframe.src = `https://drive.google.com/file/d/${drId}/preview`;
-                    iframe.style.display = 'block';
-                    if (iframeContainer) iframeContainer.style.display = 'block';
-                    modal.classList.add('active');
+            if (mediaSource) {
+                if (mediaSource.isVertical || cardIsVertical) {
+                    if (modalContent) modalContent.classList.add('modal-vertical');
+                    if (iframeContainer) iframeContainer.classList.add('modal-vertical');
                 } else {
-                    // Fallback for older seeded items
-                    if (videoId.length > 20) {
-                        iframe.src = `https://drive.google.com/file/d/${videoId}/preview`;
-                    } else {
-                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                    }
+                    if (modalContent) modalContent.classList.remove('modal-vertical');
+                    if (iframeContainer) iframeContainer.classList.remove('modal-vertical');
+                }
+
+                if (mediaSource.type === 'video') {
+                    videoPlayer.src = mediaSource.src;
+                    videoPlayer.style.display = 'block';
+                    if (iframeContainer) iframeContainer.style.display = 'block';
+                    modal.classList.add('active');
+                    videoPlayer.play().catch(e => console.log("Native video autoplay blocked:", e));
+                } else if (mediaSource.type === 'iframe') {
+                    iframe.src = mediaSource.src;
                     iframe.style.display = 'block';
                     if (iframeContainer) iframeContainer.style.display = 'block';
                     modal.classList.add('active');
                 }
             } else {
-                // Image/Graphic item!
+                // Fallback for image / graphic item
                 const imgEl = card.querySelector('img');
                 if (imgEl && imagePlayer) {
                     imagePlayer.src = imgEl.src;
@@ -367,33 +438,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // Event delegation for dynamic portfolio filter grid
-        if (gridEl) {
-            gridEl.addEventListener('click', (e) => {
-                const card = e.target.closest('.project-card, .video-card');
-                if (card) {
-                    if (e.target.closest('.card-icon-btn')) return;
-                    openModal(card);
-                }
-            });
-        }
-
-        // Click handler for portfolio slider cards (both videos and graphics)
-        if (sliderViewport) {
-            sliderViewport.addEventListener('click', (e) => {
-                const card = e.target.closest('.portfolio-slide-card');
-                if (card) {
-                    if (e.target.closest('.card-action-btn')) return;
-                    openModal(card);
-                }
-            });
-        }
-
-        // General click triggers for any other .video-card or service card mockup elements on homepage
-        document.querySelectorAll('.service-card-mockup, .card-right-image').forEach(card => {
-            card.addEventListener('click', () => {
+        // Comprehensive event listener for all video cards on the page (Showreel, Portfolio grid, Carousel, Service mockups)
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.video-card, .about-showreel-container, .project-card, .portfolio-slide-card, .premium-carousel-card, .service-card-mockup, .card-right-image, .btn-service-mockup, .archive-card');
+            if (card) {
+                if (e.target.closest('.card-icon-btn, .card-action-btn, .fav-btn')) return;
+                if (card.classList.contains('premium-carousel-card') && window.isCarouselDragging) return;
                 openModal(card);
-            });
+            }
         });
 
         const closeModal = () => {

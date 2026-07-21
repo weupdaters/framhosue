@@ -73,8 +73,13 @@ class AdminController extends Controller
     {
         if (empty($url)) return null;
 
+        $url = trim($url);
+
+        // Strip prefix if user typed "youtube:https://..." or "drive:https://..."
+        $url = preg_replace('/^(youtube|vimeo|drive|instagram):/i', '', $url);
+
         // If it matches an Instagram Reel or Post URL
-        if (preg_match('/(?:instagram\.com)\/(?:p|reel)\/([a-zA-Z0-9_-]+)/i', $url, $matches)) {
+        if (preg_match('/(?:instagram\.com)\/(?:p|reel|tv)\/([a-zA-Z0-9_-]+)/i', $url, $matches)) {
             return 'instagram:' . $matches[1];
         }
 
