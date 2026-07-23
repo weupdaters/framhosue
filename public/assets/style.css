@@ -2571,9 +2571,9 @@ header {
 
 /* Revealed State */
 .reveal.revealed {
-    opacity: 1;
-    transform: translate(0) scale(1);
-    filter: blur(0);
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important;
+    filter: blur(0) !important;
 }
 
 /* Staggered Delay Utilities (up to 12 items support) */

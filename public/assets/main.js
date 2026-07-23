@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 1. SCROLL REVEAL INTERSECTION OBSERVER & GSAP (GSAP.COM)
+    // 1. SCROLL REVEAL INTERSECTION OBSERVER
     // ==========================================
     const revealElements = document.querySelectorAll('.reveal');
     
@@ -495,149 +495,24 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, {
             root: null, // viewport
-            threshold: 0.05, // trigger when 5% is visible
-            rootMargin: '0px 0px -40px 0px' // trigger slightly before bottom of screen
+            threshold: 0.01, // trigger immediately when 1% is visible
+            rootMargin: '50px 0px 0px 0px'
         });
         
-        revealElements.forEach(el => revealObserver.observe(el));
+        revealElements.forEach(el => {
+            // If element is already near or in viewport on load, reveal immediately
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                el.classList.add('revealed');
+            }
+            revealObserver.observe(el);
+        });
     }
 
-    // GSAP ScrollTrigger Animations Suite
+    // GSAP Interactive Effects (Glow Parallax & Magnetic Buttons)
     if (typeof gsap !== 'undefined') {
         if (typeof ScrollTrigger !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
-        }
-
-        // Tag lines horizontal scale expansion on scroll
-        const tagLines = document.querySelectorAll('.portfolio-tag-line-v3, .services-tag-line-v3, .pricing-tag-line-v3, .about-tag-line');
-        tagLines.forEach(line => {
-            gsap.from(line, {
-                scrollTrigger: {
-                    trigger: line,
-                    start: 'top 92%',
-                    toggleActions: 'play none none none'
-                },
-                scaleX: 0,
-                transformOrigin: 'left center',
-                duration: 1,
-                ease: 'power3.out'
-            });
-        });
-
-        // Section Titles 3D Perspective Fade & Slide Up
-        const sectionTitles = document.querySelectorAll('.about-title, .portfolio-title-v3, .services-title-v3, .pricing-title-v3, .contact-title, .works-archive-title, .hero-title-v6');
-        sectionTitles.forEach(title => {
-            gsap.from(title, {
-                scrollTrigger: {
-                    trigger: title,
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 40,
-                rotationX: 12,
-                duration: 1.1,
-                ease: 'power3.out'
-            });
-        });
-
-        // Section Subtitles, Descriptions & Tag Labels
-        const sectionTexts = document.querySelectorAll('.about-desc, .portfolio-subtitle-v3, .services-desc-text-v3, .pricing-desc-v3, .contact-desc-text, .works-archive-desc, .portfolio-tag-v3, .services-tag-v3, .pricing-tag-v3, .about-tag-v3');
-        sectionTexts.forEach(txt => {
-            gsap.from(txt, {
-                scrollTrigger: {
-                    trigger: txt,
-                    start: 'top 90%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 25,
-                duration: 0.9,
-                ease: 'power3.out'
-            });
-        });
-
-        // Staggered Service Cards Animation
-        const serviceCards = document.querySelectorAll('.service-card-mockup');
-        if (serviceCards.length > 0) {
-            gsap.from(serviceCards, {
-                scrollTrigger: {
-                    trigger: '.services-grid-mockup',
-                    start: 'top 82%'
-                },
-                opacity: 0,
-                y: 55,
-                scale: 0.95,
-                duration: 0.85,
-                stagger: 0.12,
-                ease: 'power3.out'
-            });
-        }
-
-        // Staggered Portfolio Slide Cards Animation
-        const portfolioCards = document.querySelectorAll('.portfolio-slide-card');
-        if (portfolioCards.length > 0) {
-            gsap.from(portfolioCards, {
-                scrollTrigger: {
-                    trigger: '#portfolio-slider-viewport',
-                    start: 'top 85%'
-                },
-                opacity: 0,
-                y: 45,
-                scale: 0.96,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
-        }
-
-        // Staggered Pricing Cards Animation
-        const pricingCards = document.querySelectorAll('.pricing-editorial-card');
-        if (pricingCards.length > 0) {
-            gsap.from(pricingCards, {
-                scrollTrigger: {
-                    trigger: '.pricing-cards-container-v3',
-                    start: 'top 82%'
-                },
-                opacity: 0,
-                y: 50,
-                duration: 0.85,
-                stagger: 0.15,
-                ease: 'power3.out'
-            });
-        }
-
-        // Contact Section Columns & Quick Cards
-        const contactElements = document.querySelectorAll('.contact-quick-cards, .contact-form-col, .contact-info-col');
-        if (contactElements.length > 0) {
-            gsap.from(contactElements, {
-                scrollTrigger: {
-                    trigger: '#contact',
-                    start: 'top 82%'
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.9,
-                stagger: 0.15,
-                ease: 'power3.out'
-            });
-        }
-
-        // Works Archive Grid Items
-        const worksGridCards = document.querySelectorAll('.works-item-card');
-        if (worksGridCards.length > 0) {
-            gsap.from(worksGridCards, {
-                scrollTrigger: {
-                    trigger: '.works-grid-container',
-                    start: 'top 85%'
-                },
-                opacity: 0,
-                y: 40,
-                scale: 0.96,
-                duration: 0.75,
-                stagger: 0.08,
-                ease: 'power3.out'
-            });
         }
 
         // Parallax Effect on Ambient Background Glows on Scroll
