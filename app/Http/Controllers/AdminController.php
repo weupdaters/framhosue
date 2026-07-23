@@ -733,7 +733,9 @@ class AdminController extends Controller
             'video_id' => 'nullable|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'required|integer',
-            'icon_type' => 'nullable|string|in:camera,play',
+            'icon_type' => 'nullable|string|in:camera,play,film,palette,edit,sparkles,youtube,megaphone,drone,aperture',
+            'icon_mode' => 'nullable|string|in:preset,custom',
+            'custom_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         $service = new Service();
@@ -749,6 +751,13 @@ class AdminController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('images'), $filename);
             $service->image_path = $filename;
+        }
+
+        if ($request->input('icon_mode') === 'custom' && $request->hasFile('custom_icon')) {
+            $iconFile = $request->file('custom_icon');
+            $iconFilename = time() . '_icon_' . $iconFile->getClientOriginalName();
+            $iconFile->move(public_path('images'), $iconFilename);
+            $service->custom_icon_path = $iconFilename;
         }
 
         $service->save();
@@ -772,7 +781,9 @@ class AdminController extends Controller
             'video_id' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'required|integer',
-            'icon_type' => 'nullable|string|in:camera,play',
+            'icon_type' => 'nullable|string|in:camera,play,film,palette,edit,sparkles,youtube,megaphone,drone,aperture',
+            'icon_mode' => 'nullable|string|in:preset,custom',
+            'custom_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         $service->title = $request->title;
@@ -793,6 +804,32 @@ class AdminController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('images'), $filename);
             $service->image_path = $filename;
+        }
+
+        if ($request->input('icon_mode') === 'custom') {
+            if ($request->hasFile('custom_icon')) {
+                if ($service->custom_icon_path) {
+                    $oldIconPath = public_path('images/' . $service->custom_icon_path);
+                    if (File::exists($oldIconPath)) {
+                        File::delete($oldIconPath);
+                    }
+                }
+
+                $iconFile = $request->file('custom_icon');
+                $iconFilename = time() . '_icon_' . $iconFile->getClientOriginalName();
+                $iconFile->move(public_path('images'), $iconFilename);
+                $service->custom_icon_path = $iconFilename;
+            }
+        } else {
+            if ($request->input('remove_custom_icon')) {
+                if ($service->custom_icon_path) {
+                    $oldIconPath = public_path('images/' . $service->custom_icon_path);
+                    if (File::exists($oldIconPath)) {
+                        File::delete($oldIconPath);
+                    }
+                }
+                $service->custom_icon_path = null;
+            }
         }
 
         $service->save();

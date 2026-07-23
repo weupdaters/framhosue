@@ -17,5 +17,6 @@ class Service extends Model
         'image_path',
         'order',
         'icon_type',
+        'custom_icon_path',
     ];
 }

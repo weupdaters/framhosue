@@ -345,18 +345,6 @@
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
               </a>
-              <button class="control-btn-v5 prev-btn" id="portfolio-prev">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </button>
-              <button class="control-btn-v5 next-btn" id="portfolio-next">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
             </div>
           </div>
         </div>
@@ -423,6 +411,22 @@
             </div>
           @endforeach
         </div>
+      </div>
+
+      <!-- Bottom Slider Controls -->
+      <div class="portfolio-bottom-controls reveal">
+        <button class="control-btn-v5 prev-btn" id="portfolio-prev" title="Previous Slide" aria-label="Previous Slide">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="control-btn-v5 next-btn" id="portfolio-next" title="Next Slide" aria-label="Next Slide">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
 
 
@@ -532,7 +536,7 @@
           <div class="services-title-container-v3">
             <h2 class="services-title-v3">
               Creative Services That<br>
-              <span> Grows Bran.</span>
+              <span> Grows Brand.</span>
             </h2>
             <div class="services-brush-line-v3"></div>
           </div>
@@ -540,7 +544,7 @@
           <div class="services-desc-col-v3">
             <p class="services-desc-text-v3">
               From concept to final delivery, we provide cinematography, video production, editing, motion graphics, and
-              creative design to help brands tell better stories..
+              creative design to help brands tell better stories.
             </p>
           </div>
         </div>
@@ -581,42 +585,186 @@
             @if ($service->video_id)
               <div class="card-right-image video-card" data-video-id="{{ $service->video_id }}">
                 <div class="services-big-icon-wrapper">
-                  @if (($service->icon_type ?? 'camera') === 'play')
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"
-                      class="services-big-icon">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
+                  @if ($service->custom_icon_path)
+                    <img src="{{ asset('images/' . $service->custom_icon_path) }}" alt="Icon" class="services-big-icon" style="width: 34px; height: 34px; object-fit: contain;">
                   @else
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
-                      <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
-                      <rect x="5" y="9" width="8" height="6" rx="0.5" ry="0.5" />
-                      <path d="M7 3h8" />
-                      <path d="M9 3v3" />
-                      <path d="M13 3v3" />
-                      <path d="M16 10l6-3v10l-6-3z" />
-                    </svg>
+                    @switch($service->icon_type ?? 'camera')
+                      @case('play')
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="services-big-icon">
+                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        @break
+                      @case('film')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                          <line x1="7" y1="2" x2="7" y2="22"></line>
+                          <line x1="17" y1="2" x2="17" y2="22"></line>
+                          <line x1="2" y1="12" x2="22" y2="12"></line>
+                          <line x1="2" y1="7" x2="7" y2="7"></line>
+                          <line x1="2" y1="17" x2="7" y2="17"></line>
+                          <line x1="17" y1="17" x2="22" y2="17"></line>
+                          <line x1="17" y1="7" x2="22" y2="7"></line>
+                        </svg>
+                        @break
+                      @case('palette')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.75 1.7-1.67 0-.42-.16-.81-.43-1.1-.28-.3-.44-.7-.44-1.13 0-.92.75-1.67 1.67-1.67h1.67c2.92 0 5.33-2.41 5.33-5.33 0-5.17-4.42-9.1-9.5-9.1z"></path>
+                          <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor"></circle>
+                          <circle cx="12" cy="7.5" r="1.5" fill="currentColor"></circle>
+                          <circle cx="16.5" cy="11.5" r="1.5" fill="currentColor"></circle>
+                        </svg>
+                        @break
+                      @case('edit')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M12 20h9"></path>
+                          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        @break
+                      @case('sparkles')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                        </svg>
+                        @break
+                      @case('youtube')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.56 49.56 0 0 1-16.2 0A2 2 0 0 1 2.5 17Z"></path>
+                          <polygon points="10 15 15 12 10 9 10 15" fill="currentColor"></polygon>
+                        </svg>
+                        @break
+                      @case('megaphone')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="m3 11 18-5v12L3 13v-2z"></path>
+                          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                        </svg>
+                        @break
+                      @case('drone')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"></path>
+                          <path d="m4.93 4.93 4.24 4.24"></path>
+                          <path d="m14.83 9.17 4.24-4.24"></path>
+                          <path d="m14.83 14.83 4.24 4.24"></path>
+                          <path d="m9.17 14.83-4.24 4.24"></path>
+                          <circle cx="4" cy="4" r="2"></circle>
+                          <circle cx="20" cy="4" r="2"></circle>
+                          <circle cx="20" cy="20" r="2"></circle>
+                          <circle cx="4" cy="20" r="2"></circle>
+                        </svg>
+                        @break
+                      @case('aperture')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+                          <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+                          <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+                          <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+                          <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+                          <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+                        </svg>
+                        @break
+                      @default
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
+                          <rect x="5" y="9" width="8" height="6" rx="0.5" ry="0.5" />
+                          <path d="M7 3h8" />
+                          <path d="M9 3v3" />
+                          <path d="M13 3v3" />
+                          <path d="M16 10l6-3v10l-6-3z" />
+                        </svg>
+                    @endswitch
                   @endif
                 </div>
               </div>
             @else
               <div class="card-right-image">
                 <div class="services-big-icon-wrapper">
-                  @if (($service->icon_type ?? 'camera') === 'play')
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"
-                      class="services-big-icon">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
+                  @if ($service->custom_icon_path)
+                    <img src="{{ asset('images/' . $service->custom_icon_path) }}" alt="Icon" class="services-big-icon" style="width: 34px; height: 34px; object-fit: contain;">
                   @else
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
-                      <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
-                      <rect x="5" y="9" width="8" height="6" rx="0.5" ry="0.5" />
-                      <path d="M7 3h8" />
-                      <path d="M9 3v3" />
-                      <path d="M13 3v3" />
-                      <path d="M16 10l6-3v10l-6-3z" />
-                    </svg>
+                    @switch($service->icon_type ?? 'camera')
+                      @case('play')
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="services-big-icon">
+                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        @break
+                      @case('film')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                          <line x1="7" y1="2" x2="7" y2="22"></line>
+                          <line x1="17" y1="2" x2="17" y2="22"></line>
+                          <line x1="2" y1="12" x2="22" y2="12"></line>
+                          <line x1="2" y1="7" x2="7" y2="7"></line>
+                          <line x1="2" y1="17" x2="7" y2="17"></line>
+                          <line x1="17" y1="17" x2="22" y2="17"></line>
+                          <line x1="17" y1="7" x2="22" y2="7"></line>
+                        </svg>
+                        @break
+                      @case('palette')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.75 1.7-1.67 0-.42-.16-.81-.43-1.1-.28-.3-.44-.7-.44-1.13 0-.92.75-1.67 1.67-1.67h1.67c2.92 0 5.33-2.41 5.33-5.33 0-5.17-4.42-9.1-9.5-9.1z"></path>
+                          <circle cx="7.5" cy="11.5" r="1.5" fill="currentColor"></circle>
+                          <circle cx="12" cy="7.5" r="1.5" fill="currentColor"></circle>
+                          <circle cx="16.5" cy="11.5" r="1.5" fill="currentColor"></circle>
+                        </svg>
+                        @break
+                      @case('edit')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M12 20h9"></path>
+                          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        @break
+                      @case('sparkles')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                        </svg>
+                        @break
+                      @case('youtube')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.56 49.56 0 0 1-16.2 0A2 2 0 0 1 2.5 17Z"></path>
+                          <polygon points="10 15 15 12 10 9 10 15" fill="currentColor"></polygon>
+                        </svg>
+                        @break
+                      @case('megaphone')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="m3 11 18-5v12L3 13v-2z"></path>
+                          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                        </svg>
+                        @break
+                      @case('drone')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <path d="M12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"></path>
+                          <path d="m4.93 4.93 4.24 4.24"></path>
+                          <path d="m14.83 9.17 4.24-4.24"></path>
+                          <path d="m14.83 14.83 4.24 4.24"></path>
+                          <path d="m9.17 14.83-4.24 4.24"></path>
+                          <circle cx="4" cy="4" r="2"></circle>
+                          <circle cx="20" cy="4" r="2"></circle>
+                          <circle cx="20" cy="20" r="2"></circle>
+                          <circle cx="4" cy="20" r="2"></circle>
+                        </svg>
+                        @break
+                      @case('aperture')
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+                          <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+                          <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+                          <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+                          <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+                          <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+                        </svg>
+                        @break
+                      @default
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="services-big-icon">
+                          <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
+                          <rect x="5" y="9" width="8" height="6" rx="0.5" ry="0.5" />
+                          <path d="M7 3h8" />
+                          <path d="M9 3v3" />
+                          <path d="M13 3v3" />
+                          <path d="M16 10l6-3v10l-6-3z" />
+                        </svg>
+                    @endswitch
                   @endif
                 </div>
               </div>
@@ -1441,6 +1589,7 @@
 
   <!-- GSAP & Premium 3D Carousel JS Split Files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="{{ asset('assets/premium-carousel/animation.js') }}?v={{ time() }}"></script>
   <script src="{{ asset('assets/premium-carousel/drag.js') }}?v={{ time() }}"></script>
   <script src="{{ asset('assets/premium-carousel/touch.js') }}?v={{ time() }}"></script>

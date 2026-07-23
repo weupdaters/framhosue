@@ -331,18 +331,61 @@
                         @enderror
                     </div>
 
-                    <!-- Showcase Icon Option -->
-                    <div class="form-group">
-                        <label for="icon_type">Showcase Icon Option</label>
-                        <select id="icon_type" name="icon_type">
-                            <option value="camera" {{ old('icon_type', $service->icon_type ?? 'camera') == 'camera' ? 'selected' : '' }}>Video Camera Icon (Lime Outline)</option>
-                            <option value="play" {{ old('icon_type', $service->icon_type ?? 'camera') == 'play' ? 'selected' : '' }}>Play Button Icon (Standard Triangle)</option>
-                        </select>
-                        <p style="font-size: 0.72rem; color: rgba(255,255,255,0.4); margin: 0.3rem 0 0 0;">Choose which overlay icon to display on the service card thumbnail when a video is attached.</p>
-                        @error('icon_type')
-                            <div class="error-message">{{ $message }}</div>
-                        @enderror
+                    <!-- Icon Selection Mode (Preset SVG Icon vs Custom Image Icon) -->
+                    <div class="form-group" style="background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.06);">
+                        <label style="color: var(--primary-color);">Service Icon Option (Preset Icon or Custom Upload)</label>
+                        <div style="display: flex; gap: 1.5rem; margin-top: 0.6rem; margin-bottom: 1rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; text-transform: none; font-size: 0.88rem; color: #fff;">
+                                <input type="radio" name="icon_mode" value="preset" id="mode-preset" {{ old('icon_mode', isset($service) && $service->custom_icon_path ? 'custom' : 'preset') == 'preset' ? 'checked' : '' }} onchange="toggleIconFields()">
+                                Use System Preset SVG Icon
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; text-transform: none; font-size: 0.88rem; color: #fff;">
+                                <input type="radio" name="icon_mode" value="custom" id="mode-custom" {{ old('icon_mode', isset($service) && $service->custom_icon_path ? 'custom' : 'preset') == 'custom' ? 'checked' : '' }} onchange="toggleIconFields()">
+                                Upload Custom Icon Image (PNG / SVG)
+                            </label>
+                        </div>
+
+                        <!-- Option A: Preset Icon Dropdown -->
+                        <div id="preset-icon-container">
+                            <label for="icon_type" style="font-size: 0.75rem;">Preset Icon Choice</label>
+                            <select id="icon_type" name="icon_type" style="margin-top: 0.4rem;">
+                                <option value="camera" {{ old('icon_type', $service->icon_type ?? 'camera') == 'camera' ? 'selected' : '' }}>Video Camera Icon (Cinematography & Production)</option>
+                                <option value="play" {{ old('icon_type', $service->icon_type ?? 'camera') == 'play' ? 'selected' : '' }}>Play Button Icon (Video Showcase)</option>
+                                <option value="film" {{ old('icon_type', $service->icon_type ?? 'camera') == 'film' ? 'selected' : '' }}>Film Reel Icon (Cinema & Commercials)</option>
+                                <option value="palette" {{ old('icon_type', $service->icon_type ?? 'camera') == 'palette' ? 'selected' : '' }}>Color Palette Icon (Graphic Design & Branding)</option>
+                                <option value="edit" {{ old('icon_type', $service->icon_type ?? 'camera') == 'edit' ? 'selected' : '' }}>Edit & Slate Icon (Video Post-Production)</option>
+                                <option value="sparkles" {{ old('icon_type', $service->icon_type ?? 'camera') == 'sparkles' ? 'selected' : '' }}>Magic Sparkles Icon (VFX & Motion Graphics)</option>
+                                <option value="youtube" {{ old('icon_type', $service->icon_type ?? 'camera') == 'youtube' ? 'selected' : '' }}>YouTube Play Icon (Social Reels & Youtube)</option>
+                                <option value="megaphone" {{ old('icon_type', $service->icon_type ?? 'camera') == 'megaphone' ? 'selected' : '' }}>Megaphone Icon (Marketing & Campaigns)</option>
+                                <option value="drone" {{ old('icon_type', $service->icon_type ?? 'camera') == 'drone' ? 'selected' : '' }}>Drone Icon (Aerial Cinematography)</option>
+                                <option value="aperture" {{ old('icon_type', $service->icon_type ?? 'camera') == 'aperture' ? 'selected' : '' }}>Camera Aperture Icon (Photography & Lenses)</option>
+                            </select>
+                        </div>
+
+                        <!-- Option B: Custom Icon Image Upload -->
+                        <div id="custom-icon-container" style="display: none; margin-top: 0.8rem;">
+                            <label for="custom_icon" style="font-size: 0.75rem;">Upload Custom Icon File (PNG, SVG, transparent background recommended)</label>
+                            <input type="file" id="custom_icon" name="custom_icon" accept="image/*" style="margin-top: 0.4rem;">
+                            @if(isset($service) && $service->custom_icon_path)
+                                <div class="preview-img-container" style="margin-top: 0.6rem;">
+                                    <p style="font-size: 0.78rem; margin-bottom: 0.4rem; color: rgba(255,255,255,0.5);">Current Custom Icon:</p>
+                                    <img src="{{ asset('images/' . $service->custom_icon_path) }}" alt="Custom Icon" style="width: 48px; height: 48px; object-fit: contain; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 8px;">
+                                    <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: #ff3e6c; margin-top: 0.4rem; cursor: pointer; text-transform: none;">
+                                        <input type="checkbox" name="remove_custom_icon" value="1"> Remove Custom Icon & Revert to Preset Icon
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
                     </div>
+
+                    <script>
+                        function toggleIconFields() {
+                            const isCustom = document.getElementById('mode-custom').checked;
+                            document.getElementById('preset-icon-container').style.display = isCustom ? 'none' : 'block';
+                            document.getElementById('custom-icon-container').style.display = isCustom ? 'block' : 'none';
+                        }
+                        document.addEventListener('DOMContentLoaded', toggleIconFields);
+                    </script>
 
                     <!-- Thumbnail Image Upload -->
                     <div class="form-group">

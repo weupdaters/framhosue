@@ -325,9 +325,16 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <span style="text-transform: capitalize; font-size: 0.85rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);">
-                                            {{ $service->icon_type ?? 'camera' }}
-                                        </span>
+                                        @if($service->custom_icon_path)
+                                            <span style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; padding: 0.2rem 0.6rem; border-radius: 6px; background: rgba(184,255,52,0.08); border: 1px solid rgba(184,255,52,0.3); color: var(--primary-color);">
+                                                <img src="{{ asset('images/' . $service->custom_icon_path) }}" alt="Icon" style="width: 20px; height: 20px; object-fit: contain;">
+                                                Custom Image
+                                            </span>
+                                        @else
+                                            <span style="text-transform: capitalize; font-size: 0.85rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);">
+                                                Preset: {{ $service->icon_type ?? 'camera' }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td style="text-align: center;">
                                         <div class="action-buttons" style="justify-content: center;">

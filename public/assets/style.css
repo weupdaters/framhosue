@@ -2882,6 +2882,15 @@ body.cursor-video .custom-cursor-ring {
     background: rgba(184, 255, 52, 0.05);
 }
 
+.portfolio-bottom-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
 /* Horizontal Slider track & viewport */
 .portfolio-slider-viewport {
     width: 100%;

@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // 1. SCROLL REVEAL INTERSECTION OBSERVER
+    // 1. SCROLL REVEAL INTERSECTION OBSERVER & GSAP (GSAP.COM)
     // ==========================================
     const revealElements = document.querySelectorAll('.reveal');
     
@@ -500,6 +500,188 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         revealElements.forEach(el => revealObserver.observe(el));
+    }
+
+    // GSAP ScrollTrigger Animations Suite
+    if (typeof gsap !== 'undefined') {
+        if (typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
+
+        // Tag lines horizontal scale expansion on scroll
+        const tagLines = document.querySelectorAll('.portfolio-tag-line-v3, .services-tag-line-v3, .pricing-tag-line-v3, .about-tag-line');
+        tagLines.forEach(line => {
+            gsap.from(line, {
+                scrollTrigger: {
+                    trigger: line,
+                    start: 'top 92%',
+                    toggleActions: 'play none none none'
+                },
+                scaleX: 0,
+                transformOrigin: 'left center',
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Section Titles 3D Perspective Fade & Slide Up
+        const sectionTitles = document.querySelectorAll('.about-title, .portfolio-title-v3, .services-title-v3, .pricing-title-v3, .contact-title, .works-archive-title, .hero-title-v6');
+        sectionTitles.forEach(title => {
+            gsap.from(title, {
+                scrollTrigger: {
+                    trigger: title,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 40,
+                rotationX: 12,
+                duration: 1.1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Section Subtitles, Descriptions & Tag Labels
+        const sectionTexts = document.querySelectorAll('.about-desc, .portfolio-subtitle-v3, .services-desc-text-v3, .pricing-desc-v3, .contact-desc-text, .works-archive-desc, .portfolio-tag-v3, .services-tag-v3, .pricing-tag-v3, .about-tag-v3');
+        sectionTexts.forEach(txt => {
+            gsap.from(txt, {
+                scrollTrigger: {
+                    trigger: txt,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 25,
+                duration: 0.9,
+                ease: 'power3.out'
+            });
+        });
+
+        // Staggered Service Cards Animation
+        const serviceCards = document.querySelectorAll('.service-card-mockup');
+        if (serviceCards.length > 0) {
+            gsap.from(serviceCards, {
+                scrollTrigger: {
+                    trigger: '.services-grid-mockup',
+                    start: 'top 82%'
+                },
+                opacity: 0,
+                y: 55,
+                scale: 0.95,
+                duration: 0.85,
+                stagger: 0.12,
+                ease: 'power3.out'
+            });
+        }
+
+        // Staggered Portfolio Slide Cards Animation
+        const portfolioCards = document.querySelectorAll('.portfolio-slide-card');
+        if (portfolioCards.length > 0) {
+            gsap.from(portfolioCards, {
+                scrollTrigger: {
+                    trigger: '#portfolio-slider-viewport',
+                    start: 'top 85%'
+                },
+                opacity: 0,
+                y: 45,
+                scale: 0.96,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        }
+
+        // Staggered Pricing Cards Animation
+        const pricingCards = document.querySelectorAll('.pricing-editorial-card');
+        if (pricingCards.length > 0) {
+            gsap.from(pricingCards, {
+                scrollTrigger: {
+                    trigger: '.pricing-cards-container-v3',
+                    start: 'top 82%'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.85,
+                stagger: 0.15,
+                ease: 'power3.out'
+            });
+        }
+
+        // Contact Section Columns & Quick Cards
+        const contactElements = document.querySelectorAll('.contact-quick-cards, .contact-form-col, .contact-info-col');
+        if (contactElements.length > 0) {
+            gsap.from(contactElements, {
+                scrollTrigger: {
+                    trigger: '#contact',
+                    start: 'top 82%'
+                },
+                opacity: 0,
+                y: 40,
+                duration: 0.9,
+                stagger: 0.15,
+                ease: 'power3.out'
+            });
+        }
+
+        // Works Archive Grid Items
+        const worksGridCards = document.querySelectorAll('.works-item-card');
+        if (worksGridCards.length > 0) {
+            gsap.from(worksGridCards, {
+                scrollTrigger: {
+                    trigger: '.works-grid-container',
+                    start: 'top 85%'
+                },
+                opacity: 0,
+                y: 40,
+                scale: 0.96,
+                duration: 0.75,
+                stagger: 0.08,
+                ease: 'power3.out'
+            });
+        }
+
+        // Parallax Effect on Ambient Background Glows on Scroll
+        if (typeof ScrollTrigger !== 'undefined') {
+            const ambientGlows = document.querySelectorAll('.services-ambient-glow, .services-ambient-glow-2, .pricing-ambient-glow');
+            ambientGlows.forEach(glow => {
+                const parent = glow.closest('section') || glow.parentElement;
+                gsap.to(glow, {
+                    scrollTrigger: {
+                        trigger: parent,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1.5
+                    },
+                    y: 60,
+                    scale: 1.08,
+                    ease: 'none'
+                });
+            });
+        }
+
+        // Interactive Magnetic Spring Motion on Buttons & Badges
+        const magneticBtns = document.querySelectorAll('.control-btn-v5, .view-all-btn-v5, .portfolio-tab-btn, .top-nav-btn, .bottom-nav-link');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, {
+                    x: x * 0.25,
+                    y: y * 0.25,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'elastic.out(1, 0.4)'
+                });
+            });
+        });
     }
 
     // ==========================================
