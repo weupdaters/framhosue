@@ -240,6 +240,9 @@ header {
     height: 100%;
     z-index: 1;
     overflow: hidden;
+    background: radial-gradient(circle at 75% 30%, rgba(184, 255, 52, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 45%),
+                #030406;
 }
 
 .hero-bg-video {

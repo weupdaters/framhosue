@@ -115,16 +115,18 @@
   <section id="home" class="hero">
     <!-- Full Screen Ambient Video Layer -->
     <div class="hero-video-container">
-      <video class="hero-bg-video" autoplay loop muted playsinline
-        poster="{{ isset($site_settings['hero_poster']) && $site_settings['hero_poster'] ? asset('images/' . $site_settings['hero_poster']) : asset('images/banner.png') }}">
-        @if (isset($site_settings['hero_bg_video']) && $site_settings['hero_bg_video'])
-          <source src="{{ asset($site_settings['hero_bg_video']) }}" type="video/mp4">
-        @elseif(isset($site_settings['hero_bg_video_url']) && $site_settings['hero_bg_video_url'])
-          <source src="{{ $site_settings['hero_bg_video_url'] }}" type="video/mp4">
-        @else
-          <source src="{{ asset('Create_a_second_seamless_lo.mp4') }}" type="video/mp4">
-        @endif
-      </video>
+      @if (!empty($site_settings['hero_bg_video']) || !empty($site_settings['hero_bg_video_url']))
+        <video class="hero-bg-video" autoplay loop muted playsinline
+          @if (!empty($site_settings['hero_poster'])) poster="{{ asset('images/' . $site_settings['hero_poster']) }}" @endif>
+          @if (!empty($site_settings['hero_bg_video']))
+            <source src="{{ asset($site_settings['hero_bg_video']) }}" type="video/mp4">
+          @elseif(!empty($site_settings['hero_bg_video_url']))
+            <source src="{{ $site_settings['hero_bg_video_url'] }}" type="video/mp4">
+          @endif
+        </video>
+      @elseif (!empty($site_settings['hero_poster']))
+        <div class="hero-bg-image" style="position: absolute; inset: 0; width: 100%; height: 100%; background: url('{{ asset('images/' . $site_settings['hero_poster']) }}') center center / cover no-repeat; filter: brightness(0.65) contrast(1.05);"></div>
+      @endif
       <!-- Ambient Cinema Vignette Overlays -->
       <div class="hero-video-overlay-dark"></div>
       <div class="hero-video-overlay-glow"></div>
