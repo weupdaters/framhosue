@@ -5300,3 +5300,326 @@ a.contact-quick-card:hover .cqc-arrow {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   MOBILE PORTFOLIO SECTION: VERTICAL STACKING CARDS EFFECT
+   Smooth scroll-driven stacking card deck for mobile devices only (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Prevent horizontal layout shifts while preserving vertical sticky context */
+    html, body {
+        overflow-x: clip !important;
+    }
+
+    /* Section container overrides: Must have overflow visible for sticky to attach to window */
+    .portfolio-section-v5 {
+        overflow: visible !important;
+        padding: 3.5rem 0 4.5rem 0 !important;
+        position: relative;
+    }
+
+    .portfolio-container-v5 {
+        overflow: visible !important;
+        padding: 0 1.25rem !important;
+        max-width: 100% !important;
+    }
+
+    /* Header text adjustments for mobile */
+    .portfolio-header-v3 {
+        margin-bottom: 1.8rem !important;
+    }
+
+    .portfolio-title-v3 {
+        font-size: 2.2rem !important;
+        line-height: 1.15 !important;
+    }
+
+    .portfolio-subtitle-v3 {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Swipeable category filters row */
+    .portfolio-filter-nav {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        gap: 0.6rem !important;
+        padding: 0.2rem 0.2rem 0.6rem 0.2rem !important;
+        margin-bottom: 2rem !important;
+        width: 100% !important;
+    }
+
+    .portfolio-filter-nav::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .portfolio-tab-btn {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        font-size: 0.72rem !important;
+        padding: 0.5rem 1.1rem !important;
+        border-radius: 30px !important;
+    }
+
+    /* Slider viewport & track: Single column top-to-bottom layout */
+    .portfolio-slider-viewport,
+    .portfolio-slider-viewport.reveal,
+    .portfolio-slider-viewport.revealed {
+        overflow: visible !important;
+        overflow-x: visible !important;
+        transform: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        padding-bottom: 0 !important;
+        width: 100% !important;
+    }
+
+    .portfolio-slider-track {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 36px !important;
+        position: relative !important;
+        padding-bottom: 80px !important;
+    }
+
+    /* Card Stacking: Progressive Sticky Deck (Identical to WeUpdaters) */
+    .portfolio-slide-card {
+        position: sticky !important;
+        top: calc(82px + min(calc((var(--card-index, 1) - 1) * 26px), 130px)) !important;
+        width: 100% !important;
+        max-width: 440px !important;
+        margin: 0 auto !important;
+        padding: 1rem !important;
+        border-radius: 20px !important;
+        background: #0d1017 !important; /* 100% solid, fully opaque, no transparency */
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-top: 1px solid rgba(184, 255, 52, 0.55) !important;
+        box-shadow: 0 -14px 35px rgba(0, 0, 0, 0.9), 0 25px 50px rgba(0, 0, 0, 0.95) !important;
+        opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+        z-index: var(--card-index, 1) !important;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+    }
+
+    .portfolio-slide-card:hover {
+        transform: none !important;
+    }
+
+    /* Clean solid thumbnail container without murky blur */
+    .portfolio-slide-card .card-img-container {
+        position: relative !important;
+        width: 100% !important;
+        aspect-ratio: 4 / 3 !important;
+        height: auto !important;
+        border-radius: 14px !important;
+        overflow: hidden !important;
+        margin-bottom: 0.8rem !important;
+        background: #000000 !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+
+    .portfolio-slide-card .card-img-container img {
+        position: relative;
+        z-index: 2;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+
+    /* Action icons and compact description */
+    .portfolio-slide-card .card-actions-row {
+        margin-bottom: 0.6rem !important;
+        padding: 0 0.15rem !important;
+    }
+
+    .portfolio-slide-card .card-desc-text {
+        font-size: 0.76rem !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0.2px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    /* Hide desktop horizontal carousel controls on mobile */
+    .portfolio-bottom-controls {
+        display: none !important;
+    }
+}
+
+/* Extra compact optimization for smaller phones (<= 480px) */
+@media (max-width: 480px) {
+    .portfolio-container-v5 {
+        padding: 0 0.85rem !important;
+    }
+
+    .portfolio-title-v3 {
+        font-size: 1.95rem !important;
+    }
+
+    .portfolio-slide-card {
+        top: calc(76px + min(calc((var(--card-index, 1) - 1) * 22px), 110px)) !important;
+        padding: 0.9rem !important;
+        border-radius: 18px !important;
+    }
+
+    .portfolio-slider-track {
+        gap: 30px !important;
+    }
+
+    .portfolio-slide-card .card-img-container {
+        aspect-ratio: 4 / 3 !important;
+        border-radius: 12px !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .portfolio-slide-card .card-desc-text {
+        font-size: 0.72rem !important;
+    }
+}
+
+/* ==========================================================================
+   VIDEO MODAL MOBILE OPTIMIZATION
+   Proper edge-to-edge layout, responsive height & visible close controls
+   ========================================================================== */
+@media (max-width: 768px) {
+    .video-modal {
+        padding: 1rem 0.6rem !important;
+        background-color: rgba(5, 7, 10, 0.94) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        display: none;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 0.9rem !important;
+        z-index: 10000 !important;
+    }
+
+    .video-modal.active {
+        display: flex !important;
+    }
+
+    .modal-content {
+        width: 100% !important;
+        max-width: 520px !important;
+        padding: 0 !important;
+        border-radius: 18px !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        background: #000000 !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95) !important;
+        overflow: hidden !important;
+        aspect-ratio: unset !important;
+        height: auto !important;
+        margin: 0 auto !important;
+    }
+
+    /* Horizontal video player container on mobile:
+       Prevents Google Drive / iframe top headers from squishing the 16:9 video */
+    .modal-content:not(.modal-vertical) .iframe-container {
+        width: 100% !important;
+        height: clamp(230px, 62vw, 300px) !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+        background: #000000 !important;
+    }
+
+    .modal-content:not(.modal-vertical) .iframe-container iframe,
+    .modal-content:not(.modal-vertical) .iframe-container video {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        display: block !important;
+    }
+
+    /* Vertical Reels / Shorts layout on mobile */
+    .modal-content.modal-vertical {
+        width: min(88vw, 340px) !important;
+        max-width: 340px !important;
+        height: min(76vh, 560px) !important;
+        aspect-ratio: 9 / 16 !important;
+        border-radius: 20px !important;
+    }
+
+    .modal-content.modal-vertical .iframe-container {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 20px !important;
+    }
+
+    /* Top Close Button on Mobile: Always visible, touch-friendly 44px */
+    .modal-close-btn {
+        position: fixed !important;
+        top: max(1rem, env(safe-area-inset-top, 1rem)) !important;
+        right: max(1rem, env(safe-area-inset-right, 1rem)) !important;
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 50% !important;
+        background: rgba(18, 22, 30, 0.92) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        color: #ffffff !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7) !important;
+        z-index: 10005 !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+
+    .modal-close-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .modal-close-btn:active {
+        background: var(--primary-color) !important;
+        color: #080a0e !important;
+        transform: scale(0.92) !important;
+    }
+
+    /* Bottom Dismiss Pill: Super accessible thumb target */
+    .modal-tap-dismiss-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        padding: 0.55rem 1.4rem !important;
+        border-radius: 30px !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-size: 0.82rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        cursor: pointer !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        transition: all 0.25s ease !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .modal-tap-dismiss-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .modal-tap-dismiss-btn:active {
+        background: var(--primary-color) !important;
+        color: #080a0e !important;
+        border-color: var(--primary-color) !important;
+        transform: scale(0.95) !important;
+    }
+}
+
+/* Hide bottom dismiss pill on desktop */
+@media (min-width: 769px) {
+    .modal-tap-dismiss-btn {
+        display: none !important;
+    }
+}

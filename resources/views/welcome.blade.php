@@ -368,7 +368,8 @@
             <div class="portfolio-slide-card {{ $project->video_id || $project->video_path ? 'video-card' : '' }}"
               data-project-id="{{ $project->id }}" data-project-title="{{ e($project->title) }}"
               data-category="{{ $project->category }}" data-is-vertical="{{ $project->is_vertical_reel }}"
-              {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!} {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}>
+              {!! $project->video_id ? 'data-video-id="' . e($project->video_id) . '"' : '' !!} {!! $project->video_path ? 'data-video-path="' . e($project->video_path) . '"' : '' !!}
+              style="--card-index: {{ $loop->iteration }}; z-index: {{ $loop->iteration }};">
               <div class="card-img-container">
                 <img src="{{ asset('images/' . $project->image_path) }}" alt="{{ $project->title }}">
                 @if ($project->video_id || $project->video_path)
@@ -1504,17 +1505,29 @@
 
   <!-- Video Modal -->
   <div id="video-modal" class="video-modal">
+    <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
     <div class="modal-content">
-      <button class="modal-close-btn" id="modal-close-btn">&times;</button>
       <div class="iframe-container" id="modal-iframe-wrapper">
-        <iframe id="modal-video-iframe" src="" frameborder="0" allow="autoplay; fullscreen"
-          allowfullscreen style="display: none;"></iframe>
-        <video id="modal-video-player" controls autoplay
-          style="display: none; width: 100%; height: auto; border-radius: 12px; max-height: 80vh; background: #000;"></video>
+        <iframe id="modal-video-iframe" src="" frameborder="0" allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+          allowfullscreen playsinline style="display: none;"></iframe>
+        <video id="modal-video-player" controls autoplay playsinline
+          style="display: none; width: 100%; height: 100%; border-radius: 12px; background: #000; object-fit: contain;"></video>
       </div>
       <img id="modal-image-player" src=""
         style="display: none; width: 100%; height: auto; border-radius: 12px; max-height: 80vh; object-fit: contain; background: #000; margin: 0 auto;">
     </div>
+    <button class="modal-tap-dismiss-btn" id="modal-tap-dismiss-btn" aria-label="Close Video">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+      <span>Close Player</span>
+    </button>
   </div>
 
   <!-- Floating Bottom Navbar -->

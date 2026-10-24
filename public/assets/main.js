@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const slideNext = () => {
+            if (window.innerWidth <= 768) return; // Disable horizontal slider navigation on mobile vertical stack
             const step = getScrollStep();
             const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
             
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const slidePrev = () => {
+            if (window.innerWidth <= 768) return; // Disable horizontal slider navigation on mobile vertical stack
             const step = getScrollStep();
             if (viewport.scrollLeft <= 5) {
                 // Wrap around to the end smoothly
@@ -63,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const AUTOPLAY_DELAY = 3500; // Slide every 3.5 seconds
 
         const startAutoplay = () => {
+            if (window.innerWidth <= 768) return; // Do not autoplay on mobile
             stopAutoplay(); // Ensure no duplicate intervals
             autoplayInterval = setInterval(() => {
                 slideNext();
@@ -80,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startAutoplay();
         };
 
-        // Start autoplay on load
+        // Start autoplay on load (desktop only)
         startAutoplay();
 
         // Pause autoplay on mouse enter / resume on mouse leave
@@ -90,7 +93,50 @@ document.addEventListener('DOMContentLoaded', function() {
         // Support touch events (for mobile devices)
         viewport.addEventListener('touchstart', stopAutoplay, { passive: true });
         viewport.addEventListener('touchend', startAutoplay, { passive: true });
+
+        // Responsive resize listener to handle autoplay switching
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 768) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        });
     }
+
+    // Mobile Stacking Cards (Clean Native CSS Sticky Deck like WeUpdaters)
+    function initMobileStackCards() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+        // Clean up any old ScrollTriggers
+        ScrollTrigger.getAll().forEach(st => {
+            if (st.vars && st.vars.id && st.vars.id.toString().startsWith('mobile-stack-')) {
+                st.kill();
+            }
+        });
+
+        // Always clear any GSAP inline transforms, filters, and opacities so cards stay 100% bright, solid, and visible
+        document.querySelectorAll('.portfolio-slide-card').forEach(card => {
+            gsap.set(card, { clearProps: 'transform,filter,opacity' });
+        });
+    }
+
+    // Initialize mobile card stack on DOM ready
+    initMobileStackCards();
+
+    // Re-initialize once images and assets finish loading
+    window.addEventListener('load', () => {
+        initMobileStackCards();
+    });
+
+    // Debounced window resize
+    let mobileStackResizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(mobileStackResizeTimer);
+        mobileStackResizeTimer = setTimeout(() => {
+            initMobileStackCards();
+        }, 150);
+    });
 
     // Homepage Portfolio Slider Card Filtering by Category
     const filterTabBtns = document.querySelectorAll('.portfolio-tab-btn');
@@ -116,9 +162,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
 
-                // Reset scroll position of the viewport to the start when filter changes
-                if (viewport) {
+                // Reset scroll position of the viewport to the start when filter changes (desktop only)
+                if (viewport && window.innerWidth > 768) {
                     viewport.scrollLeft = 0;
+                }
+
+                // Re-initialize mobile stack animations if on mobile
+                if (window.innerWidth <= 768) {
+                    initMobileStackCards();
                 }
             });
         });
@@ -402,7 +453,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.add('modal-active');
             document.body.style.overflow = 'hidden';
 
-            const cardIsVertical = card.getAttribute('data-is-vertical') === '1' || card.getAttribute('data-category') === 'reels';
+            const projectTitle = (card.getAttribute('data-project-title') || '').toLowerCase();
+            const projectCat = (card.getAttribute('data-category') || '').toLowerCase();
+            const isVertAttr = card.getAttribute('data-is-vertical');
+            const cardIsVertical = isVertAttr === '1' || projectCat === 'reels' || projectTitle.includes('reel') || projectTitle.includes('short');
             const mediaSource = parseVideoSource(videoId, videoPath);
 
             if (mediaSource) {
@@ -467,8 +521,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         closeBtn.addEventListener('click', closeModal);
+        const tapDismissBtn = document.getElementById('modal-tap-dismiss-btn');
+        if (tapDismissBtn) {
+            tapDismissBtn.addEventListener('click', closeModal);
+        }
+
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
+            if (e.target === modal || e.target.classList.contains('video-modal')) {
                 closeModal();
             }
         });
